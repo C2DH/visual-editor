@@ -6,6 +6,7 @@ import ModuleFormMap from './ModuleFormMap'
 import ModuleFormTextObject from './ModuleFormTextObject'
 import ModuleFormTextGallery from './ModuleFormTextGallery'
 import ModuleFormTextMap from './ModuleFormTextMap'
+import ModuleVideoInterview from './ModuleVideoInterview'
 
 const getModuleFormComponent = moduleType => {
   switch (moduleType) {
@@ -23,6 +24,8 @@ const getModuleFormComponent = moduleType => {
       return ModuleFormTextGallery
     case 'text_map':
       return ModuleFormTextMap
+    case 'video_interview':
+      return ModuleVideoInterview
     default:
       throw new Error(`Invalid module type ${moduleType}`)
   }

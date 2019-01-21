@@ -16,6 +16,8 @@ export const createEmptyModule = (moduleType, languages) => {
       return createEmptyModuleTextGallery(languages)
     case 'text_map':
       return createEmptyModuleTextMap(languages)
+    case 'video_interview':
+      return createEmptyModuleVideoInterview(languages)
     default:
       throw new Error(`Invalid module type ${moduleType}`)
   }
@@ -47,6 +49,16 @@ const createEmptyModuleObject = languages => ({
   position: 'center',
   size: 'medium',
   caption: createEmptyMultilangObj(languages, ''),
+})
+
+const createEmptyModuleVideoInterview = languages => ({
+  module: 'video_interview',
+  object: {
+    type: 'video',
+    caption: createEmptyMultilangObj(languages, ''),
+  },
+  objects: [],
+  "speakers": [],
 })
 
 const createEmptyModuleGallery = languages => ({

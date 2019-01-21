@@ -5,11 +5,12 @@ import Spinner from '../Spinner'
 import BackgroundPreview from '../BackgroundPreview'
 import './VisualForm.css'
 
-const VisualForm = pure(({ children, onSubmit, saving = false }) => (
+const VisualForm = pure(({ children, bottomForm, onSubmit, saving = false }) => (
   <form onSubmit={onSubmit}>
     <Container fluid className="margin-r-l-20">
       <Row>{children}</Row>
     </Container>
+    {bottomForm}
     {saving && <Spinner fullpage />}
   </form>
 ))

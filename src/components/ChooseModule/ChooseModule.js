@@ -13,6 +13,7 @@ const modulesTypes = [
   {type: 'text_object', label: 'Module text & object', cover:'/modules/text_object.png'},
   {type: 'text_gallery', label: 'Module text & gallery', cover:'/modules/text_gallery.png'},
   {type: 'text_map', label: 'Module text & map', cover:'/modules/text_map.png'},
+  {type: 'video_interview', label: 'Modul video interview', cover:'/modules/text_map.png'},
 ]
 
 const ChooseModuleCard = pure(({ title, cover, cardClick }) => (
