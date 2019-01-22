@@ -53,12 +53,13 @@ const createEmptyModuleObject = languages => ({
 
 const createEmptyModuleVideoInterview = languages => ({
   module: 'video_interview',
+  title: createEmptyMultilangObj(languages, ''),
   object: {
     type: 'video',
     caption: createEmptyMultilangObj(languages, ''),
   },
   objects: [],
-  "speakers": [],
+  speakers: [],
 })
 
 const createEmptyModuleGallery = languages => ({
