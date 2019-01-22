@@ -86,13 +86,13 @@ class TitleMiniForm extends PureComponent {
     return (
       <div className='d-flex align-items-center'>
         <Field
-          name={`text.content.${language.code}`}
+          name={`title.${language.code}`}
           component={Input}
           placeholder='Insert title'
           className='video-interview-title-input mr-2'
         />
         <Field
-          name={`text.content`}
+          name={`title`}
           component={Translate}
           validate={requiredAtLeastOne}
         />
@@ -181,6 +181,7 @@ class ModuleFormObject extends PureComponent {
         subtitlesFile = subtitlesFile.replace(/http(s)?(:\/\/)[^/]*/, '')
       }
     }
+    console.log(formErrors)
 
     return (
       <VisualForm bottomForm={bottomForm} onSubmit={handleSubmit} saving={submitting}>
@@ -198,7 +199,10 @@ class ModuleFormObject extends PureComponent {
             </div>
           </SideForm>
           <SideActions>
-            {formErrors && formErrors.id && <p className="text-danger">Insert an object to save</p>}
+            {(formErrors && formErrors.object && formErrors.object.id) &&
+              <p className="text-danger">Insert an object to save</p>}
+            {(formErrors && formErrors.title) &&
+              <p className="text-danger">Insert a title to save</p>}
             <Button size="sm" type='submit' block disabled={invalid}>Save</Button>
             <Button size="sm" block tag={Link} to={exitLink}>Back</Button>
           </SideActions>
