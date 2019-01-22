@@ -32,6 +32,14 @@ export default class VideoStory extends PureComponent {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.subtitlesFile !== prevProps.subtitlesFile) {
+      this.setState({
+        subtitles: [],
+      })
+    }
+  }
+
   componentWillUnmount() {
     const video = this.player.getInternalPlayer()
     if (video) {
@@ -76,13 +84,11 @@ export default class VideoStory extends PureComponent {
     const speaker = getSpeakerAt(playedSeconds)
     const sideDoc = getSideDocAt(playedSeconds)
     const tracks = []
-    if (subtitlesFile) {
-      tracks.push({
-        kind: 'metadata',
-        src: subtitlesFile,
-        default: true
-      })
-    }
+    tracks.push({
+      kind: 'metadata',
+      src: subtitlesFile,
+      default: true
+    })
     // XXX HACK XXX
     // Super workaround
     // On firefox when the track src change the subtitles won't change
@@ -138,7 +144,7 @@ export default class VideoStory extends PureComponent {
 
         <div className='video-story-bottom'>
           <Speaker doc={speaker} />
-          {/* <Subtitles subtitles={subtitles} /> */}
+          <Subtitles subtitles={subtitles} />
         </div>
 
       </div>

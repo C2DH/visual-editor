@@ -123,7 +123,8 @@
     .video-story .video-story-bottom .subtitles {
       padding: 20px;
       flex: 1;
-      color: white; }
+      overflow: auto;
+      color: black; }
 
 .tooltip.side-doc-tooltip .tooltip-inner {
   background-color: red;

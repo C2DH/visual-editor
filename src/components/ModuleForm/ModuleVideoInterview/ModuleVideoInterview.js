@@ -10,6 +10,7 @@ import {
   getFormSyncErrors
 } from 'redux-form'
 import find from 'lodash/find'
+import get from 'lodash/get'
 import { Link } from 'react-router-dom'
 import { Button, Col, Row } from 'reactstrap'
 import VisualForm, {
@@ -155,6 +156,7 @@ class ModuleFormObject extends PureComponent {
 
   render() {
     const {
+      language,
       handleSubmit,
       invalid,
       submitting,
@@ -169,6 +171,16 @@ class ModuleFormObject extends PureComponent {
 
     const sideDocsWithTime = this.sideDocsWithTime(sideDocs)
     const speakersWithTime = this.speakersWithTime(speakers)
+
+    let subtitlesFile = null
+    if (docVideo) {
+      subtitlesFile = get(docVideo, `data.subtitles.vtt.${language.code}`, null)
+      // HACK for fixing proxy problem
+      // TODO check for production deploy env...
+      if (subtitlesFile) {
+        subtitlesFile = subtitlesFile.replace(/http(s)?(:\/\/)[^/]*/, '')
+      }
+    }
 
     return (
       <VisualForm bottomForm={bottomForm} onSubmit={handleSubmit} saving={submitting}>
@@ -194,6 +206,7 @@ class ModuleFormObject extends PureComponent {
         <Col md={9} className='m-0 p-0'>
           {docVideo && (
             <VideoStory
+              subtitlesFile={subtitlesFile}
               renderTitle={this.renderTitle}
               url={docVideo.url}
               sideDocs={sideDocsWithTime}
