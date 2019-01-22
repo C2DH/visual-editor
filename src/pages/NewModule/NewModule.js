@@ -21,8 +21,8 @@ const getStory = wrapAuthApiCall(api.getStory)
 
 class NewModule extends PureComponent {
   state = {
-    // moduleType: null,
-    moduleType: 'video_interview',
+    moduleType: null,
+    // moduleType: 'video_interview',
   }
 
   chooseModule = moduleType => this.setState({ moduleType })

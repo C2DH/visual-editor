@@ -13,8 +13,7 @@ export default function SideDocument({ onDrag, width, doc }) {
       {doc && <div className='display-doc'>
         <div className='year'>{year}</div>
         <div className='title'>
-          <h2>{doc.title}</h2>
-          <a>OPEN</a>
+          <h3>{doc.title}</h3>
         </div>
         <div
           className='doc-image'
@@ -25,8 +24,8 @@ export default function SideDocument({ onDrag, width, doc }) {
       <DraggableCore onDrag={onDrag}>
         <div className='handle-circle-container'>
           <svg width={50} height={50}>
-            <circle cx={25} cy={25} r={25} fill={'grey'} />
-            <circle cx={25} cy={25} r={15} fill={'yellow'} />
+            <circle cx={25} cy={25} r={25} fill={'#7B7B7B'} />
+            <circle cx={25} cy={25} r={15} fill={'#F8C91C'} />
           </svg>
         </div>
       </DraggableCore>

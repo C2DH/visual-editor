@@ -68,11 +68,11 @@ class ChooseDocuments extends PureComponent {
   }
 
   render() {
-    const { fields } = this.props
+    const { fields, renderExtraFields, label } = this.props
     return (
       <div>
 
-        <AddButton label='Add document' onClick={this.showDocumentChooser} />
+        <AddButton label={label} onClick={this.showDocumentChooser} />
         {fields.map((field, index) => (
            <div key={index}>
              <Field
@@ -87,6 +87,9 @@ class ChooseDocuments extends PureComponent {
                  </span>
                }
                onEmpty={() => fields.remove(index)}
+               renderExtraFields={typeof renderExtraFields === 'function' ? ({ title }) => {
+                 return renderExtraFields({ field, title })
+               } : undefined}
               />
            </div>
         ))}
@@ -96,6 +99,7 @@ class ChooseDocuments extends PureComponent {
 }
 
 ChooseDocuments.defaultProps = {
+  label: 'Add document',
   // Show docs chooser widget \w UI for place type filters
   withPlaceTypeFilters: false,
 }

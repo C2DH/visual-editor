@@ -7,25 +7,24 @@ export default function TopControls({
   playedSeconds,
   played,
   sideDocs,
-  story,
+  renderTitle,
   playing,
   togglePlaying,
   onSeek,
   volume,
   setVolume,
-  onBack,
 }) {
   const playedMinutes = moment.utc(parseInt(playedSeconds, 10) * 1000).format('mm:ss')
   const durationMinutes = moment.utc(parseInt(durationSeconds, 10) * 1000).format('mm:ss')
   return (
-    <div className='video-story-top'>
+    <div className='video-story-top' id='video-story-23'>
       <button type='button' className="control-button" onClick={togglePlaying}>
         { playing ? <span>&#9632;</span> : <span>&#9654;</span> }
       </button>
       <div className="track-container">
-        <div className="video-meta text-white">
+        <div className="video-meta">
           <div className="d-flex h-100 align-items-center">
-            <h3 className="mx-2">{story.data.title}</h3>
+            <div className="mx-2">{renderTitle()}</div>
             <div>{playedMinutes}/{durationMinutes}</div>
           </div>
           <div
@@ -40,15 +39,21 @@ export default function TopControls({
         }}>
 
           <div className="progress" style={{width: `${played*100}%`}}></div>
-          {/* {sideDocs && sideDocs.length > 0 && sideDocs.map((sideDoc, i) => (
-            <React.Fragment  key={i} >
-              <div id={`side-doc-${i}`} className="side-doc" style={{left: `${sideDoc.secondsFrom/durationSeconds*100}%`}} />
-              <UncontrolledTooltip placement="bottom" target={`side-doc-${i}`} className="side-doc-tooltip">
-                {sideDoc.doc.title}
+          {sideDocs && sideDocs.length > 0 && sideDocs.map((sideDoc, i) => (
+            <div key={sideDoc.id.id} >
+              <div
+                onClick={e => {
+                  e.stopPropagation()
+                  onSeek(sideDoc.secondsFrom/durationSeconds)
+                }}
+                id={`side-doc-${sideDoc.id.id}`}
+                className="side-doc" style={{left: `${sideDoc.secondsFrom/durationSeconds*100}%`}}
+              />
+              <UncontrolledTooltip placement="bottom" target={`side-doc-${sideDoc.id.id}`} className="side-doc-tooltip">
+                {sideDoc.id.title}
               </UncontrolledTooltip>
-            </React.Fragment>
-
-          ) )} */}
+            </div>
+          ) )}
         </div>
       </div>
     </div>

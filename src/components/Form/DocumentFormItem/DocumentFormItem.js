@@ -7,9 +7,15 @@ const DocumentFormItem = ({
   buttons,
   onEmpty,
   onChange,
+  renderExtraFields,
 }) => (
   <ListGroup className="margin-top-15">
-    <ListGroupItem className="DocumentFormItem__title">{title}</ListGroupItem>
+    <ListGroupItem className="DocumentFormItem__title">
+      {typeof renderExtraFields === 'function'
+        ? renderExtraFields({ title })
+        : title
+      }
+    </ListGroupItem>
     <ListGroupItem className="DocumentFormItem__buttons-container">
       {buttons}
       {typeof onChange === 'function' && <Button className="tiny-btn margin-right-5" onClick={onChange}><i className="fa fa-file-image-o" /></Button>}

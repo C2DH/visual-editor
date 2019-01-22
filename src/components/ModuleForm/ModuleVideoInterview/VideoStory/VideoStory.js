@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import ReactPlayer from 'react-player'
 import TopControls from './TopControls'
 import Speaker from './Speaker'
@@ -9,7 +9,7 @@ import './VideoStory.css'
 
 const MIN_SIDE_WIDTH = 250
 
-export default class VideoStory extends Component {
+export default class VideoStory extends PureComponent {
   state = {
     durationSeconds: 0,
     loaded: 0,
@@ -17,7 +17,7 @@ export default class VideoStory extends Component {
     playedSeconds: 0,
     played: 0,
     volume: 0,
-    sideWidth: 400,
+    sideWidth: 300,
     playing: true,
     subtitles: [],
   }
@@ -71,10 +71,10 @@ export default class VideoStory extends Component {
   togglePlaying = () => this.setState({playing: !this.state.playing})
 
   render() {
-    const { url, title, getSpeakerAt, getSideDocAt, sideDocs, story, subtitlesFile, onBack } = this.props
+    const { url, title, getSpeakerAt, getSideDocAt, sideDocs, subtitlesFile, renderTitle } = this.props
     const { durationSeconds, playedSeconds, played, sideWidth, playing, subtitles, volume } = this.state
-    // const speaker = getSpeakerAt(playedSeconds)
-    // const sideDoc = getSideDocAt(playedSeconds)
+    const speaker = getSpeakerAt(playedSeconds)
+    const sideDoc = getSideDocAt(playedSeconds)
     const tracks = []
     if (subtitlesFile) {
       tracks.push({
@@ -95,12 +95,12 @@ export default class VideoStory extends Component {
       <div className='video-story'>
 
         <TopControls
-          onBack={onBack}
           durationSeconds={durationSeconds}
           playedSeconds={playedSeconds}
           played={played}
           sideDocs={sideDocs}
-          story={story}
+          renderTitle={renderTitle}
+          title={title}
           playing={playing}
           togglePlaying={this.togglePlaying}
           onSeek={this.onSeek}
@@ -129,16 +129,15 @@ export default class VideoStory extends Component {
               }}
             />
           </div>
-          {/* <SideDocument
+          <SideDocument
             doc={sideDoc}
             onDrag={this.handleSideDocDrag}
             width={sideWidth}
-          /> */}
+          />
         </div>
 
         <div className='video-story-bottom'>
-          {/* <LangSwitcher /> */}
-          {/* <Speaker doc={speaker} /> */}
+          <Speaker doc={speaker} />
           {/* <Subtitles subtitles={subtitles} /> */}
         </div>
 

@@ -1,46 +1,128 @@
-import ReactDOM from 'react-dom'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import memoize from 'memoize-one'
 import {
   reduxForm,
   Field,
+  FieldArray,
   formValueSelector,
   change,
   getFormSyncErrors
 } from 'redux-form'
+import find from 'lodash/find'
 import { Link } from 'react-router-dom'
-import { Button, FormGroup, Label, Input, Col, Row } from 'reactstrap'
-import { ListGroup, ListGroupItem } from 'reactstrap'
-import './ModuleVideoInterview.css'
-
+import { Button, Col, Row } from 'reactstrap'
 import VisualForm, {
   SideContainer,
   SideForm,
   SideActions,
-  PreviewContainer
 } from '../../VisualForm'
-
+import VideoStory from './VideoStory'
 import ChooseDocument from '../../Form/ChooseDocument'
-import Bbox from '../../Form/Bbox'
+import ChooseDocuments from '../../Form/ChooseDocuments'
 import Translate from '../../Form/Translate'
-import MediumEditor from '../../Form/MediumEditor'
-import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
-import Select from '../../Form/Select'
-import AudioPlayer from '../../AudioPlayer'
-import { required } from '../../Form/validate'
-
+import Input from '../../Form/Input'
+import { required, requiredAtLeastOne } from '../../Form/validate'
 import {
   getCurrentLanguage,
 } from '../../../state/selectors'
-import {
-  DEFAULT_OVERLAY_COLOR,
-} from '../../../state/consts'
+import './ModuleVideoInterview.css'
 
-// import 'video-react/dist/video-react.css'
-// import { Player, BigPlayButton } from 'video-react'
-import VideoStory from './VideoStory'
+const stringTimeToSeconds = str => {
+  if (!str) {
+    return null
+  }
+  const pieces = str.split(':')
+  if (pieces.length !== 2) {
+    return null
+  }
+  const [min, secs] = pieces
+  return (parseInt(min, 10) * 60) + parseInt(secs, 10)
+}
+
+const betweenTime = playedSeconds => ({ secondsFrom, secondsTo }) => {
+  if (secondsFrom === null || secondsTo === null) {
+    return false
+  }
+  return playedSeconds >= secondsFrom && playedSeconds <= secondsTo
+}
+
+const listWithTime = list => {
+  return list.map(a => ({
+    ...a,
+    secondsFrom: stringTimeToSeconds(a.from),
+    secondsTo: stringTimeToSeconds(a.to),
+  }))
+}
+
+const renderExtraVideoTimeFields = ({ field, title }) => (
+  <div className='d-flex w-100'>
+    <div className='p-2' style={{ flex: 1 }}>{title}</div>
+    <div className='d-flex' style={{ width: 250 }}>
+      <div className='form-group mr-2'>
+        <label>Start</label>
+        <Field
+          component={Input}
+          placeholder='00:00'
+          name={`${field}.from`}
+        />
+      </div>
+      <div className='form-group'>
+        <label>End</label>
+        <Field
+          component={Input}
+          placeholder='00:00'
+          name={`${field}.to`}
+        />
+      </div>
+    </div>
+  </div>
+)
+
+class TitleMiniForm extends PureComponent {
+  render() {
+    const { language } = this.props
+    return (
+      <div className='d-flex align-items-center'>
+        <Field
+          name={`text.content.${language.code}`}
+          component={Input}
+          placeholder='Insert title'
+          className='video-interview-title-input mr-2'
+        />
+        <Field
+          name={`text.content`}
+          component={Translate}
+          validate={requiredAtLeastOne}
+        />
+      </div>
+    )
+  }
+}
+const TitleMiniFormLang = connect(state => ({
+  language: getCurrentLanguage(state),
+}))(TitleMiniForm)
 
 class ModuleFormObject extends PureComponent {
+
+  sideDocsWithTime = memoize(listWithTime)
+  speakersWithTime = memoize(listWithTime)
+
+  getSpeakerAt = memoize(speakers => playedSeconds => {
+    const speaker = find(speakers, betweenTime(playedSeconds))
+    if (speaker) {
+      return speaker.id
+    }
+    return null
+  })
+
+  getSideDocAt = memoize(sideDocs => playedSeconds => {
+    const sideDoc = find(sideDocs, betweenTime(playedSeconds))
+    if (sideDoc) {
+      return sideDoc.id
+    }
+    return null
+  })
 
   renderBottomForm = () => {
     return (
@@ -48,37 +130,45 @@ class ModuleFormObject extends PureComponent {
         <Row>
           <Col md={6} className='VideoInterview__col'>
             <h3>Documents</h3>
+            <FieldArray
+              name="objects"
+              documentType="image"
+              component={ChooseDocuments}
+              renderExtraFields={renderExtraVideoTimeFields}
+            />
           </Col>
           <Col md={6} className='VideoInterview__col'>
             <h3>Interviewees</h3>
-
+            <FieldArray
+              name="speakers"
+              documentType="image"
+              component={ChooseDocuments}
+              renderExtraFields={renderExtraVideoTimeFields}
+            />
           </Col>
         </Row>
       </div>
     )
   }
 
+  renderTitle = () => <TitleMiniFormLang />
+
   render() {
     const {
       handleSubmit,
-      language,
       invalid,
       submitting,
       exitLink,
-      change,
       formErrors,
-      backgroundObject,
-      backgroundImage,
-      backgroundColorOverlay,
-      backgroundColor,
-      documentType,
-      documentSize,
-      documentPosition,
       docVideo,
-      bbox,
+      speakers,
+      sideDocs,
     } = this.props
 
     const bottomForm = this.renderBottomForm()
+
+    const sideDocsWithTime = this.sideDocsWithTime(sideDocs)
+    const speakersWithTime = this.speakersWithTime(speakers)
 
     return (
       <VisualForm bottomForm={bottomForm} onSubmit={handleSubmit} saving={submitting}>
@@ -94,97 +184,6 @@ class ModuleFormObject extends PureComponent {
                 component={ChooseDocument}
               />
             </div>
-            {/* <div className="margin-bottom-15">
-              <Label for="backgroundType">Background</Label>
-              <Input
-                type="select"
-                value={backgroundType}
-                onChange={this.changeBackgroundType}
-                name="backgroundType"
-              >
-                <option value="color">Color</option>
-                <option value="image">Image</option>
-              </Input>
-            </div>
-            {backgroundType === 'image' && (
-              <div>
-                <div className="margin-bottom-15">
-                  <Field
-                    name="background.object.id"
-                    component={ChooseDocument}
-                    onEmptyDocument={() => change('moduleObject', 'background.object', {})}
-                    clearBbox={() => this.props.change('moduleObject', 'background.object.bbox', [])}
-                    buttons={(
-                      <Field
-                        name='background.object.bbox'
-                        image={backgroundImage}
-                        component={Bbox}
-                      />
-                    )}
-                   />
-                 </div>
-                <hr />
-                <div>
-                  <Field
-                    label="Background Overlay"
-                    name="background.object.overlay"
-                    colors={['#818A91', '#777', '#ADADAD', '#1E1E1E', '#373A3C', '#DDD']}
-                    component={ColorSelection}
-                    validate={[isValidHex, required]}
-                   />
-                 </div>
-              </div>
-            )}
-            {backgroundType === 'color' && (
-              <div>
-                <div>
-                  <Field
-                    label="Background Color"
-                    name="background.color"
-                    colors={['#818A91', '#777', '#ADADAD', '#1E1E1E', '#373A3C', '#DDD']}
-                    component={ColorSelection}
-                    validate={[isValidHex, required]}
-                   />
-                 </div>
-              </div>
-            )}
-            <hr />
-            <div className="margin-bottom-15">
-              <Label for="type">Object</Label>
-              <Field
-                label="Document Type"
-                name="type"
-                component={Select}
-               >
-                 <option value="image">Image</option>
-                 <option value="audio">Audio</option>
-                 <option value="video">Video</option>
-               </Field>
-            </div>
-            <div className="margin-bottom-15">
-              <Field
-                documentType={documentType}
-                label="Choose Document"
-                name="id"
-                validate={[required]}
-                component={ChooseDocument}
-               />
-            </div>
-            {documentType !== 'audio' && (
-              <div className="margin-bottom-15">
-                <FormGroup>
-                  <Label>Size</Label>
-                  <Field
-                    label="Size"
-                    name="size"
-                    component={Select}>
-                    <option value='small'>Small</option>
-                    <option value='medium'>Medium</option>
-                    <option value='big'>Big</option>
-                   </Field>
-                 </FormGroup>
-              </div>
-            )} */}
           </SideForm>
           <SideActions>
             {formErrors && formErrors.id && <p className="text-danger">Insert an object to save</p>}
@@ -192,15 +191,14 @@ class ModuleFormObject extends PureComponent {
             <Button size="sm" block tag={Link} to={exitLink}>Back</Button>
           </SideActions>
         </SideContainer>
-        <Col md={9}>
+        <Col md={9} className='m-0 p-0'>
           {docVideo && (
             <VideoStory
-              story={{
-                data: {
-                  title: 'Bella RAGA'
-                }
-              }}
+              renderTitle={this.renderTitle}
               url={docVideo.url}
+              sideDocs={sideDocsWithTime}
+              getSideDocAt={this.getSideDocAt(sideDocsWithTime)}
+              getSpeakerAt={this.getSpeakerAt(speakersWithTime)}
             />
           )}
         </Col>
@@ -214,18 +212,10 @@ const getSyncErrors = getFormSyncErrors('moduleObject')
 
 const mapStateToProps = state => ({
   docVideo: selector(state, 'object.id'),
-  backgroundObject: selector(state, 'background.object'),
+  sideDocs: selector(state, 'objects'),
+  speakers: selector(state, 'speakers'),
   language: getCurrentLanguage(state),
-  documentType: selector(state, 'type'),
-  documentSize: selector(state, 'size'),
-  documentPosition: selector(state, 'position'),
-  // doc: selector(state, 'id'),
   formErrors: getSyncErrors(state),
-  // Background
-  backgroundImage: selector(state, 'background.object.id.attachment'),
-  backgroundColorOverlay: selector(state, 'background.object.overlay'),
-  backgroundColor: selector(state, 'background.color'),
-  bbox: selector(state, 'background.object.bbox'),
 })
 
 export default reduxForm({
