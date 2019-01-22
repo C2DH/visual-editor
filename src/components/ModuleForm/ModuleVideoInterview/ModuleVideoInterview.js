@@ -135,8 +135,22 @@ class ModuleFormObject extends PureComponent {
             <FieldArray
               label='Add a document'
               name="objects"
-              documentType="image"
               component={ChooseDocuments}
+              params={{
+                filters: {
+                  'data__type__in': [
+                    'advertising',
+                    'book',
+                    'building',
+                    'image',
+                    'law',
+                    'map',
+                    'object',
+                    'other',
+                    'video'
+                  ]
+                }
+              }}
               className='mt-4'
               renderExtraFields={renderExtraVideoTimeFields}
             />
@@ -146,7 +160,11 @@ class ModuleFormObject extends PureComponent {
             <FieldArray
               label='Add interviewee'
               name="speakers"
-              documentType="image"
+              params={{
+                filters: {
+                  'data__type': 'speaker',
+                }
+              }}
               component={ChooseDocuments}
               className='mt-4'
               renderExtraFields={renderExtraVideoTimeFields}
