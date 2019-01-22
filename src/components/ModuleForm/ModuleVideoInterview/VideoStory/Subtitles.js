@@ -1,6 +1,7 @@
 import React from 'react'
+import { pure } from 'recompose'
 
-export default function Subtitles({ subtitles }) {
+export default pure(function Subtitles({ subtitles }) {
   return (
     <div className='subtitles'>
       {subtitles.map((sub, index) => (
@@ -8,4 +9,4 @@ export default function Subtitles({ subtitles }) {
       ))}
     </div>
   )
-}
+})

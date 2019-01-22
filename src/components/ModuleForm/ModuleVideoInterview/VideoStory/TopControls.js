@@ -1,8 +1,9 @@
 import React from 'react'
-import { UncontrolledTooltip } from 'reactstrap';
+import { pure } from 'recompose'
+import { UncontrolledTooltip } from 'reactstrap'
 import moment from 'moment'
 
-export default function TopControls({
+export default pure(function TopControls({
   durationSeconds,
   playedSeconds,
   played,
@@ -39,23 +40,25 @@ export default function TopControls({
         }}>
 
           <div className="progress" style={{width: `${played*100}%`}}></div>
-          {sideDocs && sideDocs.length > 0 && sideDocs.map((sideDoc, i) => (
-            <div key={sideDoc.id.id} >
-              <div
-                onClick={e => {
-                  e.stopPropagation()
-                  onSeek(sideDoc.secondsFrom/durationSeconds)
-                }}
-                id={`side-doc-${sideDoc.id.id}`}
-                className="side-doc" style={{left: `${sideDoc.secondsFrom/durationSeconds*100}%`}}
-              />
-              <UncontrolledTooltip placement="bottom" target={`side-doc-${sideDoc.id.id}`} className="side-doc-tooltip">
-                {sideDoc.id.title}
-              </UncontrolledTooltip>
-            </div>
-          ) )}
+          {sideDocs && sideDocs.length > 0 && sideDocs
+            .filter(sideDoc => sideDoc.secondsFrom !== null && sideDoc.secondsTo !== null)
+            .map((sideDoc, i) => (
+              <div key={sideDoc.id.id}>
+                <div
+                  onClick={e => {
+                    e.stopPropagation()
+                    onSeek(sideDoc.secondsFrom/durationSeconds)
+                  }}
+                  id={`side-doc-${sideDoc.id.id}`}
+                  className="side-doc" style={{left: `${sideDoc.secondsFrom/durationSeconds*100}%`}}
+                />
+                <UncontrolledTooltip placement="bottom" target={`side-doc-${sideDoc.id.id}`} className="side-doc-tooltip">
+                  {sideDoc.id.title}
+                </UncontrolledTooltip>
+              </div>
+          ))}
         </div>
       </div>
     </div>
   )
-}
+})

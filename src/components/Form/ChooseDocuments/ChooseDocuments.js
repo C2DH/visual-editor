@@ -68,9 +68,9 @@ class ChooseDocuments extends PureComponent {
   }
 
   render() {
-    const { fields, renderExtraFields, label } = this.props
+    const { fields, renderExtraFields, label, className } = this.props
     return (
-      <div>
+      <div className={className}>
 
         <AddButton label={label} onClick={this.showDocumentChooser} />
         {fields.map((field, index) => (
@@ -99,6 +99,7 @@ class ChooseDocuments extends PureComponent {
 }
 
 ChooseDocuments.defaultProps = {
+  className: '',
   label: 'Add document',
   // Show docs chooser widget \w UI for place type filters
   withPlaceTypeFilters: false,

@@ -1,7 +1,8 @@
 import React from 'react'
 import { DraggableCore } from 'react-draggable'
+import { pure } from 'recompose'
 
-export default function SideDocument({ onDrag, width, doc }) {
+export default pure(function SideDocument({ onDrag, width, doc }) {
   let year = null
   if (doc) {
     year = new Date(doc.data.start_data).getFullYear()
@@ -31,4 +32,4 @@ export default function SideDocument({ onDrag, width, doc }) {
       </DraggableCore>
     </div>
   )
-}
+})

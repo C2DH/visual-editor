@@ -1,6 +1,7 @@
 import React from 'react'
+import { pure } from 'recompose'
 
-export default function Speaker({ doc }) {
+export default pure(function Speaker({ doc }) {
   return (
     <div className='speaker'>
       {doc && <div>
@@ -8,4 +9,4 @@ export default function Speaker({ doc }) {
       </div>}
     </div>
   )
-}
+})

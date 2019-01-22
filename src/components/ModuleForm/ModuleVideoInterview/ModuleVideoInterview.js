@@ -45,7 +45,8 @@ const betweenTime = playedSeconds => ({ secondsFrom, secondsTo }) => {
   if (secondsFrom === null || secondsTo === null) {
     return false
   }
-  return playedSeconds >= secondsFrom && playedSeconds <= secondsTo
+  const intSeconds = parseInt(playedSeconds, 10)
+  return intSeconds >= secondsFrom && intSeconds <= secondsTo
 }
 
 const listWithTime = list => {
@@ -132,18 +133,22 @@ class ModuleFormObject extends PureComponent {
           <Col md={6} className='VideoInterview__col'>
             <h3>Documents</h3>
             <FieldArray
+              label='Add a document'
               name="objects"
               documentType="image"
               component={ChooseDocuments}
+              className='mt-4'
               renderExtraFields={renderExtraVideoTimeFields}
             />
           </Col>
           <Col md={6} className='VideoInterview__col'>
             <h3>Interviewees</h3>
             <FieldArray
+              label='Add interviewee'
               name="speakers"
               documentType="image"
               component={ChooseDocuments}
+              className='mt-4'
               renderExtraFields={renderExtraVideoTimeFields}
             />
           </Col>
@@ -181,7 +186,6 @@ class ModuleFormObject extends PureComponent {
         subtitlesFile = subtitlesFile.replace(/http(s)?(:\/\/)[^/]*/, '')
       }
     }
-    console.log(formErrors)
 
     return (
       <VisualForm bottomForm={bottomForm} onSubmit={handleSubmit} saving={submitting}>
