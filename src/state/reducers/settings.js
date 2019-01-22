@@ -4,7 +4,7 @@ import {
 
 const defaultState = {
   // ...
-  language: 'en_US',
+  language: 'fr_FR',
   // ...
 }
 

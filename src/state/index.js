@@ -7,11 +7,6 @@ const preloadedState = {
   // Hardcoed \w endless love
   languages: [
     {
-      label: 'EN',
-      code: 'en_US',
-      description: 'English',
-    },
-    {
       label: 'FR',
       code: 'fr_FR',
       description: 'French',
@@ -20,6 +15,11 @@ const preloadedState = {
       label: 'DE',
       code: 'de_DE',
       description: 'German',
+    },
+    {
+      label: 'EN',
+      code: 'en_US',
+      description: 'English',
     },
   ]
 }
