@@ -21,7 +21,7 @@ import EducationalDetail from './pages/EducationalDetail'
 
 const App = () => (
   <Provider store={store}>
-    <Router>
+    <Router basename={process.env.REACT_APP_EDITOR_BASENAME}>
       <Layout>
         <FullPageWidgets>
           <Switch>
