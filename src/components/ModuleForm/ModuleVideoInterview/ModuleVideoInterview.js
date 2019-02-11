@@ -136,6 +136,7 @@ class ModuleFormObject extends PureComponent {
               label='Add a document'
               name="objects"
               component={ChooseDocuments}
+              multiSelection={false}
               params={{
                 filters: {
                   'data__type__in': [
@@ -165,6 +166,7 @@ class ModuleFormObject extends PureComponent {
                   'data__type': 'speaker',
                 }
               }}
+              multiSelection={false}
               component={ChooseDocuments}
               className='mt-4'
               renderExtraFields={renderExtraVideoTimeFields}

@@ -43,16 +43,16 @@ export default pure(function TopControls({
           {sideDocs && sideDocs.length > 0 && sideDocs
             .filter(sideDoc => sideDoc.secondsFrom !== null && sideDoc.secondsTo !== null)
             .map((sideDoc, i) => (
-              <div key={sideDoc.id.id}>
+              <div key={i}>
                 <div
                   onClick={e => {
                     e.stopPropagation()
                     onSeek(sideDoc.secondsFrom/durationSeconds)
                   }}
-                  id={`side-doc-${sideDoc.id.id}`}
+                  id={`side-doc-${i}`}
                   className="side-doc" style={{left: `${sideDoc.secondsFrom/durationSeconds*100}%`}}
                 />
-                <UncontrolledTooltip placement="bottom" target={`side-doc-${sideDoc.id.id}`} className="side-doc-tooltip">
+                <UncontrolledTooltip placement="bottom" target={`side-doc-${i}`} className="side-doc-tooltip">
                   {sideDoc.id.title}
                 </UncontrolledTooltip>
               </div>

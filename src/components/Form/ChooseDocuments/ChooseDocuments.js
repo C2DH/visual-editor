@@ -26,7 +26,9 @@ class ChooseDocuments extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
+    // Handle multi selection change
     if (
+      nextProps.multiSelection &&
       typeof nextProps.selectionDone !== 'undefined' &&
       nextProps.selectionDone &&
       this.props.selectionDone !== nextProps.selectionDone
@@ -54,6 +56,16 @@ class ChooseDocuments extends PureComponent {
 
       nextProps.hideWidgetFullPage()
     }
+    // Handle single selection change
+    if (
+      !nextProps.multiSelection &&
+      this.props.choosedDocument !== nextProps.choosedDocument &&
+      nextProps.choosedDocument
+    ) {
+      // Add choosed document
+      nextProps.fields.push({ id: nextProps.choosedDocument })
+      nextProps.hideWidgetFullPage()
+    }
   }
 
   showDocumentChooser = () => {
@@ -61,7 +73,7 @@ class ChooseDocuments extends PureComponent {
       documentType: this.props.documentType,
       params: this.props.params,
       withPlaceTypeFilters: this.props.withPlaceTypeFilters,
-      multi: true,
+      multi: this.props.multiSelection,
     }, this.props.fields.name)
     // Chekka
     this.props.selectDocuments(this.props.fields.getAll().map(f => f.id.id))
@@ -103,6 +115,8 @@ ChooseDocuments.defaultProps = {
   label: 'Add document',
   // Show docs chooser widget \w UI for place type filters
   withPlaceTypeFilters: false,
+  // Show docs chooser widget in multi selection (checkboxes) mode
+  multiSelection: true,
 }
 
 const mapStateToProps = (state, ownProps) => {
@@ -110,9 +124,17 @@ const mapStateToProps = (state, ownProps) => {
   if (state.ui.fullPageWidgets.namespace !== ownProps.fields.name) {
     return {}
   }
-  return {
-    selectedDocuments: getSelectedDocuments(state),
-    selectionDone: state.widgets.chooseDocuments.selectionDone,
+  if (ownProps.multiSelection) {
+    // State for multi selection
+    return {
+      selectedDocuments: getSelectedDocuments(state),
+      selectionDone: state.widgets.chooseDocuments.selectionDone,
+    }
+  } else {
+    // State for single selection
+    return {
+      choosedDocument: state.widgets.chooseDocuments.choosedDocument,
+    }
   }
 }
 
