@@ -1,10 +1,10 @@
 {
-  "name": "ww1-visualeditor",
+  "name": "bgl-visualeditor",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://luxptt.dhlab.lu",
+  "proxy": "https://bgl.dhlab.lu",
   "dependencies": {
-    "bootstrap": "4.0.0-alpha.6",
+    "bootstrap": "4.3.1",
     "classnames": "^2.2.5",
     "d3-scale": "^1.0.6",
     "html-to-text": "^3.3.0",
