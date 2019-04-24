@@ -1,132 +1,62 @@
 /* fonts */
 @font-face {
-  font-family: 'Atlas Grotesk Web';
-  src: url('/fonts/AtlasGrotesk-MediumItalic-Web.eot');
-  src: url('/fonts/AtlasGrotesk-MediumItalic-Web.eot?#iefix') format('embedded-opentype'),
-       url('/fonts/AtlasGrotesk-MediumItalic-Web.woff2') format('woff2'),
-       url('/fonts/AtlasGrotesk-MediumItalic-Web.woff') format('woff');
-  font-weight:  500;
-  font-style:   italic;
-  font-stretch: normal;
+  font-family: "GT America";
+  src: url("/fonts/gt-america-trial-regular-webfont.woff2") format("woff2"),
+    url("/fonts/gt-america-trial-regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
 }
-
-.AtlasGrotesk-MediumItalic-Web {
-  font-family: 'Atlas Grotesk Web';
-  font-weight:  500;
-  font-style:   italic;
-  font-stretch: normal;
-}
-
-
 @font-face {
-  font-family: 'Atlas Grotesk Web';
-  src: url('/fonts/AtlasGrotesk-Medium-Web.eot');
-  src: url('/fonts/AtlasGrotesk-Medium-Web.eot?#iefix') format('embedded-opentype'),
-       url('/fonts/AtlasGrotesk-Medium-Web.woff2') format('woff2'),
-       url('/fonts/AtlasGrotesk-Medium-Web.woff') format('woff');
-  font-weight:  500;
-  font-style:   normal;
-  font-stretch: normal;
-}
-
-.AtlasGrotesk-Medium-Web {
-  font-family: 'Atlas Grotesk Web';
-  font-weight:  500;
-  font-style:   normal;
-  font-stretch: normal;
-}
-
-
-@font-face {
-  font-family: 'Atlas Grotesk Web';
-  src: url('/fonts/AtlasGrotesk-RegularItalic-Web.eot');
-  src: url('/fonts/AtlasGrotesk-RegularItalic-Web.eot?#iefix') format('embedded-opentype'),
-       url('/fonts/AtlasGrotesk-RegularItalic-Web.woff2') format('woff2'),
-       url('/fonts/AtlasGrotesk-RegularItalic-Web.woff') format('woff');
-  font-weight:  400;
-  font-style:   italic;
-  font-stretch: normal;
-}
-
-.AtlasGrotesk-RegularItalic-Web {
-  font-family: 'Atlas Grotesk Web';
-  font-weight:  400;
-  font-style:   italic;
-  font-stretch: normal;
-}
-
-
-@font-face {
-  font-family: 'Atlas Grotesk Web';
-  src: url('/fonts/AtlasGrotesk-Regular-Web.eot');
-  src: url('/fonts/AtlasGrotesk-Regular-Web.eot?#iefix') format('embedded-opentype'),
-       url('/fonts/AtlasGrotesk-Regular-Web.woff2') format('woff2'),
-       url('/fonts/AtlasGrotesk-Regular-Web.woff') format('woff');
-  font-weight:  400;
-  font-style:   normal;
-  font-stretch: normal;
-}
-
-.AtlasGrotesk-Regular-Web {
-  font-family: 'Atlas Grotesk Web';
-  font-weight:  400;
-  font-style:   normal;
-  font-stretch: normal;
+  font-family: "GT America";
+  src: url("/fonts/gt-america-trial-regular-italic-webfont.woff2")
+      format("woff2"),
+    url("/fonts/gt-america-trial-regular-italic-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: italic;
 }
 
 @font-face {
-    font-family: 'Behrens Antiqua';
-    src: url('/fonts/solotype_-_behrens_antiqua_normal-webfont.woff2') format('woff2'),
-         url('/fonts/solotype_-_behrens_antiqua_normal-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-.BehrensAntiqua {
-  font-family: 'Behrens antiqua';
-  font-weight:  normal;
-  font-style:   normal;
+  font-family: "GT America";
+  src: url("/fonts/gt-america-trial-bold-webfont.woff2") format("woff2"),
+    url("/fonts/gt-america-trial-bold-webfont.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
 }
 
 @font-face {
-  font-family: 'Vinter Web';
-  src: url('/fonts/VinterWeb-Medium.eot');
-  src: url('/fonts/VinterWeb-Medium.eot?#iefix') format('embedded-opentype'),
-     url('/fonts/VinterWeb-Medium.woff2') format('woff2'),
-       url('/fonts/VinterWeb-Medium.woff') format('woff');
+  font-family: "GT America Expanded";
+  src: url("/fonts/gt-america-trial-expanded-black-webfont.woff2")
+      format("woff2"),
+    url("/fonts/gt-america-trial-expanded-black-webfont.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GT America Expanded";
+  src: url("/fonts/gt-america-trial-expanded-regular-webfont.woff2")
+      format("woff2"),
+    url("/fonts/gt-america-trial-expanded-regular-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-    font-family: 'Vinter Web';
-    src: url('/fonts/VinterWeb-MediumItalic.eot');
-    src: url('/fonts/VinterWeb-MediumItalic.eot?#iefix') format('embedded-opentype'),
-    	 url('/fonts/VinterWeb-MediumItalic.woff2') format('woff2'),
-         url('/fonts/VinterWeb-MediumItalic.woff') format('woff');
-    font-weight: normal;
-    font-style: italic;
-
-}
-
-@font-face {
-  font-family: 'Material Icons';
+  font-family: "Material Icons";
   font-style: normal;
   font-weight: 400;
-  src: url('/fonts/MaterialIcons-Regular.eot'); /* For IE6-8 */
-  src: local('Material Icons'),
-       local('MaterialIcons-Regular'),
-       url('/fonts/MaterialIcons-Regular.woff2') format('woff2'),
-       url('/fonts/MaterialIcons-Regular.woff') format('woff'),
-       url('/fonts/MaterialIcons-Regular.ttf') format('truetype');
+  src: url("/fonts/MaterialIcons-Regular.eot"); /* For IE6-8 */
+  src: local("Material Icons"), local("MaterialIcons-Regular"),
+    url("/fonts/MaterialIcons-Regular.woff2") format("woff2"),
+    url("/fonts/MaterialIcons-Regular.woff") format("woff"),
+    url("/fonts/MaterialIcons-Regular.ttf") format("truetype");
 }
 
 .material-icons {
-  font-family: 'Material Icons';
+  font-family: "Material Icons";
   font-weight: normal;
   font-style: normal;
-  font-size: 24px;  /* Preferred icon size */
+  font-size: 24px; /* Preferred icon size */
   display: inline-block;
   line-height: 1;
   text-transform: none;
@@ -144,23 +74,38 @@
   -moz-osx-font-smoothing: grayscale;
 
   /* Support for IE. */
-  font-feature-settings: 'liga';
+  font-feature-settings: "liga";
 }
 
 /* Rules for sizing the icon. */
-.material-icons.md-18 { font-size: 18px; }
-.material-icons.md-24 { font-size: 24px; }
-.material-icons.md-36 { font-size: 36px; }
-.material-icons.md-48 { font-size: 48px; }
+.material-icons.md-18 {
+  font-size: 18px;
+}
+.material-icons.md-24 {
+  font-size: 24px;
+}
+.material-icons.md-36 {
+  font-size: 36px;
+}
+.material-icons.md-48 {
+  font-size: 48px;
+}
 
 /* Rules for using icons as black on a light background. */
-.material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }
-.material-icons.md-dark.md-inactive { color: rgba(0, 0, 0, 0.26); }
+.material-icons.md-dark {
+  color: rgba(0, 0, 0, 0.54);
+}
+.material-icons.md-dark.md-inactive {
+  color: rgba(0, 0, 0, 0.26);
+}
 
 /* Rules for using icons as white on a dark background. */
-.material-icons.md-light { color: rgba(255, 255, 255, 1); }
-.material-icons.md-light.md-inactive { color: rgba(255, 255, 255, 0.3); }
-
+.material-icons.md-light {
+  color: rgba(255, 255, 255, 1);
+}
+.material-icons.md-light.md-inactive {
+  color: rgba(255, 255, 255, 0.3);
+}
 
 /* overall style */
 body {
@@ -172,25 +117,26 @@ body {
 }
 
 .visual-preview,
-.visual-preview p{
-  font-family: Georgia, serif;
+.visual-preview p {
+  font-family: "GT America", sans-serif;
 }
 
 .visual-preview h1,
 .visual-preview h2,
-.visual-preview h3{
-    font-family: 'Vinter Web', Georgia, serif;
+.visual-preview h3 {
+  font-family: "GT America Expanded", Georgia, serif;
+  font-weight: 500;
 }
 
 .visual-preview h4,
 .visual-preview h5,
-.visual-preview h6{
-  font-family: 'Atlas Grotesk Web', Arial, sans-serif;
+.visual-preview h6 {
+  font-family: "GT America", Arial, sans-serif;
   font-weight: 500;
 }
 
 button:focus {
-  outline:0;
+  outline: 0;
 }
 
 a.button-link {
@@ -201,7 +147,9 @@ a.button-link {
   cursor: pointer !important;
 }
 
-a, a:hover, a:focus {
+a,
+a:hover,
+a:focus {
   color: inherit;
   text-decoration: none;
 }
