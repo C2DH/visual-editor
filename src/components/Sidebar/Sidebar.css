@@ -5,17 +5,17 @@
   left: 0;
   bottom: 0;
   width: 60px;
-  background-color: #EBEBEB;
+  background-color: #ebebeb;
   text-align: center;
 }
 
 .Sidebar__menuBtn {
-  background-color: #fff;
+  /* background-color: #fff; */
   width: 40px;
   height: 40px;
   border-radius: 4px;
   margin-top: 20px;
-  display: flex!important;
+  display: flex !important;
   align-items: center;
   justify-content: center;
   margin-left: 10px;

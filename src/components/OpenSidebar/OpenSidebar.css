@@ -1,7 +1,7 @@
 .OpenSidebar {
   position: absolute;
   left: 60px;
-  background-color: #EBEBEB;
+  background-color: #ebebeb;
   border-left: 1px solid #fff;
   height: 100%;
   width: 350px;
@@ -10,13 +10,13 @@
 }
 
 .OpenSidebar__toplist {
-  list-style: none!important;
+  list-style: none !important;
   margin-top: 20px;
   font-size: 28px;
 }
 
 .OpenSidebar__bottomlist {
-  list-style: none!important;
+  list-style: none !important;
   margin-top: 150px;
   font-size: 28px;
 }
@@ -40,11 +40,11 @@
 }
 
 .OpenSidebar__LanguageBtn {
-  background-color: #fff;
+  /* background-color: #fff; */
   width: 40px;
   height: 40px;
   border-radius: 4px;
-  display: flex!important;
+  display: flex !important;
   align-items: center;
   justify-content: center;
 }

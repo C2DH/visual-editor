@@ -3,8 +3,9 @@
 }
 
 .Layout__container {
-  padding-left: 60px;
+  padding-left: 75px;
   background-color: #fff;
   width: 100%;
   overflow: hidden;
+  padding-right: 15px;
 }

@@ -1,42 +1,42 @@
 /* fonts */
 @font-face {
   font-family: "GT America";
-  src: url("/fonts/gt-america-trial-regular-webfont.woff2") format("woff2"),
-    url("/fonts/gt-america-trial-regular-webfont.woff") format("woff");
+  src: url("./fonts/gt-america-trial-regular-webfont.woff2") format("woff2"),
+    url("./fonts/gt-america-trial-regular-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "GT America";
-  src: url("/fonts/gt-america-trial-regular-italic-webfont.woff2")
+  src: url("./fonts/gt-america-trial-regular-italic-webfont.woff2")
       format("woff2"),
-    url("/fonts/gt-america-trial-regular-italic-webfont.woff") format("woff");
+    url("./fonts/gt-america-trial-regular-italic-webfont.woff") format("woff");
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
   font-family: "GT America";
-  src: url("/fonts/gt-america-trial-bold-webfont.woff2") format("woff2"),
-    url("/fonts/gt-america-trial-bold-webfont.woff") format("woff");
+  src: url("./fonts/gt-america-trial-bold-webfont.woff2") format("woff2"),
+    url("./fonts/gt-america-trial-bold-webfont.woff") format("woff");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: "GT America Expanded";
-  src: url("/fonts/gt-america-trial-expanded-black-webfont.woff2")
+  src: url("./fonts/gt-america-trial-expanded-black-webfont.woff2")
       format("woff2"),
-    url("/fonts/gt-america-trial-expanded-black-webfont.woff") format("woff");
+    url("./fonts/gt-america-trial-expanded-black-webfont.woff") format("woff");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: "GT America Expanded";
-  src: url("/fonts/gt-america-trial-expanded-regular-webfont.woff2")
+  src: url("./fonts/gt-america-trial-expanded-regular-webfont.woff2")
       format("woff2"),
-    url("/fonts/gt-america-trial-expanded-regular-webfont.woff") format("woff");
+    url("./fonts/gt-america-trial-expanded-regular-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -45,11 +45,11 @@
   font-family: "Material Icons";
   font-style: normal;
   font-weight: 400;
-  src: url("/fonts/MaterialIcons-Regular.eot"); /* For IE6-8 */
+  src: url("./fonts/MaterialIcons-Regular.eot"); /* For IE6-8 */
   src: local("Material Icons"), local("MaterialIcons-Regular"),
-    url("/fonts/MaterialIcons-Regular.woff2") format("woff2"),
-    url("/fonts/MaterialIcons-Regular.woff") format("woff"),
-    url("/fonts/MaterialIcons-Regular.ttf") format("truetype");
+    url("./fonts/MaterialIcons-Regular.woff2") format("woff2"),
+    url("./fonts/MaterialIcons-Regular.woff") format("woff"),
+    url("./fonts/MaterialIcons-Regular.ttf") format("truetype");
 }
 
 .material-icons {
@@ -156,8 +156,8 @@ a:focus {
 
 /* general utilities */
 .margin-r-l-20 {
-  margin-left: 20px;
-  margin-right: 20px;
+  /* margin-left: 20px;
+  margin-right: 20px; */
 }
 
 .no-padding-left {
