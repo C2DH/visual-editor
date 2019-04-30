@@ -1,44 +1,65 @@
 /* fonts */
 @font-face {
   font-family: "GT America";
-  src: url("./fonts/gt-america-trial-regular-webfont.woff2") format("woff2"),
-    url("./fonts/gt-america-trial-regular-webfont.woff") format("woff");
+  src: url("./fonts/GT-America-Standard-Regular.woff2") format("woff2"),
+    url("./fonts/GT-America-Standard-Regular.woff") format("woff"),
+    url("./fonts/GT-America-Standard-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "GT America";
-  src: url("./fonts/gt-america-trial-regular-italic-webfont.woff2")
-      format("woff2"),
-    url("./fonts/gt-america-trial-regular-italic-webfont.woff") format("woff");
+  src: url("./fonts/GT-America-Standard-Regular-Italic.woff2") format("woff2"),
+    url("./fonts/GT-America-Standard-Regular-Italic.woff") format("woff"),
+    url("./fonts/GT-America-Standard-Regular-Italic.ttf") format("truetype");
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
   font-family: "GT America";
-  src: url("./fonts/gt-america-trial-bold-webfont.woff2") format("woff2"),
-    url("./fonts/gt-america-trial-bold-webfont.woff") format("woff");
+  src: url("./fonts/GT-America-Standard-Bold.woff2") format("woff2"),
+    url("./fonts/GT-America-Standard-Bold.woff") format("woff"),
+    url("./fonts/GT-America-Standard-Bold.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "GT America";
+  src: url("./fonts/GT-America-Standard-Bold-Italic.woff2") format("woff2"),
+    url("./fonts/GT-America-Standard-Bold-Italic.woff") format("woff"),
+    url("./fonts/GT-America-Standard-Bold-Italic.ttf") format("truetype");
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "GT America Expanded";
+  src: url("./fonts/GT-America-Expanded-Black.woff2") format("woff2"),
+    url("./fonts/GT-America-Expanded-Black.woff") format("woff"),
+    url("./fonts/GT-America-Expanded-Black.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: "GT America Expanded";
-  src: url("./fonts/gt-america-trial-expanded-black-webfont.woff2")
-      format("woff2"),
-    url("./fonts/gt-america-trial-expanded-black-webfont.woff") format("woff");
-  font-weight: 500;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "GT America Expanded";
-  src: url("./fonts/gt-america-trial-expanded-regular-webfont.woff2")
-      format("woff2"),
-    url("./fonts/gt-america-trial-expanded-regular-webfont.woff") format("woff");
+  src: url("./fonts/GT-America-Expanded-Regular.woff2") format("woff2"),
+    url("./fonts/GT-America-Expanded-Regular.woff") format("woff"),
+    url("./fonts/GT-America-Expanded-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
+}
+
+@font-face {
+  font-family: "Material Icons";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Material Icons"), local("MaterialIcons-Regular"),
+    url("./fonts/MaterialIcons-Regular.woff2") format("woff2"),
+    url("./fonts/MaterialIcons-Regular.woff") format("woff"),
+    url("./fonts/MaterialIcons-Regular.ttf") format("truetype");
 }
 
 @font-face {
