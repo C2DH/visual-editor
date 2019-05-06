@@ -205,13 +205,21 @@ class DocumentChooser extends PureComponent {
                           : unselectDocument(doc.id);
                       }}
                       title={doc.title}
-                      cover={doc.snapshot || doc.attachment}
+                      cover={
+                        doc.data.resolutions
+                          ? doc.data.resolutions.thumbnail.url
+                          : doc.attachment
+                      }
                     />
                   ) : (
                     <DocumentCard
                       onClick={() => this.chooseDocument(doc)}
                       title={doc.title}
-                      cover={doc.snapshot || doc.attachment}
+                      cover={
+                        doc.data.resolutions
+                          ? doc.data.resolutions.thumbnail.url
+                          : doc.attachment
+                      }
                     />
                   )}
                 </Col>
