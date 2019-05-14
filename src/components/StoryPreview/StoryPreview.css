@@ -37,21 +37,21 @@
 }
 
 .StoryPreview__content h1 {
-font-size: 5.265rem;
-text-transform: uppercase;
+  font-size: 5.265rem;
+  text-transform: uppercase;
 }
 
 .StoryPreview__content p {
   font-size: 1.5rem;
 }
 
-.chapter .StoryPreview__content{
-  text-align: center!important;
+.chapter .StoryPreview__content {
+  text-align: center !important;
 }
 
 .chapter .StoryPreview__content h1 {
   font-size: 4rem !important;
-  text-transform: capitalize !important;
+  text-transform: none !important;
   color: white !important;
 }
 

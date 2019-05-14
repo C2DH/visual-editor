@@ -1,22 +1,22 @@
-
 .ChapterForm__Preview-description-input {
-  font-family: 'Vinter Web',Georgia,serif;
+  font-family: "GT America Expanded", sans-serif;
+  font-weight: 500;
   font-size: 4rem;
 }
 
 .ChapterForm__Preview-description-description {
-  font-family: Georgia,serif;
+  font-family: "GT America", sans-serif;
   font-size: 1.5rem;
   font-style: italic;
 }
 
-.ChapterForm__Preview-input-cont{
+.ChapterForm__Preview-input-cont {
   display: flex;
   align-items: center;
   width: 100%;
 }
 
-.ChapterForm__Preview-inputs-cont{
+.ChapterForm__Preview-inputs-cont {
   display: flex;
   align-items: center;
   width: 100%;
@@ -25,13 +25,13 @@
 }
 
 .ChapterForm__Preview-input-cont > input,
-.ChapterForm__Preview-input-cont > textarea{
+.ChapterForm__Preview-input-cont > textarea {
   text-align: center;
   flex-grow: 1;
   flex-shrink: 1;
 }
 
-.ChapterForm__Preview-input-cont > textarea{
+.ChapterForm__Preview-input-cont > textarea {
   flex-basis: 65%;
   flex-grow: 0;
   margin-left: auto;

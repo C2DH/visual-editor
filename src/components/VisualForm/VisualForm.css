@@ -45,20 +45,26 @@
   flex-direction: column;
   justify-content: center;
   padding: 20px;
+  max-width: 100%;
 }
 
 .VisualForm__PreviewContainer__Background-container .visual-preview blockquote,
-.VisualForm__PreviewContainer__Background-container .visual-preview blockquote p{
+.VisualForm__PreviewContainer__Background-container
+  .visual-preview
+  blockquote
+  p {
   position: relative;
   font-style: italic;
   font-size: 2rem;
 }
 
-.VisualForm__PreviewContainer__Background-container .visual-preview blockquote::before{
+.VisualForm__PreviewContainer__Background-container
+  .visual-preview
+  blockquote::before {
   position: absolute;
   top: 3rem;
   left: -3rem;
-  content: '“';
+  content: "“";
   color: #f56350;
   opacity: 0.6;
   font-size: 12rem;

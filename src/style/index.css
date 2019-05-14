@@ -225,6 +225,7 @@ textarea.invisible-input {
   border: 0px;
   resize: none;
   outline: none;
+  overflow-x: auto;
 }
 
 button.tiny-btn {
