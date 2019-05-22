@@ -1,54 +1,50 @@
-import React, { PureComponent } from 'react'
-import classNames from 'classnames'
-import { connect } from 'react-redux'
-import { reduxForm, Field, formValueSelector, change } from 'redux-form'
-import { Link } from 'react-router-dom'
-import { FormGroup, Label, Button, Input } from 'reactstrap'
+import React, { PureComponent } from "react";
+import classNames from "classnames";
+import { connect } from "react-redux";
+import { reduxForm, Field, formValueSelector, change } from "redux-form";
+import { Link } from "react-router-dom";
+import { FormGroup, Label, Button, Input } from "reactstrap";
 
-import ChooseDocument from '../../Form/ChooseDocument'
-import MediumEditor from '../../Form/MediumEditor'
-import Bbox from '../../Form/Bbox'
-import Translate from '../../Form/Translate'
-import { required } from '../../Form/validate'
-import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
-import Select from '../../Form/Select'
-import AudioPlayer from '../../AudioPlayer'
+import ChooseDocument from "../../Form/ChooseDocument";
+import MediumEditor from "../../Form/MediumEditor";
+import Bbox from "../../Form/Bbox";
+import Translate from "../../Form/Translate";
+import { required } from "../../Form/validate";
+import ColorSelection, { isValidHex } from "../../Form/ColorSelection";
+import Select from "../../Form/Select";
+import AudioPlayer from "../../AudioPlayer";
 
-import './ModuleFormTextObject.css'
+import "./ModuleFormTextObject.css";
 
 import VisualForm, {
   SideContainer,
   SideForm,
   SideActions,
   PreviewContainer
-} from '../../VisualForm'
+} from "../../VisualForm";
 
-import {
-  getCurrentLanguage,
-} from '../../../state/selectors'
-import {
-  DEFAULT_OVERLAY_COLOR,
-} from '../../../state/consts'
+import { getCurrentLanguage } from "../../../state/selectors";
+import { DEFAULT_OVERLAY_COLOR } from "../../../state/consts";
 
-import 'video-react/dist/video-react.css'
-import { Player, BigPlayButton } from 'video-react'
+import "video-react/dist/video-react.css";
+import { Player, BigPlayButton } from "video-react";
 
 class ModuleFormTextObject extends PureComponent {
-  changeBackgroundType = (e) => {
-    if (e.target.value === 'color') {
-      this.props.change('moduleTextObject', 'background.object', null)
+  changeBackgroundType = e => {
+    if (e.target.value === "color") {
+      this.props.change("moduleTextObject", "background.object", null);
     } else {
-      this.props.change('moduleTextObject', 'background.object', {
+      this.props.change("moduleTextObject", "background.object", {
         id: null,
-        overlay: DEFAULT_OVERLAY_COLOR,
-      })
-      this.props.change('moduleTextObject', 'background.color', null)
+        overlay: DEFAULT_OVERLAY_COLOR
+      });
+      this.props.change("moduleTextObject", "background.color", null);
     }
-  }
+  };
 
   componentWillReceiveProps(nextProps) {
     if (this.props.documentType !== nextProps.documentType) {
-      this.props.change('moduleTextObject', 'object.id', null)
+      this.props.change("moduleTextObject", "object.id", null);
     }
   }
 
@@ -68,79 +64,106 @@ class ModuleFormTextObject extends PureComponent {
       backgroundColor,
       doc,
       layout,
-      bbox,
-    } = this.props
+      bbox
+    } = this.props;
 
-    const backgroundType = backgroundObject ? 'image' : 'color'
+    const backgroundType = backgroundObject ? "image" : "color";
 
     return (
       <VisualForm onSubmit={handleSubmit} saving={submitting}>
         <SideContainer>
           <SideForm>
             <div className="margin-bottom-15">
-              <Input type="select" value={backgroundType} onChange={this.changeBackgroundType}>
+              <Input
+                type="select"
+                value={backgroundType}
+                onChange={this.changeBackgroundType}
+              >
                 <option value="color">Color</option>
                 <option value="image">Image</option>
               </Input>
             </div>
-            {backgroundType === 'image' && (
+            {backgroundType === "image" && (
               <div>
                 <div className="margin-bottom-15">
                   <Field
                     name="background.object.id"
                     component={ChooseDocument}
-                    onEmptyDocument={() => change('moduleTextObject', 'background.object', {})}
-                    clearBbox={() => this.props.change('moduleTextObject', 'background.object.bbox', [])}
-                    buttons={(
+                    onEmptyDocument={() =>
+                      change("moduleTextObject", "background.object", {})
+                    }
+                    clearBbox={() =>
+                      this.props.change(
+                        "moduleTextObject",
+                        "background.object.bbox",
+                        []
+                      )
+                    }
+                    buttons={
                       <Field
-                        name='background.object.bbox'
+                        name="background.object.bbox"
                         image={backgroundImage}
                         component={Bbox}
                       />
-                    )}
-                   />
-                 </div>
+                    }
+                  />
+                </div>
                 <div>
                   <Field
                     label="Background Overlay"
                     name="background.object.overlay"
-                    colors={['#818A91', '#777', '#ADADAD', '#1E1E1E', '#373A3C', '#DDD']}
+                    colors={[
+                      "#818A91",
+                      "#777",
+                      "#ADADAD",
+                      "#1E1E1E",
+                      "#373A3C",
+                      "#DDD"
+                    ]}
                     component={ColorSelection}
                     validate={[isValidHex, required]}
-                   />
-                 </div>
+                  />
+                </div>
               </div>
             )}
-            {backgroundType === 'color' && (
+            {backgroundType === "color" && (
               <div>
                 <div>
                   <Field
                     label="Background Color"
                     name="background.color"
-                    colors={['#818A91', '#777', '#ADADAD', '#1E1E1E', '#373A3C', '#DDD']}
+                    colors={[
+                      "#818A91",
+                      "#777",
+                      "#ADADAD",
+                      "#1E1E1E",
+                      "#373A3C",
+                      "#DDD"
+                    ]}
                     component={ColorSelection}
                     validate={[isValidHex, required]}
-                   />
-                 </div>
+                  />
+                </div>
               </div>
             )}
             <Field
               label="Text color"
-              colors={['#fff', '#000']}
+              colors={["#fff", "#000"]}
               hexInput={false}
               name="text.color"
               component={ColorSelection}
-             />
+            />
             <div className="margin-bottom-15">
               <Field
                 label="Document Type"
                 name="object.type"
                 component={Select}
-               >
-                 <option value="image">Image</option>
-                 <option value="audio">Audio</option>
-                 <option value="video">Video</option>
-               </Field>
+              >
+                <option value="image">Image</option>
+                <option value="audio">Audio</option>
+                <option value="video">Video</option>
+                <option value="pdf">Pdf</option>
+              </Field>
             </div>
             <div className="margin-bottom-15">
               <Field
@@ -148,119 +171,125 @@ class ModuleFormTextObject extends PureComponent {
                 label="Choose Document"
                 name="object.id"
                 component={ChooseDocument}
-               />
+              />
             </div>
             <div className="margin-bottom-15">
               <FormGroup>
                 <Label>Layout</Label>
-                <Field
-                  label="Layout"
-                  name="layout"
-                  component={Select}
-                 >
-                   <option value="text-object">Text Object</option>
-                   <option value="object-text">Object Text</option>
-                 </Field>
-               </FormGroup>
+                <Field label="Layout" name="layout" component={Select}>
+                  <option value="text-object">Text Object</option>
+                  <option value="object-text">Object Text</option>
+                </Field>
+              </FormGroup>
             </div>
           </SideForm>
           <SideActions>
-            <Button size="sm" type='submit' block disabled={invalid}>Save</Button>
-            <Button size="sm" block tag={Link} to={exitLink}>Back</Button>
+            <Button size="sm" type="submit" block disabled={invalid}>
+              Save
+            </Button>
+            <Button size="sm" block tag={Link} to={exitLink}>
+              Back
+            </Button>
           </SideActions>
         </SideContainer>
         <PreviewContainer
           overlayClassName={classNames(
-            'ModuleFormTextObject__PreviewOverlay visual-preview',
-            layout === 'object-text' ? 'reverse' : null
+            "ModuleFormTextObject__PreviewOverlay visual-preview",
+            layout === "object-text" ? "reverse" : null
           )}
           backgroundType={backgroundType}
           backgroundColor={backgroundColor}
           backgroundImage={backgroundImage}
           backgroundColorOverlay={backgroundColorOverlay}
-          bbox={bbox}>
-
-          <div className='ModuleFormTextObject__TextContainer'>
+          bbox={bbox}
+        >
+          <div className="ModuleFormTextObject__TextContainer">
             <Field
               name={`text.content.${language.code}`}
               className="invisible-input"
-              style={{ width: '100%', color: textColor, maxHeight:'100%', overflowY:'auto' }}
+              style={{
+                width: "100%",
+                color: textColor,
+                maxHeight: "100%",
+                overflowY: "auto"
+              }}
               component={MediumEditor}
-              placeholder='Insert text'
+              placeholder="Insert text"
             />
-            <Field
-              name={`text.content`}
-              component={Translate}
-            />
+            <Field name={`text.content`} component={Translate} />
           </div>
 
-          <div className='ModuleFormTextObject__ObjectContainer'>
-            {(doc && documentType === 'audio') && (
-              <AudioPlayer
-                src={doc.attachment}
-              />
+          <div className="ModuleFormTextObject__ObjectContainer">
+            {doc && documentType === "audio" && (
+              <AudioPlayer src={doc.attachment} />
             )}
 
-            {(doc && documentType === 'video') && (
+            {doc && documentType === "video" && (
               <div className="ModuleFormTextObject__video_container">
                 <Player
                   playsInline
                   fluid={true}
                   src={doc.url || doc.attachment}
                 >
-                  <BigPlayButton position='center' />
+                  <BigPlayButton position="center" />
                 </Player>
               </div>
-
             )}
 
-            {(doc && documentType === 'image') && (
-              <img src={doc.attachment}
-                   className="ModuleFormTextObject__ImagePreview" />
+            {doc && (documentType === "image" || documentType === "pdf") && (
+              <img
+                src={
+                  doc.data.resolutions ? doc.data.resolutions.medium.url : ""
+                }
+                alt="Gallery Img"
+                className="ModuleFormTextObject__ImagePreview"
+              />
             )}
 
-            <div className='ModuleFormTextObject__DocumentPreview__Caption'>
+            <div className="ModuleFormTextObject__DocumentPreview__Caption">
               <Field
                 name={`object.caption.${language.code}`}
                 className="invisible-input"
-                style={{ width: '100%' }}
+                style={{ width: "100%" }}
                 options={{
-                  disableReturn: true,
+                  disableReturn: true
                 }}
-                placeholder='Insert caption'
+                placeholder="Insert caption"
                 component={MediumEditor}
               />
-              <Field
-                name={`object.caption`}
-                component={Translate}
-              />
+              <Field name={`object.caption`} component={Translate} />
             </div>
           </div>
         </PreviewContainer>
       </VisualForm>
-    )
+    );
   }
 }
 
-const selector = formValueSelector('moduleTextObject')
+const selector = formValueSelector("moduleTextObject");
 
 const mapStateToProps = state => ({
-  layout: selector(state, 'layout'),
-  textColor: selector(state, 'text.color'),
-  backgroundObject: selector(state, 'background.object'),
+  layout: selector(state, "layout"),
+  textColor: selector(state, "text.color"),
+  backgroundObject: selector(state, "background.object"),
   language: getCurrentLanguage(state),
   // Object
-  doc: selector(state, 'object.id'),
-  documentType: selector(state, 'object.type'),
+  doc: selector(state, "object.id"),
+  documentType: selector(state, "object.type"),
   // Background
-  backgroundImage: selector(state, 'background.object.id.attachment'),
-  backgroundColorOverlay: selector(state, 'background.object.overlay'),
-  backgroundColor: selector(state, 'background.color'),
-  bbox: selector(state, 'background.object.bbox'),
-})
+  backgroundImage: selector(state, "background.object.id.attachment"),
+  backgroundColorOverlay: selector(state, "background.object.overlay"),
+  backgroundColor: selector(state, "background.color"),
+  bbox: selector(state, "background.object.bbox")
+});
 
 export default reduxForm({
-  form: 'moduleTextObject',
-})(connect(mapStateToProps, {
-  change,
-})(ModuleFormTextObject))
+  form: "moduleTextObject"
+})(
+  connect(
+    mapStateToProps,
+    {
+      change
+    }
+  )(ModuleFormTextObject)
+);
