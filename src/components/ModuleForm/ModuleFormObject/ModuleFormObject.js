@@ -32,8 +32,9 @@ import { required } from "../../Form/validate";
 import { getCurrentLanguage } from "../../../state/selectors";
 import { DEFAULT_OVERLAY_COLOR } from "../../../state/consts";
 
-import "video-react/dist/video-react.css";
-import { Player, BigPlayButton } from "video-react";
+// import "video-react/dist/video-react.css";
+// import { Player, BigPlayButton } from "video-react";
+import ReactPlayer from "react-player";
 
 class ModuleFormObject extends PureComponent {
   state = {
@@ -315,16 +316,7 @@ class ModuleFormObject extends PureComponent {
             )}
 
             {doc && documentType === "video" && (
-              <Player
-                ref={ref => (this.player = ref)}
-                width={this.state.playerWidth}
-                height={this.state.playerHeight}
-                playsInline
-                fluid={documentSize === "big" ? true : false}
-                src={doc.url || doc.attachment}
-              >
-                <BigPlayButton position="center" />
-              </Player>
+              <ReactPlayer url={doc.url || ""} />
             )}
 
             {doc && (documentType === "image" || documentType === "pdf") && (
@@ -339,14 +331,7 @@ class ModuleFormObject extends PureComponent {
               />
             )}
 
-            <div
-              className="ModuleFormObject__DocumentPreview__Caption"
-              style={
-                documentType === "video"
-                  ? { width: this.state.playerWidth, margin: "auto" }
-                  : undefined
-              }
-            >
+            <div className="ModuleFormObject__DocumentPreview__Caption">
               <Field
                 name={`caption.${language.code}`}
                 className="invisible-input"

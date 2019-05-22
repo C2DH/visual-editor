@@ -21,7 +21,7 @@
     "react-image-crop": "^3.0.2",
     "react-mapbox-gl": "^2.5.0",
     "react-medium-editor": "^1.8.1",
-    "react-player": "^1.8.0",
+    "react-player": "^1.11.0",
     "react-redux": "^5.0.5",
     "react-router-dom": "^4.1.1",
     "react-transition-group": "^1.1.3",
