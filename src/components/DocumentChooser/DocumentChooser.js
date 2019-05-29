@@ -158,14 +158,16 @@ class DocumentChooser extends PureComponent {
           className="DocumentChooser__StickyHeader"
         >
           {loading && <Spinner noPadding x={2} />}
-          <div style={{ marginLeft: 20 }}>
-            <Button disabled={loading} onClick={this.selectAll}>
-              Select All
-            </Button>{" "}
-            <Button disabled={loading} onClick={unselectAllDocuments}>
-              Clear Selection
-            </Button>
-          </div>
+          {multi && (
+            <div style={{ marginLeft: 20 }}>
+              <Button disabled={loading} onClick={this.selectAll}>
+                Select All
+              </Button>{" "}
+              <Button disabled={loading} onClick={unselectAllDocuments}>
+                Clear Selection
+              </Button>
+            </div>
+          )}
 
           {withPlaceTypeFilters && placeTypes && (
             <div className="DocumentChooser__PlaceTypeFilters">
@@ -204,6 +206,7 @@ class DocumentChooser extends PureComponent {
                           ? selectDocument(doc.id)
                           : unselectDocument(doc.id);
                       }}
+                      type={doc.type}
                       title={doc.title}
                       cover={
                         doc.data.resolutions
