@@ -65,9 +65,9 @@ export const me = token =>
   withToken(token, request.get('/api/profile/me/'))
     .then(extractBody)
 
-const CLIENT_ID = 'b7X9djWuMXK5WZBCNINieUFyQfnFkIPqgf3MsaN5'
+const CLIENT_ID = process.env.REACT_APP_MILLER_CLIENT_ID
 const oauth = grantType =>
-  request.post(`/editor/o/token/`).type('form').send({
+  request.post(`/o/token/`).type('form').send({
     client_id: CLIENT_ID,
     grant_type: grantType,
   })
