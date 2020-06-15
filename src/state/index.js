@@ -1,42 +1,47 @@
-import { createStore, compose, applyMiddleware } from 'redux'
-import createSagaMiddleware from 'redux-saga'
-import rootReducer from './reducers'
-import rootSaga from './saga'
+import { createStore, compose, applyMiddleware } from "redux";
+import createSagaMiddleware from "redux-saga";
+import rootReducer from "./reducers";
+import rootSaga from "./saga";
 
 const preloadedState = {
   // Hardcoed \w endless love
   languages: [
     {
-      label: 'FR',
-      code: 'fr_FR',
-      description: 'French',
+      label: "EN",
+      code: "en_US",
+      description: "English",
     },
     {
-      label: 'DE',
-      code: 'de_DE',
-      description: 'German',
+      label: "DE",
+      code: "de_DE",
+      description: "German",
     },
     {
-      label: 'EN',
-      code: 'en_US',
-      description: 'English',
+      label: "FR",
+      code: "fr_FR",
+      description: "French",
     },
-  ]
-}
+    {
+      label: "BE",
+      code: "nl_BE",
+      description: "Belgian Dutch",
+    },
+  ],
+};
 
-const sagaMiddleware = createSagaMiddleware()
+const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
   rootReducer,
   preloadedState,
   compose(
     applyMiddleware(sagaMiddleware),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
+    window.devToolsExtension ? window.devToolsExtension() : (f) => f
   )
-)
-sagaMiddleware.run(rootSaga)
+);
+sagaMiddleware.run(rootSaga);
 
 // TODO: Move in other place
-export const wrapAuthApiCall = apiFn => (...args) =>
-  apiFn(store.getState().auth.accessToken)(...args)
+export const wrapAuthApiCall = (apiFn) => (...args) =>
+  apiFn(store.getState().auth.accessToken)(...args);
 
-export default store
+export default store;

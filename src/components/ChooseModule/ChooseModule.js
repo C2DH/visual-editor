@@ -16,23 +16,27 @@ const modulesTypes = [
   { type: "text", label: "Module text", cover: textImage },
   { type: "object", label: "Module object", cover: objectImage },
   { type: "gallery", label: "Module gallery", cover: galleryImage },
-  { type: "map", label: "Module map", cover: mapImage },
+  //{ type: "map", label: "Module map", cover: mapImage },
   {
     type: "text_object",
     label: "Module text & object",
-    cover: text_objectImage
+    cover: text_objectImage,
   },
   {
     type: "text_gallery",
     label: "Module text & gallery",
-    cover: text_galleryImage
+    cover: text_galleryImage,
   },
+  // {
+  //   type: "text_map",
+  //   label: "Module text & map",
+  //   cover: text_mapImage,
+  // },
   {
-    type: "text_map",
-    label: "Module text & map",
-    cover: text_mapImage
-  }
-  //{type: 'video_interview', label: 'Modul video interview', cover:'/modules/text_map.png'},
+    type: "video_interview",
+    label: "Modul video interview",
+    cover: objectImage,
+  },
 ];
 
 const ChooseModuleCard = pure(({ title, cover, cardClick }) => (
