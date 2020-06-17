@@ -14,4 +14,11 @@ module.exports = function(app) {
       changeOrigin: true,
     })
   );
+  app.use(
+    '/media',
+    createProxyMiddleware({
+      target: process.env.PROXY_HOST,
+      changeOrigin: true,
+    })
+  );
 };
