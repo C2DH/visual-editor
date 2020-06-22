@@ -22,7 +22,7 @@ const preloadedState = {
       description: "French",
     },
     {
-      label: "BE",
+      label: "NL",
       code: "nl_BE",
       description: "Belgian Dutch",
     },
