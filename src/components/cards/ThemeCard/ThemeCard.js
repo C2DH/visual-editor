@@ -20,6 +20,7 @@ const ThemeCard = pure(
   }) => (
     <GenericCard
       className="ThemeCard__card"
+      slug={theme.slug}
       title={trans(theme, "data.title")}
       backgroundType={get(theme, "covers", []).length > 0 ? "image" : "color"}
       backgroundImage={get(theme, "covers[0].data.resolutions.medium.url")}

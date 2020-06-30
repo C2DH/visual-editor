@@ -22,7 +22,8 @@ const SelectedModuleLabel = () => (
 );
 
 const GenericCard = ({
-  title,
+  title = '',
+  slug = '',
   backgroundType = "image",
   backgroundImage,
   backgroundColor,
@@ -61,7 +62,9 @@ const GenericCard = ({
               {type}
             </Badge>
           )}
-          {title}
+          {!title.length && slug.length && (
+            <em className="text-secondary">{slug}</em>
+          )}{title}
         </CardTitle>
         <div className="GenericCard_footerButton">{footerButton}</div>
       </div>
