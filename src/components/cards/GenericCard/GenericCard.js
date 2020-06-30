@@ -62,7 +62,7 @@ const GenericCard = ({
               {type}
             </Badge>
           )}
-          {!title.length && slug.length && (
+          {!title.length && (
             <em className="text-secondary">{slug}</em>
           )}{title}
         </CardTitle>

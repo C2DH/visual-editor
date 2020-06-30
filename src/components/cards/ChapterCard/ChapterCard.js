@@ -21,6 +21,7 @@ const ChapterCard = pure(
   }) => (
     <GenericCard
       className="ChapterCard__card"
+      slug={chapter.slug}
       title={trans(chapter, "data.title")}
       backgroundType={get(chapter, "covers", []).length > 0 ? "image" : "color"}
       backgroundImage={get(chapter, "covers[0].data.resolutions.medium.url")}
