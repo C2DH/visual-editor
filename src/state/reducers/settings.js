@@ -1,12 +1,10 @@
-import {
-  UPDATE_SETTINGS,
-} from '../actions'
+import { UPDATE_SETTINGS } from "../actions";
 
 const defaultState = {
   // ...
-  language: 'fr_FR',
+  language: "de_DE",
   // ...
-}
+};
 
 export default (prevState = defaultState, { type, payload }) => {
   switch (type) {
@@ -14,8 +12,8 @@ export default (prevState = defaultState, { type, payload }) => {
       return {
         ...prevState,
         ...payload,
-      }
+      };
     default:
-      return prevState
+      return prevState;
   }
-}
+};
