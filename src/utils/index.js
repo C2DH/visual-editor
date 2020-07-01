@@ -137,7 +137,7 @@ export const getBoundingBoxImage = (token, imageUrl, bbox) => {
   if (isArray(bbox) && bbox.length === 4 && token) {
     const bboxUrl = appendBeforeExtension(imageUrl, `_c[${bbox.join(",")}]`);
     // TODO: Move hardcoded url away...
-    return `https://bgl.dhlab.lu/services/images?url=${encodeURI(
+    return `/services/images?url=${encodeURI(
       bboxUrl
     )}&token=${token}`;
   }
