@@ -18,6 +18,7 @@ import StaticStory from './pages/StaticStory'
 import Educationals from './pages/Educationals'
 import NewEducational from './pages/NewEducational'
 import EducationalDetail from './pages/EducationalDetail'
+import Documents from './pages/Documents'
 
 const App = () => (
   <Provider store={store}>
@@ -34,6 +35,7 @@ const App = () => (
             <AuthRoute path='/educationals' exact component={Educationals} />
             <AuthRoute path='/educationals/new' component={NewEducational} />
             <AuthRoute path='/educationals/:educationalId' component={EducationalDetail} />
+            <AuthRoute path='/documents' exact component={Documents} />
             <Redirect to='/' />
           </Switch>
         </FullPageWidgets>
