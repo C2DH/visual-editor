@@ -46,9 +46,8 @@ const createBasicStory = (languages, tag) => ({
 })
 
 // Make base paginate list state selectors
-const makePaginateListSelectors = selectState => {
+const makePaginateListSelectors = (selectState, getData) => {
   const getIds = state => selectState(state).ids
-  const getData = state => selectState(state).data
   const getLoading = state => selectState(state).loading
   const getPagination = state => selectState(state).pagination
   const getCount = state => getPagination(state).count
@@ -67,8 +66,11 @@ export const [
   getDocuments,
   canLoadMoreDocuments,
   getDocumentsCount,
-  getDocumentsLoading,
-] = makePaginateListSelectors(state => state.widgets.chooseDocuments.list)
+  areDocumentsLoading,
+] = makePaginateListSelectors(
+  state => state.documents.list,
+  state => state.entities.documents
+);
 
 export const getDocumentsPlaceTypes = createSelector(
   state => state.widgets.chooseDocuments.facets,

@@ -13,7 +13,7 @@ import "./DocumentChooser.css";
 import {
   loadDocuments,
   loadMoreDocuments,
-  unloadChoseDocuments,
+  unloadDocuments,
   chooseDocument,
   hideWidgetFullPage,
   selectDocument,
@@ -27,7 +27,7 @@ import {
   getDocuments,
   canLoadMoreDocuments,
   getDocumentsCount,
-  getDocumentsLoading,
+  areDocumentsLoading,
   getSelectedDocumentsById,
   getDocumentsPlaceTypes,
 } from "../../state/selectors";
@@ -95,7 +95,7 @@ class DocumentChooser extends PureComponent {
   }
 
   componentWillUnmount() {
-    this.props.unloadChoseDocuments();
+    this.props.unloadDocuments();
   }
 
   chooseDocument = (doc) => {
@@ -272,13 +272,13 @@ const mapStateToProps = (state) => ({
   selectedDocuments: getSelectedDocumentsById(state),
   canLoadMore: canLoadMoreDocuments(state),
   count: getDocumentsCount(state),
-  loading: getDocumentsLoading(state),
+  loading: areDocumentsLoading(state),
 });
 
 export default connect(mapStateToProps, {
   loadDocuments,
   loadMoreDocuments,
-  unloadChoseDocuments,
+  unloadDocuments,
   chooseDocument,
   hideWidgetFullPage,
   selectDocument,

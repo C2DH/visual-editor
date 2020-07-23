@@ -7,7 +7,6 @@ const defaultState = {
   error: null,
   // null instead of [] to discriminating the inital state by the empy state
   ids: null,
-  data: {},
   pagination: {
     count: null,
     offset: 0,
@@ -25,7 +24,6 @@ export default (actionType, config = { byKey: 'id' }) => {
           ...prevState,
           loading: false,
           ids: reset ? fresh.ids : uniq(prevState.ids.concat(fresh.ids)),
-          data: reset ? fresh.data : { ...prevState.data, ...fresh.data },
           pagination: {
             count,
             offset,

@@ -1,0 +1,17 @@
+.Documents__LoadMoreBtn {
+  padding: 20px;
+  text-align: center;
+}
+
+.Documents__StickyHeader {
+  position: fixed;
+  width: calc(100% - 100px);
+  background-color: #fff;
+  top: 0;
+  z-index: 99;
+}
+
+.Documents__List {
+  padding-top: 90px;
+  padding-bottom: 70px;
+}

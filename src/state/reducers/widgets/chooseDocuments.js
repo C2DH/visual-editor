@@ -77,7 +77,6 @@ const reducer = combineReducers({
   selectedDocuments,
   selectionDone,
   facets,
-  list: paginateCollection(GET_DOCUMENTS),
 })
 
 export default resetOn(GET_DOCUMENTS_UNLOAD, reducer)
