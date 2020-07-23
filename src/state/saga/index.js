@@ -135,7 +135,7 @@ export default function* rootSaga() {
   yield fork(makePaginateCollection(
     GET_DOCUMENTS,
     api.getDocuments,
-    state => state.widgets.chooseDocuments.list,
+    state => state.documents.list,
   ))
   yield fork(
     takeLatestAndCancel,
