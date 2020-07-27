@@ -13,6 +13,7 @@ RUN yarn install
 
 COPY public ./public
 COPY src ./src
+COPY .env .
 
 ENV NODE_ENV production
 ENV NODE_OPTIONS --max_old_space_size=4096

@@ -10,7 +10,7 @@ run-build:
 
 build-docker-image:
 	docker build \
-	-t c2dhunilu/visual-editor \
+	-t c2dhunilu/visual-editor:ostbelgien-v1.0.0 \
 	--build-arg GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD) \
 	--build-arg GIT_REVISION=$(shell git rev-parse --short HEAD) .
 
