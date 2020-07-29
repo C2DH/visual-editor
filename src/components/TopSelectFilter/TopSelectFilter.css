@@ -1,0 +1,11 @@
+.TopSelectFilter__container {
+  margin-left: auto;
+  margin-bottom: 15px;
+}
+
+.TopSelectFilter__container select {
+  text-transform: capitalize;
+  display: inline-block;
+  width: inherit;
+  margin-left: 10px;
+}

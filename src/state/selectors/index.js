@@ -73,10 +73,20 @@ export const [
 );
 
 export const getDocumentsPlaceTypes = createSelector(
-  state => state.widgets.chooseDocuments.facets,
+  state => state.documents.facets,
   facets => maybeNull(facets)(() => {
     if (facets.data__place_type) {
       return facets.data__place_type.map(f => f.data__place_type)
+    }
+    return []
+  })
+)
+
+export const getDocumentsTypes = createSelector(
+  state => state.documents.facets,
+  facets => maybeNull(facets)(() => {
+    if (facets.data__type) {
+      return facets.data__type.map(f => f.data__type)
     }
     return []
   })
@@ -86,7 +96,7 @@ export const getSelectedDocumentsById = state => state.widgets.chooseDocuments.s
 
 export const getSelectedDocuments = createSelector(
   getSelectedDocumentsById,
-  state => state.widgets.chooseDocuments.list.data,
+  state => state.entities.documents,
   (byId, data) => reduce(byId, (r, v, id) => {
     if (v) {
       if (data[id]) {

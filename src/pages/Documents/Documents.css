@@ -11,6 +11,10 @@
   z-index: 99;
 }
 
+.Documents__StickyHeader .search-input {
+  margin-left: 20px;
+}
+
 .Documents__List {
   padding-top: 90px;
   padding-bottom: 70px;
