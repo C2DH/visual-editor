@@ -4,10 +4,11 @@ import makeAuth from './auth'
 import createMakeCollection from './hos/collection'
 import createMakePaginateCollection from './hos/paginateCollection'
 import createMakeStoryDetail from './hos/storyDetail'
-import createMakeDeleteStory from './hos/deleteStory'
+import createMakeDelete from './hos/delete'
 import createMakeMoveStory from './hos/moveStory'
 import * as api from '../../api'
 import {
+  DOCUMENT,
   THEME,
   CHAPTER,
   STATIC_STORY,
@@ -52,7 +53,7 @@ const { authFlow, authApiCall } = makeAuth({
 const makeCollection = createMakeCollection(authApiCall)
 const makePaginateCollection = createMakePaginateCollection(authApiCall)
 const makeStoryDetail = createMakeStoryDetail(authApiCall)
-const makeDeleteStory = createMakeDeleteStory(authApiCall)
+const makeDelete = createMakeDelete(authApiCall)
 const makeMoveStory = createMakeMoveStory(authApiCall)
 
 function *handleDeleteModuleChapter({ payload }) {
@@ -143,6 +144,7 @@ export default function* rootSaga() {
     GET_DOCUMENTS_UNLOAD,
     handleSelectAllDocumets
   )
+  yield fork(makeDelete(DOCUMENT, api.deleteDocument));
   yield fork(makeCollection(GET_THEMES, api.getThemes))
   yield fork(makeStoryDetail(THEME))
   yield fork(makeStoryDetail(CHAPTER))
@@ -155,9 +157,9 @@ export default function* rootSaga() {
   yield takeEvery(MOVE_CHAPTER_THEME, handleMoveChapterTheme)
   yield fork(makeMoveStory(MOVE_THEME))
   yield fork(makeMoveStory(MOVE_EDUCATIONAL))
-  yield fork(makeDeleteStory(THEME))
-  yield fork(makeDeleteStory(EDUCATIONAL))
-  yield fork(makeDeleteStory(CHAPTER, token => ({ id, theme }) =>
+  yield fork(makeDelete(THEME))
+  yield fork(makeDelete(EDUCATIONAL))
+  yield fork(makeDelete(CHAPTER, token => ({ id, theme }) =>
     // Got dragon balls like my name was Vegeta
     Promise.all([
       api.deleteStory(token)(id),

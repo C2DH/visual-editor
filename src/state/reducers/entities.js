@@ -22,7 +22,8 @@ import {
   DELETE_THEME_SUCCESS,
   DELETE_EDUCATIONAL_SUCCESS,
   MOVE_CHAPTER_THEME_SUCCESS,
-  GET_DOCUMENTS_SUCCESS
+  GET_DOCUMENTS_SUCCESS,
+  DELETE_DOCUMENT_SUCCESS
 } from '../actions'
 
 const mergeList = (prevState, list) => ({
@@ -212,10 +213,12 @@ const documents = (prevState = {}, action) => {
   const { type, payload } = action;
 
   switch(type) {
-  case GET_DOCUMENTS_SUCCESS:
-    return mergeList(prevState, payload.results);
-  default:
-    return prevState;
+    case DELETE_DOCUMENT_SUCCESS:
+      return omit(prevState, payload)
+    case GET_DOCUMENTS_SUCCESS:
+      return mergeList(prevState, payload.results);
+    default:
+      return prevState;
   }
 }
 

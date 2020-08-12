@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { debounce } from 'lodash';
-import { Container, Row, Col, Button } from 'reactstrap';
+import { debounce, isNull } from 'lodash';
+import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import HeadingRow from '../../components/HeadingRow';
 import TopSearchInput from '../../components/TopSearchInput';
 import TopSelectFilter from '../../components/TopSelectFilter';
@@ -12,7 +12,8 @@ import './Documents.css';
 import {
   loadDocuments,
   loadMoreDocuments,
-  unloadDocuments
+  unloadDocuments,
+  deleteDocument
 } from '../../state/actions';
 import {
   getDocuments,
@@ -30,7 +31,8 @@ class Documents extends PureComponent {
 
   state = {
     searchString: "",
-    typeFilter: TYPE_ALL
+    typeFilter:   TYPE_ALL,
+    docToDelete:  null
   };
 
   constructor(props) {
@@ -66,6 +68,11 @@ class Documents extends PureComponent {
     return params;
   }
 
+  askDeleteDoc(doc) {
+    this.setState({ docToDelete: doc });
+  }
+
+
 
 	//	--------------------------------------------------------------------------------
 	//	Callback methods
@@ -82,6 +89,14 @@ class Documents extends PureComponent {
   typeFilter_changeHandler = ({ target: { value: typeFilter } }) => {
     this.setState({ typeFilter }, this.searchDocuments);
   }
+
+  clearDeleteDocModal = () => this.setState({ docToDelete: null });
+
+  deleteTheme_clickHandler = () => {
+    this.props.deleteDocument(this.state.docToDelete.id);
+    this.setState({ docToDelete: null })
+  }
+
 
   render() {
     const { documents, canLoadMore, count, loading, types } = this.props;
@@ -114,9 +129,11 @@ class Documents extends PureComponent {
             {documents && documents.map((doc) => (
               <Col md="3" key={doc.id}>
                 <DocumentCard
-                  type={doc.type}
-                  title={doc.title}
-                  cover={
+                  type              = {doc.type}
+                  title             = {doc.title}
+                  showDeleteButton  = {true}
+                  onClick           = {() => this.askDeleteDoc(doc)}
+                  cover             = {
                     doc.data.resolutions
                       ? doc.data.resolutions.thumbnail.url
                       : doc.attachment
@@ -132,6 +149,18 @@ class Documents extends PureComponent {
             <Button onClick={this.loadMore_clickHandler}>Load more</Button>
           </div>
         )}
+
+        <Modal isOpen={!isNull(this.state.docToDelete)} toggle={this.clearDeleteDocModal}>
+          <ModalHeader>Delete document</ModalHeader>
+          <ModalBody>
+            Delete document {this.state.docToDelete && this.state.docToDelete.title}?
+          </ModalBody>
+          <ModalFooter>
+            <Button color="secondary" onClick={this.clearDeleteDocModal}>Undo</Button>
+            <Button color="danger" onClick={this.deleteTheme_clickHandler}>Delete</Button>
+          </ModalFooter>
+        </Modal>
+
       </Container>
     );
   }
@@ -148,5 +177,6 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps, {
   loadDocuments,
   loadMoreDocuments,
-  unloadDocuments
+  unloadDocuments,
+  deleteDocument
 })(Documents);

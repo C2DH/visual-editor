@@ -82,6 +82,8 @@ export const refreshToken = token =>
     .send({ refresh_token: token })
     .then(extractBody)
 
+// Documents
+
 export const getDocuments = token => (params = {}) =>
   withToken(
     token,
@@ -90,6 +92,10 @@ export const getDocuments = token => (params = {}) =>
       .query(buildMillerParams(params))
   )
   .then(extractBody)
+
+export const deleteDocument = token => id =>
+  withToken(token, request.del(`/api/document/${id}/`))
+    .then(extractBody)
 
 // Stories
 
