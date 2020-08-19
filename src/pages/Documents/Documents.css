@@ -11,7 +11,12 @@
   z-index: 99;
 }
 
-.Documents__StickyHeader .search-input {
+.Documents__StickyHeader .Documents__Header-toolbar {
+  margin-left: auto;
+  display: flex;
+}
+
+.Documents__StickyHeader .Documents__Header-toolbar > div {
   margin-left: 20px;
 }
 

@@ -1,18 +1,54 @@
 import React from 'react'
-import { Input, Label } from 'reactstrap';
+import PropTypes from "prop-types";
+import ReactSelect, { components } from "react-select"
 import './TopSelectFilter.css'
 
-const TopSelectFilter = ({ children = [], label, ...props }) => (
-  <div className="TopSelectFilter__container">
+const Option = props => {
+  return (
+    <div>
+      <components.Option {...props}>
+        <input
+          type      = "checkbox"
+          checked   = {props.isSelected}
+          onChange  = {() => null}
+        />{" "}
+        <label>{props.label}</label>
+      </components.Option>
+    </div>
+  );
+};
 
-      {label && <Label for="selectFilter">{label}</Label>}
+function TopSelectFilter({ options, label, onChange }) {
 
-      <Input id="selectFilter" type="select" {...props}>
-        {children.map((option) => (
-          <option key={option}>{option}</option>
-        ))}
-      </Input>
-  </div>
-)
+  function changeHandler(selected) {
+    onChange((selected || []).map(item => item.value));
+  }
+
+  return (
+      <ReactSelect
+        isMulti
+        options             = {options.map(val => ({value: val, label: val}))}
+        placeholder         = {`${label}...`}
+        closeMenuOnSelect   = {false}
+        hideSelectedOptions = {false}
+        onChange            = {changeHandler}
+        className           = "TopSelectFilter__container"
+        components={{
+          Option
+        }}
+      />
+  );
+};
+
+TopSelectFilter.propTypes = {
+  options:  PropTypes.arrayOf(PropTypes.string),
+  label:    PropTypes.string,
+  onChange: PropTypes.func
+};
+
+TopSelectFilter.defaultProps = {
+  options: [],
+  label: 'Select'
+};
 
 export default TopSelectFilter

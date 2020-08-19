@@ -25,15 +25,15 @@ import {
 
 const TYPE_FACET = 'data__type';
 const DEFAULT_PARAMS = { facets: TYPE_FACET };
-const TYPE_ALL = 'all';
 
 class Documents extends PureComponent {
 
   state = {
-    searchString: "",
-    typeFilter:   TYPE_ALL,
     docToDelete:  null
   };
+
+  searchString :string;
+  typeFilter = [];
 
   constructor(props) {
     super(props);
@@ -59,11 +59,11 @@ class Documents extends PureComponent {
   getFilterParams() {
     let params = {};
 
-    if(this.state.searchString)
-      params.q = `${this.state.searchString}*`;
+    if(this.searchString)
+      params.q = `${this.searchString}*`;
 
-    if(this.state.typeFilter != TYPE_ALL)
-      params.filters = { data__type: this.state.typeFilter }
+    if(this.typeFilter.length)
+      params.filters = { data__type__in: this.typeFilter }
 
     return params;
   }
@@ -82,12 +82,14 @@ class Documents extends PureComponent {
     this.props.loadMoreDocuments(this.getFilterParams());
   }
 
-  search_changeHandler = ({ target: { value: searchString } }) => {
-    this.setState({ searchString }, this.searchDocuments);
+  search_changeHandler = ({ target: { value } }) => {
+    this.searchString = value;
+    this.searchDocuments();
   }
 
-  typeFilter_changeHandler = ({ target: { value: typeFilter } }) => {
-    this.setState({ typeFilter }, this.searchDocuments);
+  typeFilter_changeHandler = typeFilter => {
+    this.typeFilter = typeFilter;
+    this.searchDocuments();
   }
 
   clearDeleteDocModal = () => this.setState({ docToDelete: null });
@@ -103,25 +105,20 @@ class Documents extends PureComponent {
 
     return (
       <Container fluid className="margin-r-l-20">
-        <HeadingRow title="Documents" className="Documents__StickyHeader">
+        <HeadingRow title={`Documents ${count ? `(${count})` : ''}`} className="Documents__StickyHeader">
 
           {loading && <Spinner noPadding x={2} />}
 
-          {types &&
-            <TopSelectFilter
-              label     = "Type"
-              value     = {this.state.typeFilter}
-              onChange  = {this.typeFilter_changeHandler}
-            >
-              {[TYPE_ALL, ...types]}
-            </TopSelectFilter>
-          }
-
-          <TopSearchInput
-            value     = {this.state.searchString}
-            onChange  = {this.search_changeHandler}
-            className = "search-input"
-          />
+          <div className="Documents__Header-toolbar">
+            {types &&
+              <TopSelectFilter
+                label     = "Select type"
+                onChange  = {this.typeFilter_changeHandler}
+                options   = {types}
+              />
+            }
+            <TopSearchInput onChange={this.search_changeHandler} />
+          </div>
         </HeadingRow>
 
         <div className="Documents__List">
@@ -129,7 +126,7 @@ class Documents extends PureComponent {
             {documents && documents.map((doc) => (
               <Col md="3" key={doc.id}>
                 <DocumentCard
-                  type              = {doc.type}
+                  type              = {`${doc.data.type != doc.type ? `${doc.data.type} / ` : ""}${doc.type}`}
                   title             = {doc.title}
                   showDeleteButton  = {true}
                   onClick           = {() => this.askDeleteDoc(doc)}

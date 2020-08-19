@@ -24,6 +24,7 @@
     "react-player": "^2.6.0",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
+    "react-select": "^3.1.0",
     "react-transition-group": "^4.4.1",
     "react-wavesurfer": "^0.8.6",
     "reactstrap": "^8.5.1",
