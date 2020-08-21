@@ -1,10 +1,7 @@
 import { combineReducers } from 'redux'
 import resetOn from '../hor/resetOn'
-import paginateCollection from '../hor/paginateCollection'
 import {
-  GET_DOCUMENTS,
   GET_DOCUMENTS_UNLOAD,
-  GET_DOCUMENTS_SUCCESS,
   CHOOSE_DOCUMENT,
   SELECT_DOCUMENTS,
   SELECT_DOCUMENT,

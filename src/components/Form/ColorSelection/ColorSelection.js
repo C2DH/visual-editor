@@ -3,7 +3,7 @@ import { Label, Button, ButtonGroup, FormGroup, Input, Col, FormFeedback } from 
 import './ColorSelection.css'
 
 export const isValidHex = hex =>
-  hex && !hex.match(/^\#([0-9a-f]{3})([0-9a-f]{3})?$/i)
+  hex && !hex.match(/^#([0-9a-f]{3})([0-9a-f]{3})?$/i)
     ? 'Invalid color'
     : undefined
 

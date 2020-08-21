@@ -4,8 +4,6 @@ import { debounce } from "lodash";
 import { Container, Row, Col, Button } from "reactstrap";
 import HeadingRow from "../HeadingRow";
 import TopSearchInput from "../TopSearchInput";
-import AddButton from "../AddButton";
-import ThemeCard from "../cards/ThemeCard";
 import DocumentCard from "../cards/DocumentCard";
 import Spinner from "../Spinner";
 import "./DocumentChooser.css";
@@ -80,7 +78,6 @@ class DocumentChooser extends PureComponent {
 
   componentDidMount() {
     const { loadDocuments, withPlaceTypeFilters } = this.props;
-    const { searchString } = this.state;
 
     if (withPlaceTypeFilters) {
       // Load facets for place filters

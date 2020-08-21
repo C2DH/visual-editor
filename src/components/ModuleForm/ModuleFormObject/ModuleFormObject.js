@@ -10,7 +10,6 @@ import {
 } from "redux-form";
 import { Link } from "react-router-dom";
 import { Button, FormGroup, Label, Input } from "reactstrap";
-import { ListGroup, ListGroupItem } from "reactstrap";
 import "./ModuleFormObject.css";
 
 import VisualForm, {

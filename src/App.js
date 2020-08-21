@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './state'
 import { AuthRoute, GuestRoute } from './authRoutes'
-import { getBoundingBoxImage } from './utils'
 
 import Layout from './components/Layout'
 import FullPageWidgets from './components/FullPageWidgets'

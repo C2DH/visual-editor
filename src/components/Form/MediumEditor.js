@@ -15,10 +15,10 @@ import {
   hideWidgetFullPage,
 } from '../../state/actions'
 
-const unwrap = html => {
-  let s = html.substr(html.indexOf('>') + 1)
-  return s.substr(0, s.lastIndexOf('<')).trim()
-}
+//const unwrap = html => {
+//  let s = html.substr(html.indexOf('>') + 1)
+//  return s.substr(0, s.lastIndexOf('<')).trim()
+//}
 
 class MediumEditor extends PureComponent {
 

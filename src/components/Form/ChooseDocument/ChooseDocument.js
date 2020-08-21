@@ -41,7 +41,7 @@ class ChooseDocument extends PureComponent {
   }
 
   render() {
-    const { input: { value, onChange }, label, buttons } = this.props
+    const { input: { value }, label, buttons } = this.props
 
     // No cover choosed
     if (!value) {

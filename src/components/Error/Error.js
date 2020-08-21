@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { isNull } from 'lodash';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';

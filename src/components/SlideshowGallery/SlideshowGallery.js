@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react'
-import { Button, Row, Col } from 'reactstrap'
 import classNames from 'classnames'
 import './SlideshowGallery.css'
 
@@ -38,7 +37,7 @@ class SlideshowGallery extends PureComponent {
       <div style={this.props.style} className={classNames('SlideshowGallery', this.props.className)}>
         <div>
           <div className='SlideshowGallery__CurrentImageContainer'>
-            {currentImage && <img className="SlideshowGallery__CurrentImage" src={currentImage} />}
+            {currentImage && <img className="SlideshowGallery__CurrentImage" src={currentImage} alt="" />}
           </div>
           {currentImage && (<div className='SlideshowGallery__BottomControls'>
             <button onClick={this.goPrev} disabled={!hasPrev} className="SlideshowGallery__control_btn">

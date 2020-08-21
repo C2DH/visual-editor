@@ -207,13 +207,13 @@ export const mentionStory = token => (fromStory, toStory) =>
   .then(extractBody)
 
 // FIXME TODO temporany workaround for not encoded json
-const smartParseIntoJsonWhenReallyNeeded = data =>
-  (typeof data !== 'string' || data === '') ? data : JSON.parse(data)
-const reParse = data => ({
-  ...data,
-  data: smartParseIntoJsonWhenReallyNeeded(data.data),
-  contents: smartParseIntoJsonWhenReallyNeeded(data.contents),
-})
+// const smartParseIntoJsonWhenReallyNeeded = data =>
+//   (typeof data !== 'string' || data === '') ? data : JSON.parse(data)
+// const reParse = data => ({
+//   ...data,
+//   data: smartParseIntoJsonWhenReallyNeeded(data.data),
+//   contents: smartParseIntoJsonWhenReallyNeeded(data.contents),
+// })
 
 const onlyId = module => mapValues(module, (v, k, o) => {
   if (isPlainObject(v)) {

@@ -1,1 +1,1 @@
-export { default as default } from './GridGallery'
+export { default } from './GridGallery'

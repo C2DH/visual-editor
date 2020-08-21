@@ -1,5 +1,5 @@
 import { createSelector, defaultMemoize } from 'reselect'
-import { reduce, keys, isNull, find, get, mapValues, keyBy, isPlainObject, isArray } from 'lodash'
+import { reduce, isNull, find, get, mapValues, keyBy, isPlainObject, isArray } from 'lodash'
 import {
   TAG_THEME,
   TAG_CHAPTER,

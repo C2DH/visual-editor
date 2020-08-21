@@ -2,15 +2,12 @@ import React, { PureComponent } from "react";
 import { Container, Row, Col, Label, Button } from "reactstrap";
 import GenericCard from "../cards/GenericCard";
 import { pure } from "recompose";
-import { Card, CardImg, CardText, CardTitle, CardBlock } from "reactstrap";
 import "./ChooseModule.css";
 import textImage from "./imgs/text.png";
 import objectImage from "./imgs/object.png";
 import galleryImage from "./imgs/gallery.png";
-import mapImage from "./imgs/map.png";
 import text_objectImage from "./imgs/text_object.png";
 import text_galleryImage from "./imgs/text_gallery.png";
-import text_mapImage from "./imgs/text_map.png";
 
 const modulesTypes = [
   { type: "text", label: "Module text", cover: textImage },

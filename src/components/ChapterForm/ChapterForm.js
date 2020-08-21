@@ -38,7 +38,6 @@ class ChapterForm extends PureComponent {
       backgroundColorOverlay,
       backgroundImage,
       backgroundType,
-      covers,
       language,
       color,
       invalid,

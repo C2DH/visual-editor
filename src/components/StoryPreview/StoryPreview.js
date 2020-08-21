@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 import { get } from 'lodash'
 import BackgroundPreview from '../BackgroundPreview'
 import {
-  makeTranslator,
-  getTheme,
-  isThemeSaving,
+  makeTranslator
 } from '../../state/selectors'
 import './StoryPreview.css'
 

@@ -126,7 +126,7 @@ class Documents extends PureComponent {
             {documents && documents.map((doc) => (
               <Col md="3" key={doc.id}>
                 <DocumentCard
-                  type              = {`${doc.data.type != doc.type ? `${doc.data.type} / ` : ""}${doc.type}`}
+                  type              = {`${doc.data.type !== doc.type ? `${doc.data.type} / ` : ""}${doc.type}`}
                   title             = {doc.title}
                   showDeleteButton  = {true}
                   onClick           = {() => this.askDeleteDoc(doc)}
