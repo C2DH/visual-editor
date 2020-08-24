@@ -7,7 +7,7 @@ class SlideshowGallery extends PureComponent {
     currentIndex: 0,
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     // Avoid bugged current index
     if (
       this.props.images !== nextProps.images &&

@@ -20,7 +20,7 @@ class Chapter extends PureComponent {
     this.props.loadChapter(this.props.match.params.chapterId)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.match.params.chapterId !== nextProps.match.params.chapterId) {
       this.props.unloadChapter()
       this.props.loadChapter(nextProps.match.params.chapterId)

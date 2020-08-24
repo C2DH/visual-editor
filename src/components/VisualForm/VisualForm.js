@@ -1,11 +1,10 @@
-import React from 'react'
-import { pure } from 'recompose'
+import React, { memo } from 'react'
 import { Container, Row, Col } from 'reactstrap'
 import Spinner from '../Spinner'
 import BackgroundPreview from '../BackgroundPreview'
 import './VisualForm.css'
 
-const VisualForm = pure(({ children, bottomForm, onSubmit, saving = false }) => (
+const VisualForm = memo(({ children, bottomForm, onSubmit, saving = false }) => (
   <form onSubmit={onSubmit}>
     <Container fluid className="margin-r-l-20">
       <Row>{children}</Row>
@@ -15,30 +14,30 @@ const VisualForm = pure(({ children, bottomForm, onSubmit, saving = false }) => 
   </form>
 ))
 
-export const SideContainer = pure(({ children }) => (
+export const SideContainer = memo(({ children }) => (
   <Col md={3}>
     <div className="VisualForm__SideContainer">{children}</div>
   </Col>
 ))
 
-export const SideForm = pure(({ children }) => (
+export const SideForm = memo(({ children }) => (
   <div className="VisualForm__SideContainer__SideForm">{children}</div>
 ))
 
-export const SideActions = pure(({ children }) => (
+export const SideActions = memo(({ children }) => (
   <div className="VisualForm__SideContainer__SideActions">
     <hr />
     {children}
   </div>
 ))
 
-export const PreviewContainer = pure((props) => (
+export const PreviewContainer = memo((props) => (
   <Col md={9}>
     <BackgroundPreview {...props} />
   </Col>
 ))
 
-export const GenericPreviewContainer = pure(({ className, ...props }) => (
+export const GenericPreviewContainer = memo(({ className, ...props }) => (
   <Col md={9}>
     <div className={`VisualForm__GenericPreviewContainer ${className ? className : ''}`} {...props} />
   </Col>

@@ -21,7 +21,7 @@ class Theme extends PureComponent {
     this.props.loadTheme(this.props.match.params.themeId)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.match.params.themeId !== nextProps.match.params.themeId) {
       this.props.unloadTheme()
       this.props.loadTheme(nextProps.match.params.themeId)

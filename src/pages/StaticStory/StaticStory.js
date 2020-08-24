@@ -22,7 +22,7 @@ class StaticStory extends PureComponent {
     this.props.loadStaticStory(this.props.match.params.staticStoryId)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.match.params.staticStoryId !== nextProps.match.params.staticStoryId) {
       this.props.unloadStaticStory()
       this.props.loadStaticStory(nextProps.match.params.staticStoryId)

@@ -22,7 +22,7 @@ import {
 
 class MediumEditor extends PureComponent {
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.choosedDocument !== nextProps.choosedDocument && nextProps.choosedDocument) {
       this.props.input.onChange(this.props.input.value.replace(/___DOC___/g, nextProps.choosedDocument.id))
       this.props.hideWidgetFullPage()

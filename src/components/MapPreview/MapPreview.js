@@ -45,7 +45,7 @@ class MapPreview extends PureComponent {
     zoom: [8]
   };
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.documents !== nextProps.documents) {
       this.closePopup();
     }

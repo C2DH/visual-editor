@@ -1,7 +1,6 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, memo } from "react";
 import { Container, Row, Col, Label, Button } from "reactstrap";
 import GenericCard from "../cards/GenericCard";
-import { pure } from "recompose";
 import "./ChooseModule.css";
 import textImage from "./imgs/text.png";
 import objectImage from "./imgs/object.png";
@@ -36,7 +35,7 @@ const modulesTypes = [
   },
 ];
 
-const ChooseModuleCard = pure(({ title, cover, cardClick }) => (
+const ChooseModuleCard = memo(({ title, cover, cardClick }) => (
   <GenericCard
     className="ChooseModule__ChooseModuleCard"
     containerClassName="ChooseModule__ChooseModuleCard__img"

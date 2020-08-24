@@ -1,6 +1,5 @@
-import React from "react";
+import React, { memo } from "react";
 import { get } from "lodash";
-import { pure } from "recompose";
 import { connect } from "react-redux";
 import GenericCard from "../GenericCard";
 import { Button } from "reactstrap";
@@ -8,7 +7,7 @@ import "./ThemeCard.css";
 
 import { makeTranslator } from "../../../state/selectors";
 
-const ThemeCard = pure(
+const ThemeCard = memo(
   ({
     theme,
     trans,

@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { DraggableCore } from 'react-draggable'
-import { pure } from 'recompose'
 
-export default pure(function SideDocument({ onDrag, width, doc }) {
+export default memo(function SideDocument({ onDrag, width, doc }) {
   let year = null
   if (doc) {
     year = new Date(doc.data.start_data).getFullYear()

@@ -1,9 +1,8 @@
-import React from 'react'
-import { pure } from 'recompose'
+import React, { memo } from 'react'
 import { UncontrolledTooltip } from 'reactstrap'
 import moment from 'moment'
 
-export default pure(function TopControls({
+export default memo(function TopControls({
   durationSeconds,
   playedSeconds,
   played,

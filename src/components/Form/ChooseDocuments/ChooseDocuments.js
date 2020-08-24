@@ -23,7 +23,7 @@ class ChooseDocuments extends PureComponent {
     this.props.hideWidgetFullPage();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     // Handle multi selection change
     if (
       nextProps.multiSelection &&

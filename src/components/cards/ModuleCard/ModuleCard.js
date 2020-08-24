@@ -1,6 +1,5 @@
-import React from "react";
+import React, { memo } from "react";
 import { get } from "lodash";
-import { pure } from "recompose";
 import { connect } from "react-redux";
 import { Card, Button } from "reactstrap";
 import showdown from "showdown";
@@ -167,7 +166,7 @@ const getBackground = module => {
   return symbolicBackground(module);
 };
 
-const ModuleCard = pure(
+const ModuleCard = memo(
   ({
     module,
     trans,

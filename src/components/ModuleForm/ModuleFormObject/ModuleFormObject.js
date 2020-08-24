@@ -64,7 +64,7 @@ class ModuleFormObject extends PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.documentType !== nextProps.documentType) {
       this.props.change("moduleObject", "id", null);
       if (nextProps.documentType === "audio") {
