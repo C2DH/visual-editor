@@ -101,7 +101,7 @@ class Documents extends PureComponent {
 
 
   render() {
-    const { documents, canLoadMore, count, loading, types } = this.props;
+    const { documents, canLoadMore, count, loading, types, deleting } = this.props;
 
     return (
       <Container fluid className="margin-r-l-20">
@@ -125,17 +125,19 @@ class Documents extends PureComponent {
           <Row>
             {documents && documents.map((doc) => (
               <Col md="3" key={doc.id}>
-                <DocumentCard
-                  type              = {`${doc.data.type !== doc.type ? `${doc.data.type} / ` : ""}${doc.type}`}
-                  title             = {doc.title}
-                  showDeleteButton  = {true}
-                  onClick           = {() => this.askDeleteDoc(doc)}
-                  cover             = {
-                    doc.data.resolutions
-                      ? doc.data.resolutions.thumbnail.url
-                      : doc.attachment
-                    }
-                />
+                <div style={deleting[doc.id] ? { opacity: 0.5 } : undefined}>
+                  <DocumentCard
+                    type              = {`${doc.data.type !== doc.type ? `${doc.data.type} / ` : ""}${doc.type}`}
+                    title             = {doc.title}
+                    showDeleteButton  = {true}
+                    onClick           = {() => this.askDeleteDoc(doc)}
+                    cover             = {
+                      doc.data.resolutions
+                        ? doc.data.resolutions.thumbnail.url
+                        : doc.attachment
+                      }
+                  />
+                </div>
               </Col>
             ))}
           </Row>
@@ -168,7 +170,8 @@ const mapStateToProps = state => ({
   documents: getDocuments(state),
   canLoadMore: canLoadMoreDocuments(state),
   count: getDocumentsCount(state),
-  loading: areDocumentsLoading(state)
+  loading: areDocumentsLoading(state),
+  deleting: state.documents.deleting
 });
 
 export default connect(mapStateToProps, {
