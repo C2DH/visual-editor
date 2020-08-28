@@ -1,42 +1,53 @@
-import React, { PureComponent } from 'react'
-import { Container, Row, Col } from 'reactstrap'
-import SideEditToolbar from '../../components/SideEditToolbar'
-import TextAlignSelection from '../../components/TextAlignSelection'
-import './DocumentEdit.css'
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import DocumentForm from '../../components/DocumentForm';
+import Spinner from '../../components/Spinner'
+import {
+  makeTranslator,
+  getDocument,
+  isDocumentLoading
+} from '../../state/selectors';
+import {
+  loadDocument,
+  unloadDocument
+} from '../../state/actions';
+import './DocumentEdit.css';
 
 class DocumentEdit extends PureComponent {
-  state = {
-    textAlignment: 'left'
+
+  componentDidMount() {
+    this.props.loadDocument(this.props.match.params.documentId);
   }
-  render () {
+
+  componentWillUnmount() {
+    this.props.unloadDocument();
+  }
+
+  render() {
+
+    const { doc, loading } = this.props;
+
+    if (loading && !doc) return <Spinner />;
+    if (!doc) return null;
+
     return (
-      <Container>
-        <Row>
-          <Col md="3">
-            <SideEditToolbar>
-              <TextAlignSelection
-                value={this.state.textAlignment}
-                onChange={(textAlign) => this.setState({textAlignment: textAlign})}
-                textAligns={['left', 'center', 'right']}
-              />
-            </SideEditToolbar>
-          </Col>
-          <Col md="9">
-            <div className="DocumentEdit__right_container">
-              <div style={{textAlign: this.state.textAlignment}}>
-                <p>
-                  Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                  Vivamus suscipit tortor eget felis porttitor volutpat. Donec sollicitudin molestie malesuada. Sed porttitor lectus nibh.
-                  Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Nulla quis lorem ut libero malesuada feugiat.
-                </p>
-              </div>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    )
+      <div>
+        <div className="DocumentDetail__Top">
+          {doc.title}
+        </div>
+        <DocumentForm exitLink="/documents/" />
+      </div>
+    );
   }
 }
 
+const mapStateToProps = state => ({
+  trans:    makeTranslator(state),
+  doc:      getDocument(state),
+  loading:  isDocumentLoading(state)
+});
 
-export default DocumentEdit
+export default connect(mapStateToProps, {
+  loadDocument,
+  unloadDocument
+})(DocumentEdit);

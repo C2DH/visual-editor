@@ -20,6 +20,10 @@
   margin-left: 20px;
 }
 
+.Documents__AddButton-container {
+  padding-top: 150px;
+}
+
 .Documents__List {
   padding-top: 90px;
   padding-bottom: 70px;

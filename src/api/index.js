@@ -91,7 +91,11 @@ export const getDocuments = token => (params = {}) =>
       .get(`/api/document/`)
       .query(buildMillerParams(params))
   )
-  .then(extractBody)
+  .then(extractBody);
+
+export const getDocument = token => id =>
+  withToken(token, request.get(`/api/document/${id}/`))
+    .then(extractBody);
 
 export const deleteDocument = token => id =>
   withToken(token, request.del(`/api/document/${id}/`))

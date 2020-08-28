@@ -1,8 +1,10 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { debounce, isNull } from 'lodash';
+import { Link } from 'react-router-dom'
 import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import HeadingRow from '../../components/HeadingRow';
+import AddButton from '../../components/AddButton'
 import TopSearchInput from '../../components/TopSearchInput';
 import TopSelectFilter from '../../components/TopSelectFilter';
 import DocumentCard from '../../components/cards/DocumentCard';
@@ -123,21 +125,26 @@ class Documents extends PureComponent {
 
         <div className="Documents__List">
           <Row>
+            <Col md="3" className="Documents__AddButton-container">
+              <AddButton label="Add document" tag={Link} to={'/documents/new'} />
+            </Col>
             {documents && documents.map((doc) => (
               <Col md="3" key={doc.id}>
-                <div style={deleting[doc.id] ? { opacity: 0.5 } : undefined}>
-                  <DocumentCard
-                    type              = {`${doc.data.type !== doc.type ? `${doc.data.type} / ` : ""}${doc.type}`}
-                    title             = {doc.title}
-                    showDeleteButton  = {true}
-                    onClick           = {() => this.askDeleteDoc(doc)}
-                    cover             = {
-                      doc.data.resolutions
-                        ? doc.data.resolutions.thumbnail.url
-                        : doc.attachment
-                      }
-                  />
-                </div>
+                <Link to={`/documents/${doc.id}/edit`} style={deleting[doc.id] && { pointerEvents: 'none' }}>
+                  <div style={deleting[doc.id] ? { opacity: 0.5 } : undefined}>
+                    <DocumentCard
+                      type              = {`${doc.data.type !== doc.type ? `${doc.data.type} / ` : ""}${doc.type}`}
+                      title             = {doc.title}
+                      showDeleteButton  = {true}
+                      onClick           = {e => { e.preventDefault(); this.askDeleteDoc(doc); }}
+                      cover             = {
+                        doc.data.resolutions
+                          ? doc.data.resolutions.thumbnail.url
+                          : doc.attachment
+                        }
+                    />
+                  </div>
+                </Link>
               </Col>
             ))}
           </Row>

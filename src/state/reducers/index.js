@@ -13,6 +13,7 @@ import staticStoryDetail from './staticStoryDetail'
 import educationalDetail from './educationalDetail'
 import themeDetail from './themeDetail'
 import chapterDetail from './chapterDetail'
+import documentDetail from './documentDetail';
 import ui from './ui'
 
 export default combineReducers({
@@ -30,5 +31,6 @@ export default combineReducers({
   staticStoryDetail,
   themeDetail,
   chapterDetail,
-  documents
+  documents,
+  documentDetail
 })

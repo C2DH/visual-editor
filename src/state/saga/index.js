@@ -16,6 +16,11 @@ import {
   GET_DOCUMENTS,
   GET_DOCUMENTS_UNLOAD,
   GET_DOCUMENTS_SUCCESS,
+  GET_DOCUMENT,
+  GET_DOCUMENT_UNLOAD,
+  GET_DOCUMENT_LOADING,
+  GET_DOCUMENT_SUCCESS,
+  GET_DOCUMENT_FAILURE,
   GET_STATIC_STORIES,
   GET_EDUCATIONALS,
   EDUCATIONAL,
@@ -55,6 +60,17 @@ const makePaginateCollection = createMakePaginateCollection(authApiCall)
 const makeStoryDetail = createMakeStoryDetail(authApiCall)
 const makeDelete = createMakeDelete(authApiCall)
 const makeMoveStory = createMakeMoveStory(authApiCall)
+
+function* handleGetDocument({ payload }) {
+  const id = payload
+  yield put({ type: GET_DOCUMENT_LOADING })
+  try {
+    const doc = yield authApiCall(api.getDocument, id)
+    yield put({ type: GET_DOCUMENT_SUCCESS, payload: doc })
+  } catch (error) {
+    yield put({ type: GET_DOCUMENT_FAILURE, error })
+  }
+}
 
 function *handleDeleteModuleChapter({ payload }) {
   const { chapter, moduleIndex } = payload
@@ -137,14 +153,19 @@ export default function* rootSaga() {
     GET_DOCUMENTS,
     api.getDocuments,
     state => state.documents.list,
-  ))
+  ));
+  yield fork(
+    takeLatestAndCancel,
+    GET_DOCUMENT,
+    GET_DOCUMENT_UNLOAD,
+    handleGetDocument
+  );
   yield fork(
     takeLatestAndCancel,
     SELECT_ALL_DOCUMENTS,
     GET_DOCUMENTS_UNLOAD,
     handleSelectAllDocumets
   )
-  yield fork(makeDelete(DOCUMENT, api.deleteDocument));
   yield fork(makeCollection(GET_THEMES, api.getThemes))
   yield fork(makeStoryDetail(THEME))
   yield fork(makeStoryDetail(CHAPTER))
@@ -157,6 +178,7 @@ export default function* rootSaga() {
   yield takeEvery(MOVE_CHAPTER_THEME, handleMoveChapterTheme)
   yield fork(makeMoveStory(MOVE_THEME))
   yield fork(makeMoveStory(MOVE_EDUCATIONAL))
+  yield fork(makeDelete(DOCUMENT, api.deleteDocument));
   yield fork(makeDelete(THEME))
   yield fork(makeDelete(EDUCATIONAL))
   yield fork(makeDelete(CHAPTER, token => ({ id, theme }) =>

@@ -17,7 +17,9 @@ import StaticStory from './pages/StaticStory'
 import Educationals from './pages/Educationals'
 import NewEducational from './pages/NewEducational'
 import EducationalDetail from './pages/EducationalDetail'
-import Documents from './pages/Documents'
+import Documents from './pages/Documents';
+import NewDocument from './pages/NewDocument';
+import DocumentEdit from './pages/DocumentEdit';
 
 const App = () => (
   <Provider store={store}>
@@ -35,6 +37,8 @@ const App = () => (
             <AuthRoute path='/educationals/new' component={NewEducational} />
             <AuthRoute path='/educationals/:educationalId' component={EducationalDetail} />
             <AuthRoute path='/documents' exact component={Documents} />
+            <AuthRoute path='/documents/new' component={NewDocument} />
+            <AuthRoute path='/documents/:documentId/edit' component={DocumentEdit} />
             <Redirect to='/' />
           </Switch>
         </FullPageWidgets>
