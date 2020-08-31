@@ -1,6 +1,6 @@
 {
   "name": "bgl-visualeditor",
-  "version": "0.1.0",
+  "version": "ostbelgien-v1.0.0",
   "private": true,
   "proxy": "http://localhost",
   "dependencies": {
