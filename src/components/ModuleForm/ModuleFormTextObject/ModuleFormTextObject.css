@@ -16,31 +16,30 @@
 }
 
 .ModuleFormTextObject__TextContainer h1,
-.ModuleFormTextObject__TextContainer h2{
-  color: #f56350;
+.ModuleFormTextObject__TextContainer h2 {
+  /* color: #f56350; */
 }
 
-.ModuleFormTextObject__TextContainer p{
+.ModuleFormTextObject__TextContainer p {
   font-size: 1.5rem;
 }
 
-.ModuleFormTextObject__TextContainer a{
-   color: #f56350;
- }
+.ModuleFormTextObject__TextContainer a {
+  color: #f56350;
+}
 
-.ModuleFormTextObject__TextContainer a:hover{
-   color: #f56350;
- }
+.ModuleFormTextObject__TextContainer a:hover {
+  color: #f56350;
+}
 
-.ModuleFormTextObject__TextContainer a[href^="object"]{
-   border-bottom: 1px dashed #f56350;
-   color: inherit;
- }
+.ModuleFormTextObject__TextContainer a[href^="object"] {
+  border-bottom: 1px dashed #f56350;
+  color: inherit;
+}
 
-.ModuleFormTextObject__TextContainer a[href^="object"]:hover{
-   color: inherit;
- }
-
+.ModuleFormTextObject__TextContainer a[href^="object"]:hover {
+  color: inherit;
+}
 
 .ModuleFormTextObject__ObjectContainer {
   height: 100%;
@@ -59,7 +58,6 @@
   margin-right: auto;
 }
 
-
 .ModuleFormTextObject__DocumentPreview__Caption {
   height: 50px;
   padding: 10px;
@@ -69,17 +67,17 @@
   flex-wrap: nowrap;
 }
 
-.ModuleFormTextObject__DocumentPreview__Caption .medium-editor-element{
+.ModuleFormTextObject__DocumentPreview__Caption .medium-editor-element {
   max-height: 100%;
   overflow: auto;
 }
 
-.ModuleFormTextObject__video_container{
+.ModuleFormTextObject__video_container {
   width: 100%;
   max-height: 70%;
 }
 
-.ModuleFormTextObject__video_container .video-react{
+.ModuleFormTextObject__video_container .video-react {
   max-width: 100%;
   max-height: 100%;
   margin: auto;
