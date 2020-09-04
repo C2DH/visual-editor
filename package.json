@@ -10,7 +10,7 @@
     "html-to-text": "^3.3.0",
     "lodash": "^4.17.4",
     "mapbox-gl": "^0.40.1",
-    "markdown-to-jsx": "^5.4.2",
+    "markdown-to-jsx": "^6.11.4",
     "medium-button": "^1.1.4",
     "medium-editor-markdown": "^2.6.0",
     "memoize-one": "^5.0.0",
