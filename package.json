@@ -32,7 +32,7 @@
     "redux-form": "^6.8.0",
     "redux-saga": "^0.15.3",
     "reselect": "^3.0.1",
-    "showdown": "^1.7.5",
+    "showdown": "^1.9.1",
     "superagent": "^3.5.2",
     "to-markdown": "^3.1.0",
     "video-react": "^0.8.8",
