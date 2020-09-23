@@ -26,7 +26,8 @@ import {
 } from '../../state/selectors';
 
 const TYPE_FACET = 'data__type';
-const DEFAULT_PARAMS = { facets: TYPE_FACET };
+const ORDER_BY_ID_DESC = '-id';
+const DEFAULT_PARAMS = { facets: TYPE_FACET, orderby: ORDER_BY_ID_DESC };
 
 class Documents extends PureComponent {
 
@@ -59,13 +60,13 @@ class Documents extends PureComponent {
   }
 
   getFilterParams() {
-    let params = {};
+    let params = { orderby: DEFAULT_PARAMS.orderby };
 
     if(this.searchString)
       params.q = `${this.searchString}*`;
 
     if(this.typeFilter.length)
-      params.filters = { data__type__in: this.typeFilter }
+      params.filters = { data__type__in: this.typeFilter };
 
     return params;
   }
