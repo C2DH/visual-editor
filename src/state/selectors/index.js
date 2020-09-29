@@ -73,11 +73,14 @@ export const [
 );
 
 export const getDocument = createSelector(
-  state => state.documentDetail.id,
+  state => state.documentDetail.document.id,
   state => state.entities.documents,
   (id, data) => maybeNull(id)(id => data[id])
 );
-export const isDocumentLoading = state => state.documentDetail.loading;
+export const getDocumentSchema = state => state.documentDetail.schema.payload;
+export const getDocumentSchemaError = state => state.documentDetail.schema.error;
+export const isDocumentLoading = state => state.documentDetail.document.loading;
+export const isDocumentSchemaLoading = state => state.documentDetail.schema.loading;
 
 export const getDocumentsPlaceTypes = createSelector(
   state => state.documents.facets,

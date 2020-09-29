@@ -1,4 +1,4 @@
-import { fork, take, takeEvery, put, select } from 'redux-saga/effects'
+import { fork, take, takeLatest, takeEvery, put, select } from 'redux-saga/effects'
 import { takeLatestAndCancel } from './effects'
 import makeAuth from './auth'
 import createMakeCollection from './hos/collection'
@@ -21,6 +21,10 @@ import {
   GET_DOCUMENT_LOADING,
   GET_DOCUMENT_SUCCESS,
   GET_DOCUMENT_FAILURE,
+  LOAD_DOCUMENT_SCHEMA,
+  LOAD_DOCUMENT_SCHEMA_LOADING,
+  LOAD_DOCUMENT_SCHEMA_SUCCESS,
+  LOAD_DOCUMENT_SCHEMA_FAILURE,
   GET_STATIC_STORIES,
   GET_EDUCATIONALS,
   EDUCATIONAL,
@@ -47,6 +51,7 @@ import {
 import {
   canLoadMoreDocuments
 } from '../selectors'
+import { DOCUMENT_SCHEMA } from '../consts';
 
 const { authFlow, authApiCall } = makeAuth({
   meCall: api.me,
@@ -69,6 +74,16 @@ function* handleGetDocument({ payload }) {
     yield put({ type: GET_DOCUMENT_SUCCESS, payload: doc })
   } catch (error) {
     yield put({ type: GET_DOCUMENT_FAILURE, error })
+  }
+}
+
+function* handleLoadSchema() {
+  yield put({ type: LOAD_DOCUMENT_SCHEMA_LOADING });
+  try {
+    const schema = yield api.loadSchema(DOCUMENT_SCHEMA);
+    yield put({ type: LOAD_DOCUMENT_SCHEMA_SUCCESS, payload: schema });
+  } catch(error) {
+    yield put({ type: LOAD_DOCUMENT_SCHEMA_FAILURE, error });
   }
 }
 
@@ -160,6 +175,7 @@ export default function* rootSaga() {
     GET_DOCUMENT_UNLOAD,
     handleGetDocument
   );
+  yield takeLatest(LOAD_DOCUMENT_SCHEMA, handleLoadSchema);
   yield fork(
     takeLatestAndCancel,
     SELECT_ALL_DOCUMENTS,

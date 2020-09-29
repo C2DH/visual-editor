@@ -9,6 +9,7 @@ import {
 } from '../../state/selectors';
 import {
   loadDocument,
+  loadDocumentSchema,
   unloadDocument
 } from '../../state/actions';
 import './DocumentEdit.css';
@@ -35,7 +36,10 @@ class DocumentEdit extends PureComponent {
         <div className="DocumentDetail__Top">
           {doc.title}
         </div>
-        <DocumentForm exitLink="/documents/" />
+        <DocumentForm
+          initialValues = {doc}
+          exitLink      = "/documents/"
+        />
       </div>
     );
   }
@@ -49,5 +53,6 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
   loadDocument,
+  loadDocumentSchema,
   unloadDocument
 })(DocumentEdit);

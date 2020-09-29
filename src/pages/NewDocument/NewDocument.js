@@ -5,7 +5,9 @@ class NewDocument extends PureComponent {
 
   render() {
     return (
-      <DocumentForm exitLink="/documents/" />
+      <div className="mt-3">
+        <DocumentForm exitLink="/documents/" />
+      </div>
     );
   }
 }

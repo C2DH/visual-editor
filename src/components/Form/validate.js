@@ -16,3 +16,15 @@ export const notAnEmptyList = value => {
   }
   return 'Insert at least one item'
 }
+
+export const matchPattern = pattern => value =>
+  !pattern || !value || pattern.test(value) ? undefined : 'Invalid value. Doesn\'t match pattern.';
+
+export const matchMinMax = (min, max) => value => {
+  if(min && max)
+    return min <= value && max >= value ? undefined : `The value must be between ${min} and ${max}`;
+  if(min)
+    return min <= value ? undefined : `The value must be greater than ${min}`;
+  if(max)
+    return max >= value ? undefined : `The value must be lower than ${max}`;
+}

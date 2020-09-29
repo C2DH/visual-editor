@@ -82,6 +82,9 @@ export const refreshToken = token =>
     .send({ refresh_token: token })
     .then(extractBody)
 
+export const loadSchema = url =>
+  request.get(url).then(extractBody);
+
 // Documents
 
 export const getDocuments = token => (params = {}) =>

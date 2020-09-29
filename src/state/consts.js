@@ -10,3 +10,7 @@ export const TAG_EDUCATION = parseInt(
 
 export const DEFAULT_BG_COLOR = "#ddd";
 export const DEFAULT_OVERLAY_COLOR = "#1E1E1E";
+
+export const DOCUMENT_SCHEMA = process.env.REACT_APP_DOCUMENT_SCHEMA || '/static/schema/document/payload.json';
+
+export const MEDIAT_TYPES = (process.env.REACT_APP_MEDIA_TYPES || 'image,pdf,video,audio,entity').split(',');

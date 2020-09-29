@@ -1,0 +1,8 @@
+.JSONSchemaForm h5 {
+  cursor: pointer;
+}
+
+.JSONSchemaForm select {
+  width: auto;
+  max-width: 100%;
+}

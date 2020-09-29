@@ -46,3 +46,11 @@ export const deleteDocument = (id) => ({
   type: DELETE_DOCUMENT,
   payload: id
 });
+
+export const LOAD_DOCUMENT_SCHEMA = 'LOAD_DOCUMENT_SCHEMA';
+export const LOAD_DOCUMENT_SCHEMA_LOADING = 'LOAD_DOCUMENT_SCHEMA_LOADING';
+export const LOAD_DOCUMENT_SCHEMA_SUCCESS = 'LOAD_DOCUMENT_SCHEMA_SUCCESS';
+export const LOAD_DOCUMENT_SCHEMA_FAILURE = 'LOAD_DOCUMENT_SCHEMA_FAILURE';
+export const loadDocumentSchema = () => ({
+  type: LOAD_DOCUMENT_SCHEMA
+});
