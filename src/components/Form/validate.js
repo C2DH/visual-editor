@@ -18,7 +18,7 @@ export const notAnEmptyList = value => {
 }
 
 export const matchPattern = pattern => value =>
-  !pattern || !value || pattern.test(value) ? undefined : 'Invalid value. Doesn\'t match pattern.';
+  !pattern || !value || pattern.test(value) ? undefined : 'The value does not conform to the required pattern.';
 
 export const matchMinMax = (min, max) => value => {
   if(min && max)
