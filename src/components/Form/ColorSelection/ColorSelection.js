@@ -32,7 +32,7 @@ class ColorSelection extends PureComponent {
           <FormGroup row className="margin-bottom-0" color={meta.error ? 'danger' : null}>
             <Label for="hex" sm={2} className="ColorSelection__hex_label">Hex</Label>
             <Col sm={6}>
-              <Input type="text" value={value} onChange={onChange} name="hex" id="hex" placeholder="#" className="ColorSelection__hex_input" size="sm" />
+              <Input type="text" value={value} onChange={onChange} name="hex" id="hex" placeholder="#" className="ColorSelection__hex_input" bsSize="sm" />
               {meta.error && <FormFeedback>{meta.error}</FormFeedback>}
             </Col>
           </FormGroup>
