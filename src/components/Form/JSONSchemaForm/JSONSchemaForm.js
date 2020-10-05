@@ -20,8 +20,18 @@ const AlertMissLanguage = ({ fieldName }) => (
 //  To format ISO data-time value
 const formatDate = value => value ? value.split('T')[0] : '';
 
-//  To normalize array field. Convert value to array
-const convertToArray = value => value ? value.split(',') : null;
+//  Normalize functions for the field
+const normalize       = type => {
+  switch(type) {
+  case 'array':   return convertToArray;
+  case 'integer': return convertToInt;
+  case 'number':  return convertToFloat;
+  default: return null;
+  }
+}
+const convertToArray  = value => value ? value.split(',') : undefined;
+const convertToInt    = value => value ? parseInt(value) : undefined;
+const convertToFloat  = value => value ? parseFloat(value) : undefined;
 
 
 const JSONSchemaField = ({ name, title: customTitle, properties: {
@@ -41,7 +51,6 @@ const JSONSchemaField = ({ name, title: customTitle, properties: {
   const isStringType = type === 'string';
   const isNumberType = type === 'number' || type === 'integer';
   const isCheckType = type === 'boolean';
-  const isArrayType = type === 'array';
   const isDateType = format === 'date';
 
   let component = Input;
@@ -71,7 +80,7 @@ const JSONSchemaField = ({ name, title: customTitle, properties: {
         className   = {isNumberType ? 'w-50' : ''}
         pattern     = {pattern}
         required    = {isRequired}
-        normalize   = {isArrayType ? convertToArray : null}
+        normalize   = {normalize(type)}
         format      = {isDateType ? formatDate : null}
         validate    = {validate}
       />

@@ -21,6 +21,8 @@ export const matchPattern = pattern => value =>
   !pattern || !value || pattern.test(value) ? undefined : 'The value does not conform to the required pattern.';
 
 export const matchMinMax = (min, max) => value => {
+  if(!value)
+    return undefined;
   if(min && max)
     return min <= value && max >= value ? undefined : `The value must be between ${min} and ${max}`;
   if(min)

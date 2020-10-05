@@ -3,7 +3,10 @@ import { Input, Label } from 'reactstrap'
 
 // Maybe pass down props such style or other shit...
 const FormInput = ({
-    input,
+    input: {
+      value,
+      ...input
+    },
     label,
     type,
     maxLength,
@@ -24,6 +27,7 @@ const FormInput = ({
       type      = {type}
       maxLength = {maxLength}
       className = {className}
+      value     = {value || ''}
       {...input}
     />
     {touched && error &&
