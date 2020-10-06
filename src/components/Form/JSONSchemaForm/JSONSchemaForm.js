@@ -6,6 +6,7 @@ import Input from '../Input';
 import Select from '../Select';
 import Textarea from '../Textarea';
 import Checkbox from '../Checkbox';
+import Translate from '../Translate';
 import { required, matchPattern, matchMinMax } from '../validate'
 
 import './JSONSchemaForm.css';
@@ -29,9 +30,9 @@ const normalize       = type => {
   default: return null;
   }
 }
-const convertToArray  = value => value ? value.split(',') : undefined;
-const convertToInt    = value => value ? parseInt(value) : undefined;
-const convertToFloat  = value => value ? parseFloat(value) : undefined;
+const convertToArray  = value => value ? value.split(',') : null;
+const convertToInt    = value => value ? parseInt(value) : null;
+const convertToFloat  = value => value ? parseFloat(value) : null;
 
 
 const JSONSchemaField = ({ name, title: customTitle, properties: {
@@ -80,7 +81,7 @@ const JSONSchemaField = ({ name, title: customTitle, properties: {
         className   = {isNumberType ? 'w-50' : ''}
         pattern     = {pattern}
         required    = {isRequired}
-        normalize   = {normalize(type)}
+        parse       = {normalize(type)}
         format      = {isDateType ? formatDate : null}
         validate    = {validate}
       />
@@ -104,8 +105,6 @@ export const JSONSchemaProperty = memo(({
   const isTranslatedField       = type === 'object' && format === 'translate';
   const isObjectField           = !isTranslatedField && type === 'object';
 
-  let message = null;
-
   if(group && groups && groups instanceof Array && !groups.includes(group))
     return null;
 
@@ -120,33 +119,67 @@ export const JSONSchemaProperty = memo(({
     );
 
   if(isTranslatedField) {
-
-    let fieldProperties = properties.properties;
-
-    name  = `${name}.${language}`;
-
-    if(fieldProperties)
-      properties  = fieldProperties[language]
-        || fieldProperties[Object.keys(fieldProperties)[0]]
-        || properties;
-
-    if(!fieldProperties || !fieldProperties[language])
-      message = <AlertMissLanguage fieldName={name} />;
-
+    return (
+      <JSONSchemaTranslatedProperty
+        name        = {name}
+        properties  = {properties}
+        required    = {required}
+        language    = {language}
+      />
+    );
   }
 
   return (
-    <Fragment>
-      {message}
-      <JSONSchemaField
-        name        = {name}
-        title       = {title}
-        properties  = {properties}
-        required    = {required}
-      />
-    </Fragment>
+    <JSONSchemaField
+      name        = {name}
+      title       = {title}
+      properties  = {properties}
+      required    = {required}
+    />
   );
 });
+
+
+const JSONSchemaTranslatedProperty = ({
+  name,
+  properties,
+  required,
+  language
+}) => {
+
+  const { title, properties: i18nProps } = properties;
+
+  //  Get config properties for the field
+  //  First get properties of the current language
+  //  If not defined, get properties of the first available language
+  //  If not defined yet, get use properties of the parent object field
+  let currentLangProperties = properties;
+  if(i18nProps)
+    currentLangProperties  = i18nProps[language]
+      || i18nProps[Object.keys(i18nProps)[0]]
+      || properties;
+
+  //  Display a warning message if the current language is not in the JSON schema
+  let message = null;
+  if(!i18nProps[language])
+    message = <AlertMissLanguage fieldName={name} />;
+
+  return (
+    <div className="JSONSchemaTranslatedProperty">
+      {message}
+      <JSONSchemaField
+        name        = {`${name}.${language}`}
+        title       = {title}
+        properties  = {currentLangProperties}
+        required    = {required}
+      />
+      <Field
+        name        = {`data.${name}`}
+        component   = {Translate}
+      />
+    </div>
+  );
+}
 
 
 const JSONSchemaObjectProperty = ({

@@ -2,9 +2,10 @@ import React from 'react'
 import { Input, Label } from 'reactstrap'
 
 // TODO: Handle meta props in an irrealistic future...
-const Textarea = ({ 
+const Textarea = ({
     input,
     label,
+    className,
     required,
     meta: {
       touched,
@@ -16,7 +17,12 @@ const Textarea = ({
     {label &&
       <Label className={required ? 'font-weight-bold' : ''} for={input.name}>{label}</Label>
     }
-    <Input type='textarea' id={input.name} {...input} />
+    <Input
+      id        = {input.name}
+      type      = 'textarea'
+      className = {className}
+      {...input}
+    />
     {touched && error &&
       <span className="text-danger">{error}</span>
     }
