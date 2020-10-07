@@ -15,7 +15,7 @@ export const DOCUMENT_SCHEMA = process.env.REACT_APP_DOCUMENT_SCHEMA || '/static
 
 export const MEDIA_TYPES = (process.env.REACT_APP_MEDIA_TYPES || 'image,pdf,video,audio,entity').split(',');
 
-export const LANGUAGES = (process.env.REACT_APP_LANGUAGES || 'en|British English|en_GB|english,fr|French|fr_FR|french,de|German|de_DE|german,nl|Belgian Dutch|nl_BE|dutch')
+export const LANGUAGES = (process.env.REACT_APP_LANGUAGES || 'en|British English|en_GB,fr|French|fr_FR,de|German|de_DE')
   .split(',')
   .map(lang => {
     const [ label, description, code ] = lang.split('|');
