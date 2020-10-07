@@ -13,4 +13,12 @@ export const DEFAULT_OVERLAY_COLOR = "#1E1E1E";
 
 export const DOCUMENT_SCHEMA = process.env.REACT_APP_DOCUMENT_SCHEMA || '/static/schema/document/payload.json';
 
-export const MEDIAT_TYPES = (process.env.REACT_APP_MEDIA_TYPES || 'image,pdf,video,audio,entity').split(',');
+export const MEDIA_TYPES = (process.env.REACT_APP_MEDIA_TYPES || 'image,pdf,video,audio,entity').split(',');
+
+export const LANGUAGES = (process.env.REACT_APP_LANGUAGES || 'en|British English|en_GB|english,fr|French|fr_FR|french,de|German|de_DE|german,nl|Belgian Dutch|nl_BE|dutch')
+  .split(',')
+  .map(lang => {
+    const [ label, description, code ] = lang.split('|');
+    return {label, description, code};
+  });
+export const DEFAULT_LANGUAGE = process.env.REACT_APP_DEFAULT_LANGUAGE || LANGUAGES[0].code;

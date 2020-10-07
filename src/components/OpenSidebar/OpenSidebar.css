@@ -47,4 +47,5 @@
   display: flex !important;
   align-items: center;
   justify-content: center;
+  text-transform: uppercase;
 }

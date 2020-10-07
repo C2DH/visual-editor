@@ -1,2 +1,4 @@
 // Noop reducers
-export default (prevState = [], action) => prevState
+import { LANGUAGES } from '../consts';
+
+export default (prevState, action) => LANGUAGES;

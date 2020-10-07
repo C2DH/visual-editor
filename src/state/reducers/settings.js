@@ -1,12 +1,16 @@
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
 import { UPDATE_SETTINGS } from "../actions";
+import { DEFAULT_LANGUAGE } from '../consts';
 
 const defaultState = {
   // ...
-  language: "de_DE",
+  language: DEFAULT_LANGUAGE,
   // ...
 };
 
-export default (prevState = defaultState, { type, payload }) => {
+const reducer = (prevState = defaultState, { type, payload }) => {
   switch (type) {
     case UPDATE_SETTINGS:
       return {
@@ -17,3 +21,5 @@ export default (prevState = defaultState, { type, payload }) => {
       return prevState;
   }
 };
+
+export default persistReducer({key: 'settings', storage}, reducer);

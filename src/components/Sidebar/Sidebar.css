@@ -29,6 +29,7 @@
 .Sidebar__languageBtn {
   position: absolute;
   bottom: 20px;
+  text-transform: uppercase;
 }
 
 /* CSS transition styles */
