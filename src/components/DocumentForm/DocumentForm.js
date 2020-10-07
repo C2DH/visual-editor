@@ -16,7 +16,7 @@ import {
   isDocumentSchemaLoading,
   getCurrentLanguage
 } from '../../state/selectors';
-import { MEDIAT_TYPES } from '../../state/consts';
+import { MEDIA_TYPES } from '../../state/consts';
 
 import './DocumentForm.css';
 
@@ -86,7 +86,7 @@ class DocumentForm extends PureComponent {
                   <FormGroup>
                     <Label className="font-weight-bold">Media type</Label>
                     <Field name="type" component={Select} className="text-capitalize">
-                      {MEDIAT_TYPES.map(type =>
+                      {MEDIA_TYPES.map(type =>
                         <option key={type} value={type}>{type}</option>
                       )}
                     </Field>

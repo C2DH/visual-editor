@@ -165,19 +165,21 @@ const JSONSchemaTranslatedProperty = ({
     message = <AlertMissLanguage fieldName={name} />;
 
   return (
-    <div className="JSONSchemaTranslatedProperty">
+    <Fragment>
       {message}
-      <JSONSchemaField
-        name        = {`${name}.${language}`}
-        title       = {title}
-        properties  = {currentLangProperties}
-        required    = {required}
-      />
-      <Field
-        name        = {`data.${name}`}
-        component   = {Translate}
-      />
-    </div>
+      <div className="JSONSchemaTranslatedProperty">
+        <JSONSchemaField
+          name        = {`${name}.${language}`}
+          title       = {title}
+          properties  = {currentLangProperties}
+          required    = {required}
+        />
+        <Field
+          name        = {`data.${name}`}
+          component   = {Translate}
+        />
+      </div>
+    </Fragment>
   );
 }
 
