@@ -24,6 +24,7 @@ import {
   MOVE_CHAPTER_THEME_SUCCESS,
   GET_DOCUMENTS_SUCCESS,
   GET_DOCUMENT_SUCCESS,
+  DOCUMENT_UPDATED,
   DELETE_DOCUMENT_SUCCESS
 } from '../actions'
 
@@ -215,6 +216,7 @@ const documents = (prevState = {}, action) => {
 
   switch(type) {
     case GET_DOCUMENT_SUCCESS:
+    case DOCUMENT_UPDATED:
       return {
         ...prevState,
         [payload.id]: payload

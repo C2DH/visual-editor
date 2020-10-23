@@ -2,17 +2,25 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import DocumentForm from '../../components/DocumentForm';
 import Spinner from '../../components/Spinner'
+import * as api from '../../api'
+import { wrapAuthApiCall } from '../../state'
 import {
   makeTranslator,
   getDocument,
-  isDocumentLoading
+  isDocumentLoading,
+  getCurrentLanguage
 } from '../../state/selectors';
 import {
   loadDocument,
   loadDocumentSchema,
-  unloadDocument
+  unloadDocument,
+  documentUpdated
 } from '../../state/actions';
+import { cleanJSON } from '../../utils';
 import './DocumentEdit.css';
+
+const updateDocument = wrapAuthApiCall(api.updateDocument);
+const fetchDocument = wrapAuthApiCall(api.getDocument);
 
 class DocumentEdit extends PureComponent {
 
@@ -24,9 +32,18 @@ class DocumentEdit extends PureComponent {
     this.props.unloadDocument();
   }
 
+  submit = doc => updateDocument({
+      ...doc,
+      data: cleanJSON(doc.data)
+    })
+    .then(() => fetchDocument(doc.id));
+
+  //  Update document in entities state
+  documentUpdated = (doc) => this.props.documentUpdated(doc);
+
   render() {
 
-    const { doc, loading } = this.props;
+    const { doc, loading, language } = this.props;
 
     if (loading && !doc) return <Spinner />;
     if (!doc) return null;
@@ -34,11 +51,13 @@ class DocumentEdit extends PureComponent {
     return (
       <div>
         <div className="DocumentDetail__Top">
-          {doc.title}
+          {doc.data.title && doc.data.title[language.code]} ({doc.slug})
         </div>
         <DocumentForm
-          initialValues = {doc}
-          exitLink      = "/documents/"
+          initialValues   = {doc}
+          onSubmit        = {this.submit}
+          onSubmitSuccess = {this.documentUpdated}
+          exitLink        = "/documents/"
         />
       </div>
     );
@@ -48,11 +67,13 @@ class DocumentEdit extends PureComponent {
 const mapStateToProps = state => ({
   trans:    makeTranslator(state),
   doc:      getDocument(state),
-  loading:  isDocumentLoading(state)
+  loading:  isDocumentLoading(state),
+  language: getCurrentLanguage(state)
 });
 
 export default connect(mapStateToProps, {
   loadDocument,
   loadDocumentSchema,
-  unloadDocument
+  unloadDocument,
+  documentUpdated
 })(DocumentEdit);

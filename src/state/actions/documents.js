@@ -38,6 +38,12 @@ export const unloadDocument = () => ({
   type: GET_DOCUMENT_UNLOAD
 });
 
+export const DOCUMENT_UPDATED = 'DOCUMENT_UPDATED';
+export const documentUpdated = doc => ({
+  type: DOCUMENT_UPDATED,
+  payload: doc
+});
+
 export const DELETE_DOCUMENT = 'DELETE_DOCUMENT';
 export const DELETE_DOCUMENT_LOADING = 'DELETE_DOCUMENT_LOADING';
 export const DELETE_DOCUMENT_SUCCESS = 'DELETE_DOCUMENT_SUCCESS';

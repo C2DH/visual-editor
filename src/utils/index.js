@@ -1,4 +1,4 @@
-import { reduce, isArray } from "lodash";
+import _, { reduce, isArray } from "lodash";
 
 export const hexToRgb = hexStr => {
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
@@ -143,5 +143,30 @@ export const getBoundingBoxImage = (token, imageUrl, bbox) => {
   }
   return imageUrl;
 };
+
+// Build a JSON object with default values from the schema
+// Used as initial value for new document
+export const getSchemaInitialValue = (properties = {}) => {
+
+  let value = {};
+  for(let prop in properties) {
+
+    if(properties[prop].properties) {
+      let childValue = getSchemaInitialValue(properties[prop].properties);
+      if(Object.keys(childValue).length !== 0)
+        value[prop] = childValue;
+
+    } else if(properties[prop].default !== undefined)
+      value[prop] = properties[prop].default;
+  }
+
+  return value;
+}
+
+// Recursively remove null, undefined, '', {}, [] values from object
+const isBlank = value => (_.isEmpty(value) && !_.isNumber(value) && !_.isBoolean(value)) || _.isNaN(value);
+export const cleanJSON = obj =>
+  _.isObject(obj) ? _(obj).mapValues(cleanJSON).omitBy(isBlank).value() : obj;
+
 
 export * from "./modules";

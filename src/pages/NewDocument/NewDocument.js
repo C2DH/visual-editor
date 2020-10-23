@@ -1,15 +1,43 @@
 import React, { PureComponent } from 'react';
+import { connect } from 'react-redux'
 import DocumentForm from '../../components/DocumentForm';
+import { getNewDocument } from '../../state/selectors';
+import * as api from '../../api'
+import { wrapAuthApiCall } from '../../state'
+import { cleanJSON } from '../../utils';
+
+const createDocument = wrapAuthApiCall(api.createDocument)
 
 class NewDocument extends PureComponent {
 
+  submit = doc => createDocument({
+    ...doc,
+    data: cleanJSON(doc.data)
+  });
+
+  redirectToCreatedDocument = createdDoc =>
+    this.props.history.replace(`/documents/${createdDoc.id}/edit`);
+
   render() {
+
+    const { doc } = this.props;
+
     return (
       <div className="mt-3">
-        <DocumentForm exitLink="/documents/" />
+        <DocumentForm
+          initialValues       = {doc}
+          onSubmit            = {this.submit}
+          onSubmitSuccess     = {this.redirectToCreatedDocument}
+          exitLink            = "/documents/"
+          enableReinitialize
+        />
       </div>
     );
   }
 }
 
-export default NewDocument;
+const mapStateToProps = state => ({
+  doc: getNewDocument(state)
+});
+
+export default connect(mapStateToProps)(NewDocument);

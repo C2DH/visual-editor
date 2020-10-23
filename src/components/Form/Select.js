@@ -7,7 +7,7 @@ const Select = ({
     input,
     label,
     options,
-    required, 
+    required,
     className,
     children
   }) => (
@@ -16,7 +16,7 @@ const Select = ({
     {label && <Label className={required ? 'font-weight-bold' : ''} for={input.name}>{label}</Label>}
     <Input
       id        = {input.name}
-      type      ='select'
+      type      = 'select'
       className = {className}
       {...input}
     >

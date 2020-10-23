@@ -8,7 +8,12 @@ const FormCheckbox = ({
   }) => (
 
   <React.Fragment>
-    <Input type="checkbox" id={input.name} {...input} checked={input.value} />
+    <Input
+      type    = "checkbox"
+      id      = {input.name}
+      checked = {input.value || false}
+      {...input}
+    />
     {label &&
       <Label className={required ? 'font-weight-bold' : ''} for={input.name}>{label}</Label>
     }

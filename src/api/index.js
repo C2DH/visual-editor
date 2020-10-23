@@ -1,6 +1,7 @@
 import request from 'superagent'
 import { moveArrayBack, moveArrayAhead } from '../utils'
-import { findKey, get, mapValues, isArray, isPlainObject, without } from 'lodash'
+import { find, findKey, get, mapValues, isArray, isPlainObject, without } from 'lodash'
+import { DEFAULT_LANGUAGE } from '../state/consts';
 
 // Hight value for pagination that means no limit maaan
 const NO_LIMIT = 1000
@@ -99,6 +100,22 @@ export const getDocuments = token => (params = {}) =>
 export const getDocument = token => id =>
   withToken(token, request.get(`/api/document/${id}/`))
     .then(extractBody);
+
+export const createDocument = token => doc =>
+  withToken(token, request.post(`/api/document/`)
+  .send({
+    title:  doc.data.title[DEFAULT_LANGUAGE] || find(doc.data.title),
+    type:   doc.type,
+    data:   doc.data
+  }))
+  .then(extractBody)
+
+export const updateDocument = token => doc =>
+  withToken(token, request.patch(`/api/document/${doc.id}/`).send({
+    type: doc.type,
+    data: doc.data
+  }))
+  .then(extractBody)
 
 export const deleteDocument = token => id =>
   withToken(token, request.del(`/api/document/${id}/`))

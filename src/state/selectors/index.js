@@ -1,5 +1,7 @@
 import { createSelector, defaultMemoize } from 'reselect'
 import { reduce, isNull, find, get, mapValues, keyBy, isPlainObject, isArray } from 'lodash'
+import { getSchemaInitialValue } from '../../utils';
+import { MEDIA_TYPES } from '../consts';
 import {
   TAG_THEME,
   TAG_CHAPTER,
@@ -119,6 +121,14 @@ export const getSelectedDocuments = createSelector(
     return r
   }, [])
 )
+
+export const getNewDocument = createSelector(
+  getDocumentSchema,
+  schema => ({
+    type: MEDIA_TYPES[0],
+    data: maybeNull(schema)(schema => getSchemaInitialValue(schema.properties))
+  })
+);
 
 // Themes
 
