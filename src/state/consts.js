@@ -22,3 +22,15 @@ export const LANGUAGES = (process.env.REACT_APP_LANGUAGES || 'en|British English
     return {label, description, code};
   });
 export const DEFAULT_LANGUAGE = process.env.REACT_APP_DEFAULT_LANGUAGE || LANGUAGES[0].code;
+
+//  List of accepted files in content field
+export const CONTENT_ACCEPTED_FILES = process.env.REACT_APP_CONTENT_ACCEPTED_FILES || '*';
+
+//  Maximum size of files to upload in content field (in Megabyte)
+export const CONTENT_MAX_SIZE = process.env.REACT_APP_CONTENT_MAX_SIZE || 2;
+
+//  List of accepted files in preview field
+export const PREVIEW_ACCEPTED_FILES = process.env.REACT_APP_PREVIEW_ACCEPTED_FILES || 'image/jpeg,image/png';
+
+//  Maximum size of files to upload in preview field (in Megabyte)
+export const PREVIEW_MAX_SIZE = process.env.REACT_APP_PREVIEW_MAX_SIZE || 1;

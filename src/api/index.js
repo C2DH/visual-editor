@@ -102,24 +102,35 @@ export const getDocument = token => id =>
     .then(extractBody);
 
 export const createDocument = token => doc =>
-  withToken(token, request.post(`/api/document/`)
-  .send({
-    title:  doc.data.title[DEFAULT_LANGUAGE] || find(doc.data.title),
-    type:   doc.type,
-    data:   doc.data
-  }))
-  .then(extractBody)
+  withToken(token, request.post(`/api/document/`))
+    .field({
+      title:      doc.data.title[DEFAULT_LANGUAGE] || find(doc.data.title),
+      type:       doc.type,
+      data:       JSON.stringify(doc.data)
+    })
+    .attach('attachment', doc.attachment_file || undefined)
+    .attach('snapshot', doc.snapshot_file || undefined)
+    .then(extractBody);
 
 export const updateDocument = token => doc =>
-  withToken(token, request.patch(`/api/document/${doc.id}/`).send({
-    type: doc.type,
-    data: doc.data
-  }))
-  .then(extractBody)
+  withToken(token, request.patch(`/api/document/${doc.id}/`))
+    .field({
+      type:       doc.type,
+      data:       JSON.stringify(doc.data)
+    })
+    .field(!doc.attachment ? {attachment: ''} : {}) //  Send an empty string to remove the file
+    .field(!doc.snapshot ? {snapshot: ''} : {}) //  Send an empty string to remove the file
+    .attach('attachment', doc.attachment_file || undefined)
+    .attach('snapshot', doc.snapshot_file || undefined)
+    .then(extractBody);
 
 export const deleteDocument = token => id =>
   withToken(token, request.del(`/api/document/${id}/`))
     .then(extractBody)
+
+export const generateDocumentPreview = token => id =>
+  withToken(token, request.put(`/api/document/${id}/generate_snapshot/`))
+    .then(extractBody);
 
 // Stories
 

@@ -20,6 +20,7 @@ import { cleanJSON } from '../../utils';
 import './DocumentEdit.css';
 
 const updateDocument = wrapAuthApiCall(api.updateDocument);
+const generateDocumentPreview = wrapAuthApiCall(api.generateDocumentPreview);
 const fetchDocument = wrapAuthApiCall(api.getDocument);
 
 class DocumentEdit extends PureComponent {
@@ -32,10 +33,12 @@ class DocumentEdit extends PureComponent {
     this.props.unloadDocument();
   }
 
-  submit = doc => updateDocument({
+  submit = doc =>
+    updateDocument({
       ...doc,
       data: cleanJSON(doc.data)
     })
+    .then(() => (doc.generate_preview || doc.snapshot_file) && generateDocumentPreview(doc.id))
     .then(() => fetchDocument(doc.id));
 
   //  Update document in entities state
@@ -58,6 +61,7 @@ class DocumentEdit extends PureComponent {
           onSubmit        = {this.submit}
           onSubmitSuccess = {this.documentUpdated}
           exitLink        = "/documents/"
+          enableReinitialize
         />
       </div>
     );

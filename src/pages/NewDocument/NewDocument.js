@@ -7,13 +7,20 @@ import { wrapAuthApiCall } from '../../state'
 import { cleanJSON } from '../../utils';
 
 const createDocument = wrapAuthApiCall(api.createDocument)
+const generateDocumentPreview = wrapAuthApiCall(api.generateDocumentPreview);
 
 class NewDocument extends PureComponent {
 
-  submit = doc => createDocument({
-    ...doc,
-    data: cleanJSON(doc.data)
-  });
+  submit = doc =>
+    createDocument({
+      ...doc,
+      data: cleanJSON(doc.data)
+    })
+    .then((createdDoc) =>
+      doc.generate_preview || doc.snapshot_file ?
+        generateDocumentPreview(createdDoc.id).then(() => createdDoc) :
+        createdDoc
+    );
 
   redirectToCreatedDocument = createdDoc =>
     this.props.history.replace(`/documents/${createdDoc.id}/edit`);
