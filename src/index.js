@@ -10,6 +10,11 @@ console.info('Version:',
   process.env.REACT_APP_VISUAL_EDITOR_GIT_BRANCH,
   process.env.REACT_APP_VISUAL_EDITOR_GIT_REVISION,
 );
+
+if (process.env.NODE_ENV === 'development') {
+  console.info('REACT_APP_MILLER_CLIENT_ID', process.env.REACT_APP_MILLER_CLIENT_ID)
+  console.info('REACT_APP_DOCUMENT_SCHEMA', process.env.REACT_APP_DOCUMENT_SCHEMA)
+}
 ReactDOM.render(<App />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change
