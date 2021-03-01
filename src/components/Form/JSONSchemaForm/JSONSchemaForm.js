@@ -192,7 +192,7 @@ const JSONSchemaObjectProperty = ({
       required
     },
     language,
-    level
+    level = 1
   }) => {
 
   const [isOpen, setIsOpen] = useState(false);
