@@ -135,9 +135,11 @@ class DocumentForm extends PureComponent {
   validatePreview = value =>
     this.state.previewStatus === 'error_file_size' ? 'File too big!' : undefined;
 
-  componentDidUpdate = () =>
+  componentDidUpdate = () => {
     // Force field validation for File components
-    this.props.change('_validationHack', Date.now());
+    if(!this.props.error)
+      this.props.change('_validationHack', Date.now());
+  }
 
   render() {
     const {
