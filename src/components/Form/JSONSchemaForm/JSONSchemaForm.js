@@ -192,7 +192,7 @@ const JSONSchemaObjectProperty = ({
       required
     },
     language,
-    level = 1
+    level
   }) => {
 
   const [isOpen, setIsOpen] = useState(false);
@@ -220,6 +220,9 @@ const JSONSchemaObjectProperty = ({
   );
 }
 
+JSONSchemaObjectProperty.defaultProps = {
+  level:    0
+}
 
 export const JSONSchemaForm = ({
   properties,
