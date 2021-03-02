@@ -10,6 +10,7 @@ import {
   MOVE_MODULE_CHAPTER_SUCCESS,
 } from '../actions'
 import makeStoryDetail from './hor/storyDetail'
+import resetOn from './hor/resetOn';
 
 const deletingModules = (prevState = {}, { type, payload }) => {
   switch (type) {
@@ -22,8 +23,6 @@ const deletingModules = (prevState = {}, { type, payload }) => {
       return {
         [payload.moduleIndex]: undefined,
       }
-    case GET_CHAPTER_UNLOAD:
-      return {}
     default:
       return prevState
   }
@@ -40,15 +39,15 @@ const movingModules = (prevState = {}, { type, payload }) => {
       return {
         [payload.moduleIndex]: undefined,
       }
-    case GET_CHAPTER_UNLOAD:
-      return {}
     default:
       return prevState
   }
 }
 
-export default combineReducers({
+const reducer = combineReducers({
   deletingModules,
   movingModules,
   chapter: makeStoryDetail(CHAPTER),
 })
+
+export default resetOn(GET_CHAPTER_UNLOAD, reducer);

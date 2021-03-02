@@ -1,0 +1,9 @@
+.TopSelectFilter__container {
+  margin-bottom: 15px;
+  min-width: 200px;
+}
+
+.TopSelectFilter__container label {
+  margin-bottom: 0;
+  text-transform: capitalize;
+}

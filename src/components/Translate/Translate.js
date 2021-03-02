@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
-import { Container, Row, Col, FormGroup, Label, Input, Button } from 'reactstrap'
+import { Container, Row, Col, FormGroup, Label, Button } from 'reactstrap'
 import HeadingRow from '../HeadingRow'
 import Textarea from '../Form/Textarea'
 import {

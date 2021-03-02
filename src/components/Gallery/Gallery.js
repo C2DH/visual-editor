@@ -1,5 +1,4 @@
-import React from 'react'
-import { pure } from 'recompose'
+import React, { memo } from 'react'
 import SlideshowGallery from '../SlideshowGallery'
 import GridGallery from '../GridGallery'
 
@@ -12,4 +11,4 @@ const Gallery = ({ layout, ...props }) => {
   return null
 }
 
-export default pure(Gallery)
+export default memo(Gallery)

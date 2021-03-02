@@ -11,7 +11,7 @@ class Bbox extends PureComponent {
     this.props.hideWidgetFullPage()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.savedBbox !== nextProps.savedBbox && nextProps.savedBbox) {
       this.props.input.onChange(nextProps.savedBbox)
       this.props.hideWidgetFullPage()

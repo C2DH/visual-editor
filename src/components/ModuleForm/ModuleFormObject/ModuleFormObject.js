@@ -10,7 +10,6 @@ import {
 } from "redux-form";
 import { Link } from "react-router-dom";
 import { Button, FormGroup, Label, Input } from "reactstrap";
-import { ListGroup, ListGroupItem } from "reactstrap";
 import "./ModuleFormObject.css";
 
 import VisualForm, {
@@ -65,7 +64,7 @@ class ModuleFormObject extends PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.documentType !== nextProps.documentType) {
       this.props.change("moduleObject", "id", null);
       if (nextProps.documentType === "audio") {

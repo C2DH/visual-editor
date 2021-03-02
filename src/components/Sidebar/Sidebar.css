@@ -29,6 +29,7 @@
 .Sidebar__languageBtn {
   position: absolute;
   bottom: 20px;
+  text-transform: uppercase;
 }
 
 /* CSS transition styles */
@@ -44,13 +45,13 @@
   transition: opacity 500ms ease-in;
 }
 
-.sidebar-leave {
+.sidebar-exit {
   /*transition: transform 500ms;
   transform: translateX(0%);*/
   opacity: 1;
 }
 
-.sidebar-leave.sidebar-leave-active {
+.sidebar-exit.sidebar-exit-active {
   /*transform: translateX(-90%);*/
   opacity: 0.01;
   transition: opacity 300ms ease-in;

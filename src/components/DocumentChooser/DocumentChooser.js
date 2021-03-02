@@ -4,8 +4,6 @@ import { debounce } from "lodash";
 import { Container, Row, Col, Button } from "reactstrap";
 import HeadingRow from "../HeadingRow";
 import TopSearchInput from "../TopSearchInput";
-import AddButton from "../AddButton";
-import ThemeCard from "../cards/ThemeCard";
 import DocumentCard from "../cards/DocumentCard";
 import Spinner from "../Spinner";
 import "./DocumentChooser.css";
@@ -13,23 +11,23 @@ import "./DocumentChooser.css";
 import {
   loadDocuments,
   loadMoreDocuments,
-  unloadChoseDocuments,
+  unloadDocuments,
   chooseDocument,
   hideWidgetFullPage,
   selectDocument,
   unselectDocument,
   selectionDone,
   selectAllDocuments,
-  unselectAllDocuments
+  unselectAllDocuments,
 } from "../../state/actions";
 
 import {
   getDocuments,
   canLoadMoreDocuments,
   getDocumentsCount,
-  getDocumentsLoading,
+  areDocumentsLoading,
   getSelectedDocumentsById,
-  getDocumentsPlaceTypes
+  getDocumentsPlaceTypes,
 } from "../../state/selectors";
 
 const mergeParams = (s1, s2) => ({
@@ -37,14 +35,14 @@ const mergeParams = (s1, s2) => ({
   ...s2,
   filters: {
     ...s1.filters,
-    ...s2.filters
-  }
+    ...s2.filters,
+  },
 });
 
 class DocumentChooser extends PureComponent {
   state = {
     searchString: "",
-    placeTypeFilters: {}
+    placeTypeFilters: {},
   };
 
   makeParams = (params = {}) => {
@@ -54,22 +52,22 @@ class DocumentChooser extends PureComponent {
     return mergeParams(
       {
         filters: {
-          type: this.props.documentType
-        }
+          type: this.props.documentType,
+        },
       },
       params
     );
   };
 
   // Params \w user filters
-  getFilterParams = searchString => {
+  getFilterParams = (searchString) => {
     let params = {
       q: `${searchString}*`,
-      filters: {}
+      filters: {},
     };
     if (this.props.withPlaceTypeFilters) {
       const placeTypes = Object.keys(this.state.placeTypeFilters).filter(
-        placeType => this.state.placeTypeFilters[placeType]
+        (placeType) => this.state.placeTypeFilters[placeType]
       );
       if (placeTypes.length > 0) {
         params.filters.data__place_type__in = placeTypes;
@@ -80,13 +78,12 @@ class DocumentChooser extends PureComponent {
 
   componentDidMount() {
     const { loadDocuments, withPlaceTypeFilters } = this.props;
-    const { searchString } = this.state;
 
     if (withPlaceTypeFilters) {
       // Load facets for place filters
       loadDocuments(
         this.makeParams({
-          facets: "data__place_type"
+          facets: "data__place_type",
         })
       );
     } else {
@@ -95,26 +92,26 @@ class DocumentChooser extends PureComponent {
   }
 
   componentWillUnmount() {
-    this.props.unloadChoseDocuments();
+    this.props.unloadDocuments();
   }
 
-  chooseDocument = doc => {
+  chooseDocument = (doc) => {
     this.props.chooseDocument(doc);
   };
 
-  handleSearchChange = e => {
+  handleSearchChange = (e) => {
     const searchString = e.target.value;
     this.setState({ searchString });
     this.searchDocuments(searchString);
   };
 
-  togglePlaceTypeFilter = placeType => {
+  togglePlaceTypeFilter = (placeType) => {
     this.setState(
-      prevState => ({
+      (prevState) => ({
         placeTypeFilters: {
           ...prevState.placeTypeFilters,
-          [placeType]: !prevState.placeTypeFilters[placeType]
-        }
+          [placeType]: !prevState.placeTypeFilters[placeType],
+        },
       }),
       () => {
         this.props.loadDocuments(this.getFilterParams(this.state.searchString));
@@ -122,7 +119,7 @@ class DocumentChooser extends PureComponent {
     );
   };
 
-  searchDocuments = debounce(searchString => {
+  searchDocuments = debounce((searchString) => {
     this.props.loadDocuments(this.getFilterParams(searchString));
   }, 200);
 
@@ -149,7 +146,7 @@ class DocumentChooser extends PureComponent {
       selectDocument,
       unselectDocument,
       selectionDone,
-      placeTypes
+      placeTypes,
     } = this.props;
     return (
       <Container fluid className="margin-r-l-20">
@@ -171,7 +168,7 @@ class DocumentChooser extends PureComponent {
 
           {withPlaceTypeFilters && placeTypes && (
             <div className="DocumentChooser__PlaceTypeFilters">
-              {placeTypes.map(placeType => (
+              {placeTypes.map((placeType) => (
                 <span key={placeType} style={{ marginRight: 15 }}>
                   <input
                     checked={!!this.state.placeTypeFilters[placeType]}
@@ -196,7 +193,7 @@ class DocumentChooser extends PureComponent {
         >
           {documents && (
             <Row>
-              {documents.map(doc => (
+              {documents.map((doc) => (
                 <Col md="3" key={doc.id}>
                   {multi ? (
                     <DocumentCard
@@ -263,30 +260,27 @@ DocumentChooser.defaultProps = {
   // Is a multi select document or a pick one only?
   multi: false,
   // \w UI for place type filters
-  withPlaceTypeFilters: false
+  withPlaceTypeFilters: false,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   placeTypes: getDocumentsPlaceTypes(state),
   documents: getDocuments(state),
   selectedDocuments: getSelectedDocumentsById(state),
   canLoadMore: canLoadMoreDocuments(state),
   count: getDocumentsCount(state),
-  loading: getDocumentsLoading(state)
+  loading: areDocumentsLoading(state),
 });
 
-export default connect(
-  mapStateToProps,
-  {
-    loadDocuments,
-    loadMoreDocuments,
-    unloadChoseDocuments,
-    chooseDocument,
-    hideWidgetFullPage,
-    selectDocument,
-    unselectDocument,
-    selectionDone,
-    selectAllDocuments,
-    unselectAllDocuments
-  }
-)(DocumentChooser);
+export default connect(mapStateToProps, {
+  loadDocuments,
+  loadMoreDocuments,
+  unloadDocuments,
+  chooseDocument,
+  hideWidgetFullPage,
+  selectDocument,
+  unselectDocument,
+  selectionDone,
+  selectAllDocuments,
+  unselectAllDocuments,
+})(DocumentChooser);

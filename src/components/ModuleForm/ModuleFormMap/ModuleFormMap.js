@@ -4,25 +4,20 @@ import { defaultMemoize } from 'reselect'
 import { reduxForm, Field, FieldArray, formValueSelector, change } from 'redux-form'
 import { get } from 'lodash'
 import { Link } from 'react-router-dom'
-import { Button, FormGroup, Label, Input } from 'reactstrap'
-import { ListGroup, ListGroupItem } from 'reactstrap'
+import { Button } from 'reactstrap'
 import './ModuleFormMap.css'
 
 import VisualForm, {
   SideContainer,
   SideForm,
   SideActions,
-  PreviewContainer,
   GenericPreviewContainer,
 } from '../../VisualForm'
 
-import AddButton from '../../AddButton'
 import MapPreview from '../../MapPreview'
-import ChooseDocument from '../../Form/ChooseDocument'
 import ChooseDocuments from '../../Form/ChooseDocuments'
 import Translate from '../../Form/Translate'
 import MediumEditor from '../../Form/MediumEditor'
-import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
 import { notAnEmptyList } from '../../Form/validate'
 
 import {
@@ -53,15 +48,11 @@ class ModuleFormMap extends PureComponent {
       invalid,
       submitting,
       exitLink,
-      change,
-      backgroundObject,
-      backgroundImage,
-      backgroundColorOverlay,
-      backgroundColor,
-      doc,
-      documents,
+//      change,
+//      backgroundObject,
+      documents
     } = this.props
-    const backgroundType = backgroundObject ? 'image' : 'color'
+//    const backgroundType = backgroundObject ? 'image' : 'color'
 
     return (
       <VisualForm onSubmit={handleSubmit} saving={submitting}>

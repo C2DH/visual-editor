@@ -9,7 +9,8 @@ const DocumentCard = ({
   checked,
   onClick,
   onChange,
-  type
+  type,
+  showDeleteButton = false
 }) => (
   <GenericCard
     className="DocumentCard__card"
@@ -19,7 +20,7 @@ const DocumentCard = ({
     footerButton={
       typeof onChange === "undefined" ? (
         <Button onClick={onClick}>
-          <i className="fa fa-crosshairs" aria-hidden="true" />
+          <i className={`fa ${showDeleteButton ? 'fa-trash-o' : 'fa-crosshairs'}`} aria-hidden="true" />
         </Button>
       ) : (
         <Label check>

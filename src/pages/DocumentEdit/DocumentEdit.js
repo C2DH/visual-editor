@@ -1,42 +1,83 @@
-import React, { PureComponent } from 'react'
-import { Container, Row, Col } from 'reactstrap'
-import SideEditToolbar from '../../components/SideEditToolbar'
-import TextAlignSelection from '../../components/TextAlignSelection'
-import './DocumentEdit.css'
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import DocumentForm from '../../components/DocumentForm';
+import Spinner from '../../components/Spinner'
+import * as api from '../../api'
+import { wrapAuthApiCall } from '../../state'
+import {
+  makeTranslator,
+  getDocument,
+  isDocumentLoading,
+  getCurrentLanguage
+} from '../../state/selectors';
+import {
+  loadDocument,
+  loadDocumentSchema,
+  unloadDocument,
+  documentUpdated
+} from '../../state/actions';
+import { cleanJSON } from '../../utils';
+import './DocumentEdit.css';
+
+const updateDocument = wrapAuthApiCall(api.updateDocument);
+const generateDocumentPreview = wrapAuthApiCall(api.generateDocumentPreview);
+const fetchDocument = wrapAuthApiCall(api.getDocument);
 
 class DocumentEdit extends PureComponent {
-  state = {
-    textAlignment: 'left'
+
+  componentDidMount() {
+    this.props.loadDocument(this.props.match.params.documentId);
   }
-  render () {
+
+  componentWillUnmount() {
+    this.props.unloadDocument();
+  }
+
+  submit = doc =>
+    updateDocument({
+      ...doc,
+      data: cleanJSON(doc.data)
+    })
+    .then(() => (doc.generate_preview || doc.snapshot_file) && generateDocumentPreview(doc.id))
+    .then(() => fetchDocument(doc.id));
+
+  //  Update document in entities state
+  documentUpdated = (doc) => this.props.documentUpdated(doc);
+
+  render() {
+
+    const { doc, loading, language } = this.props;
+
+    if (loading && !doc) return <Spinner />;
+    if (!doc) return null;
+
     return (
-      <Container>
-        <Row>
-          <Col md="3">
-            <SideEditToolbar>
-              <TextAlignSelection
-                value={this.state.textAlignment}
-                onChange={(textAlign) => this.setState({textAlignment: textAlign})}
-                textAligns={['left', 'center', 'right']}
-              />
-            </SideEditToolbar>
-          </Col>
-          <Col md="9">
-            <div className="DocumentEdit__right_container">
-              <div style={{textAlign: this.state.textAlignment}}>
-                <p>
-                  Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
-                  Vivamus suscipit tortor eget felis porttitor volutpat. Donec sollicitudin molestie malesuada. Sed porttitor lectus nibh.
-                  Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Quisque velit nisi, pretium ut lacinia in, elementum id enim. Nulla quis lorem ut libero malesuada feugiat.
-                </p>
-              </div>
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    )
+      <div>
+        <div className="DocumentDetail__Top">
+          {doc.data.title && doc.data.title[language.code]} ({doc.slug})
+        </div>
+        <DocumentForm
+          initialValues   = {doc}
+          onSubmit        = {this.submit}
+          onSubmitSuccess = {this.documentUpdated}
+          exitLink        = "/documents/"
+          enableReinitialize
+        />
+      </div>
+    );
   }
 }
 
+const mapStateToProps = state => ({
+  trans:    makeTranslator(state),
+  doc:      getDocument(state),
+  loading:  isDocumentLoading(state),
+  language: getCurrentLanguage(state)
+});
 
-export default DocumentEdit
+export default connect(mapStateToProps, {
+  loadDocument,
+  loadDocumentSchema,
+  unloadDocument,
+  documentUpdated
+})(DocumentEdit);

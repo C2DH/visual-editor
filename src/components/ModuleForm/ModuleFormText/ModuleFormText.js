@@ -15,7 +15,6 @@ import TextAlignSelection from '../../Form/TextAlignSelection'
 import Bbox from '../../Form/Bbox'
 import Translate from '../../Form/Translate'
 import ColorSelection, { isValidHex } from '../../Form/ColorSelection'
-import Select from '../../Form/Select'
 import MediumEditor from '../../Form/MediumEditor'
 import { requiredAtLeastOne, required } from '../../Form/validate'
 

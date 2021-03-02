@@ -2,7 +2,6 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { isNull } from 'lodash'
 import { Container, Row, Col, Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
-import { Badge } from 'reactstrap';
 import AddButton from '../../components/AddButton'
 import Spinner from '../../components/Spinner'
 import { Link } from 'react-router-dom'

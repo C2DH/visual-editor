@@ -42,7 +42,7 @@ class ModuleFormTextObject extends PureComponent {
     }
   };
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.documentType !== nextProps.documentType) {
       this.props.change("moduleTextObject", "object.id", null);
     }

@@ -1,41 +1,41 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, memo } from "react";
 import { Container, Row, Col, Label, Button } from "reactstrap";
 import GenericCard from "../cards/GenericCard";
-import { pure } from "recompose";
-import { Card, CardImg, CardText, CardTitle, CardBlock } from "reactstrap";
 import "./ChooseModule.css";
 import textImage from "./imgs/text.png";
 import objectImage from "./imgs/object.png";
 import galleryImage from "./imgs/gallery.png";
-import mapImage from "./imgs/map.png";
 import text_objectImage from "./imgs/text_object.png";
 import text_galleryImage from "./imgs/text_gallery.png";
-import text_mapImage from "./imgs/text_map.png";
 
 const modulesTypes = [
   { type: "text", label: "Module text", cover: textImage },
   { type: "object", label: "Module object", cover: objectImage },
   { type: "gallery", label: "Module gallery", cover: galleryImage },
-  { type: "map", label: "Module map", cover: mapImage },
+  //{ type: "map", label: "Module map", cover: mapImage },
   {
     type: "text_object",
     label: "Module text & object",
-    cover: text_objectImage
+    cover: text_objectImage,
   },
   {
     type: "text_gallery",
     label: "Module text & gallery",
-    cover: text_galleryImage
+    cover: text_galleryImage,
   },
+  // {
+  //   type: "text_map",
+  //   label: "Module text & map",
+  //   cover: text_mapImage,
+  // },
   {
-    type: "text_map",
-    label: "Module text & map",
-    cover: text_mapImage
-  }
-  //{type: 'video_interview', label: 'Modul video interview', cover:'/modules/text_map.png'},
+    type: "video_interview",
+    label: "Modul video interview",
+    cover: objectImage,
+  },
 ];
 
-const ChooseModuleCard = pure(({ title, cover, cardClick }) => (
+const ChooseModuleCard = memo(({ title, cover, cardClick }) => (
   <GenericCard
     className="ChooseModule__ChooseModuleCard"
     containerClassName="ChooseModule__ChooseModuleCard__img"

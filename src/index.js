@@ -2,9 +2,22 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.css";
 import App from "./App";
-import { unregister } from "./registerServiceWorker";
+import * as serviceWorker from './serviceWorker';
 import "./style/font-awesome.css";
 import "./style/index.css";
 
+console.info('Version:',
+  process.env.REACT_APP_VISUAL_EDITOR_GIT_BRANCH,
+  process.env.REACT_APP_VISUAL_EDITOR_GIT_REVISION,
+);
+
+if (process.env.NODE_ENV === 'development') {
+  console.info('REACT_APP_MILLER_CLIENT_ID', process.env.REACT_APP_MILLER_CLIENT_ID)
+  console.info('REACT_APP_DOCUMENT_SCHEMA', process.env.REACT_APP_DOCUMENT_SCHEMA)
+}
 ReactDOM.render(<App />, document.getElementById("root"));
-unregister();
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+serviceWorker.unregister();

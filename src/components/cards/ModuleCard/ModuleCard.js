@@ -1,6 +1,5 @@
-import React from "react";
+import React, { memo } from "react";
 import { get } from "lodash";
-import { pure } from "recompose";
 import { connect } from "react-redux";
 import { Card, Button } from "reactstrap";
 import showdown from "showdown";
@@ -49,6 +48,7 @@ const getTitle = (module, trans) => {
           caption
         )}`;
       }
+      break;
     }
     case "text_object": {
       const text = trans(module, "text.content");
@@ -63,6 +63,7 @@ const getTitle = (module, trans) => {
           caption
         )}`;
       }
+      break;
     }
     case "text_map": {
       const text = trans(module, "text.content");
@@ -77,10 +78,11 @@ const getTitle = (module, trans) => {
           caption
         )}`;
       }
+      break;
     }
     default:
-      return `<span class="badge badge-primary">${moduleName}</span>`;
   }
+  return `<span class="badge badge-primary">${moduleName}</span>`;
 };
 
 const symbolicBackground = module => ({
@@ -121,6 +123,7 @@ const getBackground = module => {
           backgroundType: "image"
         };
       }
+      break;
     }
     case "gallery": {
       if (get(module, "objects[0].id")) {
@@ -132,6 +135,7 @@ const getBackground = module => {
           backgroundType: "image"
         };
       }
+      break;
     }
     case "text_gallery": {
       if (get(module, "gallery.objects[0].id")) {
@@ -143,6 +147,7 @@ const getBackground = module => {
           backgroundType: "image"
         };
       }
+      break;
     }
     case "text_object": {
       if (get(module, "object.type") === "image") {
@@ -151,15 +156,17 @@ const getBackground = module => {
           backgroundType: "image"
         };
       }
+      break;
     }
     case "map":
       return symbolicBackground(module);
     default:
       return standardBackground(module);
   }
+  return symbolicBackground(module);
 };
 
-const ModuleCard = pure(
+const ModuleCard = memo(
   ({
     module,
     trans,

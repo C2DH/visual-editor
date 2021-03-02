@@ -1,13 +1,14 @@
-import { fork, take, takeEvery, put, select } from 'redux-saga/effects'
+import { fork, take, takeLatest, takeEvery, put, select } from 'redux-saga/effects'
 import { takeLatestAndCancel } from './effects'
 import makeAuth from './auth'
 import createMakeCollection from './hos/collection'
 import createMakePaginateCollection from './hos/paginateCollection'
 import createMakeStoryDetail from './hos/storyDetail'
-import createMakeDeleteStory from './hos/deleteStory'
+import createMakeDelete from './hos/delete'
 import createMakeMoveStory from './hos/moveStory'
 import * as api from '../../api'
 import {
+  DOCUMENT,
   THEME,
   CHAPTER,
   STATIC_STORY,
@@ -15,6 +16,15 @@ import {
   GET_DOCUMENTS,
   GET_DOCUMENTS_UNLOAD,
   GET_DOCUMENTS_SUCCESS,
+  GET_DOCUMENT,
+  GET_DOCUMENT_UNLOAD,
+  GET_DOCUMENT_LOADING,
+  GET_DOCUMENT_SUCCESS,
+  GET_DOCUMENT_FAILURE,
+  LOAD_DOCUMENT_SCHEMA,
+  LOAD_DOCUMENT_SCHEMA_LOADING,
+  LOAD_DOCUMENT_SCHEMA_SUCCESS,
+  LOAD_DOCUMENT_SCHEMA_FAILURE,
   GET_STATIC_STORIES,
   GET_EDUCATIONALS,
   EDUCATIONAL,
@@ -41,6 +51,7 @@ import {
 import {
   canLoadMoreDocuments
 } from '../selectors'
+import { DOCUMENT_SCHEMA } from '../consts';
 
 const { authFlow, authApiCall } = makeAuth({
   meCall: api.me,
@@ -52,8 +63,29 @@ const { authFlow, authApiCall } = makeAuth({
 const makeCollection = createMakeCollection(authApiCall)
 const makePaginateCollection = createMakePaginateCollection(authApiCall)
 const makeStoryDetail = createMakeStoryDetail(authApiCall)
-const makeDeleteStory = createMakeDeleteStory(authApiCall)
+const makeDelete = createMakeDelete(authApiCall)
 const makeMoveStory = createMakeMoveStory(authApiCall)
+
+function* handleGetDocument({ payload }) {
+  const id = payload
+  yield put({ type: GET_DOCUMENT_LOADING })
+  try {
+    const doc = yield authApiCall(api.getDocument, id)
+    yield put({ type: GET_DOCUMENT_SUCCESS, payload: doc })
+  } catch (error) {
+    yield put({ type: GET_DOCUMENT_FAILURE, error })
+  }
+}
+
+function* handleLoadSchema() {
+  yield put({ type: LOAD_DOCUMENT_SCHEMA_LOADING });
+  try {
+    const schema = yield api.loadSchema(DOCUMENT_SCHEMA);
+    yield put({ type: LOAD_DOCUMENT_SCHEMA_SUCCESS, payload: schema });
+  } catch(error) {
+    yield put({ type: LOAD_DOCUMENT_SCHEMA_FAILURE, error });
+  }
+}
 
 function *handleDeleteModuleChapter({ payload }) {
   const { chapter, moduleIndex } = payload
@@ -135,8 +167,15 @@ export default function* rootSaga() {
   yield fork(makePaginateCollection(
     GET_DOCUMENTS,
     api.getDocuments,
-    state => state.widgets.chooseDocuments.list,
-  ))
+    state => state.documents.list,
+  ));
+  yield fork(
+    takeLatestAndCancel,
+    GET_DOCUMENT,
+    GET_DOCUMENT_UNLOAD,
+    handleGetDocument
+  );
+  yield takeLatest(LOAD_DOCUMENT_SCHEMA, handleLoadSchema);
   yield fork(
     takeLatestAndCancel,
     SELECT_ALL_DOCUMENTS,
@@ -155,9 +194,10 @@ export default function* rootSaga() {
   yield takeEvery(MOVE_CHAPTER_THEME, handleMoveChapterTheme)
   yield fork(makeMoveStory(MOVE_THEME))
   yield fork(makeMoveStory(MOVE_EDUCATIONAL))
-  yield fork(makeDeleteStory(THEME))
-  yield fork(makeDeleteStory(EDUCATIONAL))
-  yield fork(makeDeleteStory(CHAPTER, token => ({ id, theme }) =>
+  yield fork(makeDelete(DOCUMENT, api.deleteDocument));
+  yield fork(makeDelete(THEME))
+  yield fork(makeDelete(EDUCATIONAL))
+  yield fork(makeDelete(CHAPTER, token => ({ id, theme }) =>
     // Got dragon balls like my name was Vegeta
     Promise.all([
       api.deleteStory(token)(id),

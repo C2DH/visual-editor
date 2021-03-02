@@ -1,7 +1,6 @@
-import React from 'react'
-import { pure } from 'recompose'
+import React, { memo } from 'react'
 
-export default pure(function Speaker({ doc }) {
+export default memo(function Speaker({ doc }) {
   return (
     <div className='speaker'>
       {doc && <div>

@@ -5,7 +5,6 @@ import { Container, Label, FormGroup, Row, Col, Button } from 'reactstrap'
 
 import ChooseDocument from '../Form/ChooseDocument'
 import Spinner from '../Spinner'
-import Bbox from '../Form/Bbox'
 import Translate from '../Form/Translate'
 import MediumEditor from '../Form/MediumEditor'
 import Input from '../Form/Input'

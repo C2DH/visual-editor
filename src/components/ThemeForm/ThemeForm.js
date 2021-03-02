@@ -39,7 +39,6 @@ class ThemeForm extends PureComponent {
       backgroundColorOverlay,
       backgroundImage,
       backgroundType,
-      covers,
       language,
       color,
       invalid,
@@ -63,7 +62,7 @@ class ThemeForm extends PureComponent {
             <FormGroup className="margin-bottom-15">
               <Label for="backgroundType">Background</Label>
 
-              <Field name="backgroundType" component={Select} name="backgroundType">
+              <Field name="backgroundType" component={Select}>
                 <option value='color'>Color</option>
                 <option value='image'>Image</option>
               </Field>
@@ -153,7 +152,7 @@ class ThemeForm extends PureComponent {
                 component={Translate}
               />
            </div>
-          </div>   
+          </div>
         </PreviewContainer>
       </VisualForm>
     )

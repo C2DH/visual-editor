@@ -1,1 +1,1 @@
-export { default as default } from './SlideshowGallery'
+export { default } from './SlideshowGallery'

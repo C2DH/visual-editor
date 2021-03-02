@@ -8,8 +8,7 @@ import {
   change
 } from "redux-form";
 import { Link } from "react-router-dom";
-import { Button, FormGroup, Label, Input } from "reactstrap";
-import { ListGroup, ListGroupItem } from "reactstrap";
+import { Button, Label, Input } from "reactstrap";
 import { defaultMemoize } from "reselect";
 import "./ModuleFormGallery.css";
 
@@ -20,7 +19,6 @@ import VisualForm, {
   PreviewContainer
 } from "../../VisualForm";
 
-import AddButton from "../../AddButton";
 import Bbox from "../../Form/Bbox";
 import ChooseDocument from "../../Form/ChooseDocument";
 import ChooseDocuments from "../../Form/ChooseDocuments";
@@ -59,7 +57,6 @@ class ModuleFormGallery extends PureComponent {
       backgroundImage,
       backgroundColorOverlay,
       backgroundColor,
-      doc,
       layout,
       images,
       bbox

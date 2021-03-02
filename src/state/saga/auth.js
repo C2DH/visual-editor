@@ -7,7 +7,6 @@ import {
   AUTH_WITH_TOKEN_LOADING,
   AUTH_WITH_TOKEN_FAILURE,
   AUTH_WITH_TOKEN_SUCCESS,
-  TOKEN_REFRESHED,
   LOGOUT,
   logout,
   tokenRefreshed
@@ -17,7 +16,7 @@ const makeAuth = ({ meCall, loginCall, refreshTokenCall }) => {
   // redux saga helpers for Local Storage
   // TODO: Sorround shit above in a try/catch prevent bugged behaviour on
   // mobile safari anonymous navigaton
-  const STORAGE_KEY_NS = "bglVisualeditor";
+  const STORAGE_KEY_NS = "visualeditor";
   function* lsGetAccessToken() {
     return yield call(
       [window.localStorage, "getItem"],

@@ -1,2 +1,2 @@
-import DocumentEdit from './DocumentEdit'
-export default DocumentEdit
+import DocumentEdit from './DocumentEdit';
+export default DocumentEdit;

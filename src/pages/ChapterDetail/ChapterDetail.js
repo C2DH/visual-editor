@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { get, isNull } from 'lodash'
+import { isNull } from 'lodash'
 import { Link } from 'react-router-dom'
 import {
   Container,

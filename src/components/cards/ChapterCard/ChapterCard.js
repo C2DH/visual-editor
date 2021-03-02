@@ -1,6 +1,5 @@
-import React from "react";
+import React, { memo } from "react";
 import { get } from "lodash";
-import { pure } from "recompose";
 import { connect } from "react-redux";
 import GenericCard from "../GenericCard";
 import { Button } from "reactstrap";
@@ -8,7 +7,7 @@ import "./ChapterCard.css";
 
 import { makeTranslator } from "../../../state/selectors";
 
-const ChapterCard = pure(
+const ChapterCard = memo(
   ({
     chapter,
     trans,
@@ -21,6 +20,7 @@ const ChapterCard = pure(
   }) => (
     <GenericCard
       className="ChapterCard__card"
+      slug={chapter.slug}
       title={trans(chapter, "data.title")}
       backgroundType={get(chapter, "covers", []).length > 0 ? "image" : "color"}
       backgroundImage={get(chapter, "covers[0].data.resolutions.medium.url")}

@@ -1,6 +1,7 @@
 import request from 'superagent'
 import { moveArrayBack, moveArrayAhead } from '../utils'
-import { findKey, get, mapValues, isArray, isPlainObject, without } from 'lodash'
+import { find, findKey, get, mapValues, isArray, isPlainObject, without } from 'lodash'
+import { DEFAULT_LANGUAGE } from '../state/consts';
 
 // Hight value for pagination that means no limit maaan
 const NO_LIMIT = 1000
@@ -65,9 +66,9 @@ export const me = token =>
   withToken(token, request.get('/api/profile/me/'))
     .then(extractBody)
 
-const CLIENT_ID = 'b7X9djWuMXK5WZBCNINieUFyQfnFkIPqgf3MsaN5'
+const CLIENT_ID = process.env.REACT_APP_MILLER_CLIENT_ID
 const oauth = grantType =>
-  request.post(`/editor/o/token/`).type('form').send({
+  request.post(`/o/token/`).type('form').send({
     client_id: CLIENT_ID,
     grant_type: grantType,
   })
@@ -82,6 +83,11 @@ export const refreshToken = token =>
     .send({ refresh_token: token })
     .then(extractBody)
 
+export const loadSchema = url =>
+  request.get(url).then(extractBody);
+
+// Documents
+
 export const getDocuments = token => (params = {}) =>
   withToken(
     token,
@@ -89,7 +95,42 @@ export const getDocuments = token => (params = {}) =>
       .get(`/api/document/`)
       .query(buildMillerParams(params))
   )
-  .then(extractBody)
+  .then(extractBody);
+
+export const getDocument = token => id =>
+  withToken(token, request.get(`/api/document/${id}/`))
+    .then(extractBody);
+
+export const createDocument = token => doc =>
+  withToken(token, request.post(`/api/document/`))
+    .field({
+      title:      doc.data.title[DEFAULT_LANGUAGE] || find(doc.data.title),
+      type:       doc.type,
+      data:       JSON.stringify(doc.data)
+    })
+    .attach('attachment', doc.attachment_file || undefined)
+    .attach('snapshot', doc.snapshot_file || undefined)
+    .then(extractBody);
+
+export const updateDocument = token => doc =>
+  withToken(token, request.patch(`/api/document/${doc.id}/`))
+    .field({
+      type:       doc.type,
+      data:       JSON.stringify(doc.data)
+    })
+    .field(!doc.attachment ? {attachment: ''} : {}) //  Send an empty string to remove the file
+    .field(!doc.snapshot ? {snapshot: ''} : {}) //  Send an empty string to remove the file
+    .attach('attachment', doc.attachment_file || undefined)
+    .attach('snapshot', doc.snapshot_file || undefined)
+    .then(extractBody);
+
+export const deleteDocument = token => id =>
+  withToken(token, request.del(`/api/document/${id}/`))
+    .then(extractBody)
+
+export const generateDocumentPreview = token => id =>
+  withToken(token, request.put(`/api/document/${id}/generate_snapshot/`))
+    .then(extractBody);
 
 // Stories
 
@@ -201,13 +242,13 @@ export const mentionStory = token => (fromStory, toStory) =>
   .then(extractBody)
 
 // FIXME TODO temporany workaround for not encoded json
-const smartParseIntoJsonWhenReallyNeeded = data =>
-  (typeof data !== 'string' || data === '') ? data : JSON.parse(data)
-const reParse = data => ({
-  ...data,
-  data: smartParseIntoJsonWhenReallyNeeded(data.data),
-  contents: smartParseIntoJsonWhenReallyNeeded(data.contents),
-})
+// const smartParseIntoJsonWhenReallyNeeded = data =>
+//   (typeof data !== 'string' || data === '') ? data : JSON.parse(data)
+// const reParse = data => ({
+//   ...data,
+//   data: smartParseIntoJsonWhenReallyNeeded(data.data),
+//   contents: smartParseIntoJsonWhenReallyNeeded(data.contents),
+// })
 
 const onlyId = module => mapValues(module, (v, k, o) => {
   if (isPlainObject(v)) {

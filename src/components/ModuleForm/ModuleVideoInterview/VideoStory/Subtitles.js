@@ -1,7 +1,6 @@
-import React from 'react'
-import { pure } from 'recompose'
+import React, { memo } from 'react'
 
-export default pure(function Subtitles({ subtitles }) {
+export default memo(function Subtitles({ subtitles }) {
   return (
     <div className='subtitles'>
       {subtitles.map((sub, index) => (

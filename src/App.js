@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './state'
 import { AuthRoute, GuestRoute } from './authRoutes'
-import { getBoundingBoxImage } from './utils'
 
 import Layout from './components/Layout'
 import FullPageWidgets from './components/FullPageWidgets'
@@ -18,6 +17,9 @@ import StaticStory from './pages/StaticStory'
 import Educationals from './pages/Educationals'
 import NewEducational from './pages/NewEducational'
 import EducationalDetail from './pages/EducationalDetail'
+import Documents from './pages/Documents';
+import NewDocument from './pages/NewDocument';
+import DocumentEdit from './pages/DocumentEdit';
 
 const App = () => (
   <Provider store={store}>
@@ -34,6 +36,9 @@ const App = () => (
             <AuthRoute path='/educationals' exact component={Educationals} />
             <AuthRoute path='/educationals/new' component={NewEducational} />
             <AuthRoute path='/educationals/:educationalId' component={EducationalDetail} />
+            <AuthRoute path='/documents' exact component={Documents} />
+            <AuthRoute path='/documents/new' component={NewDocument} />
+            <AuthRoute path='/documents/:documentId/edit' component={DocumentEdit} />
             <Redirect to='/' />
           </Switch>
         </FullPageWidgets>

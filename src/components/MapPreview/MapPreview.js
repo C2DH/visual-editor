@@ -3,12 +3,8 @@ import { connect } from "react-redux";
 import ReactMapboxGl, {
   Popup,
   Marker,
-  Layer,
-  Feature,
   Cluster,
-  ZoomControl,
-  GeoJSONLayer,
-  Source
+  ZoomControl
 } from "react-mapbox-gl";
 import { scaleLinear } from "d3-scale";
 import * as MapboxGL from "mapbox-gl";
@@ -49,7 +45,7 @@ class MapPreview extends PureComponent {
     zoom: [8]
   };
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.documents !== nextProps.documents) {
       this.closePopup();
     }
@@ -98,7 +94,7 @@ class MapPreview extends PureComponent {
         touchZoomRotate={false}
         minZoom={8}
         maxBounds={llb}
-        style="mapbox://styles/andreabenedetti/cj2kujx9w002d2rt7mcwgv5fd"
+        style={`mapbox://styles/andreabenedetti/cj2kujx9w002d2rt7mcwgv5fd`}
         containerStyle={{
           width: "100%",
           height: "100%"

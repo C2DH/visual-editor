@@ -1,0 +1,21 @@
+.DocumentForm {
+  padding: 10px 20px 100px;
+}
+
+.DocumentForm textarea {
+  height: 100px;
+}
+
+.DocumentForm__Footer {
+  padding-bottom: 10px;
+  padding-top: 0.5rem;
+  border-top: 1px solid;
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 130px);
+  background-color: white;
+}
+
+.DocumentForm__Footer .text-danger {
+  white-space: pre-line;
+}

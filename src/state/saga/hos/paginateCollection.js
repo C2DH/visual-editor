@@ -1,4 +1,4 @@
-import { put, select, fork, call } from 'redux-saga/effects'
+import { put, select, fork } from 'redux-saga/effects'
 import { identity } from 'lodash'
 import qs from 'query-string'
 import { takeLatestAndCancel } from '../effects'

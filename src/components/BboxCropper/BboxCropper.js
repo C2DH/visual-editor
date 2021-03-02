@@ -9,7 +9,7 @@ import {
 import 'react-image-crop/dist/ReactCrop.css'
 import './BboxCropper.css'
 
-const emptyCrop = { x: 0, y: 0, width: 0, height: 0}
+//const emptyCrop = { x: 0, y: 0, width: 0, height: 0}
 
 class BboxCropper extends PureComponent {
   state = {

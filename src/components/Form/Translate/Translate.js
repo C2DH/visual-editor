@@ -11,7 +11,7 @@ class Translate extends PureComponent {
     this.props.hideWidgetFullPage()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.translations !== nextProps.translations && nextProps.translations) {
       this.props.input.onChange(nextProps.translations)
       this.props.hideWidgetFullPage()

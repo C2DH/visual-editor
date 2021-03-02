@@ -12,6 +12,7 @@ const OpenSidebar = ({ closeMenu, logout, languages, setLanguage }) => (
       <li><Link to="/" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Home</Button></Link></li>
       <li><Link to="/themes" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Themes</Button></Link></li>
       <li><Link to="/educationals" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Education</Button></Link></li>
+      <li><Link to="/documents" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Documents</Button></Link></li>
     </ul>
     <ul className="OpenSidebar__bottomlist">
       <li><a href="https://github.com/C2DH/ww1-visualeditor/wiki" rel="noopener noreferrer" target="_blank" onClick={closeMenu}><Button className="OpenSidebar__btn" outline color="primary">Help</Button></a></li>
@@ -23,7 +24,7 @@ const OpenSidebar = ({ closeMenu, logout, languages, setLanguage }) => (
       <div className="OpenSidebar__LanguageBtn_container">
         <ButtonGroup>
           {languages.map(language => (
-            <Button key={language.code} onClick={() => setLanguage(language.code)} className="OpenSidebar__LanguageBtn">{language.label}</Button>
+            <Button key={language.code} onClick={() => { closeMenu(); setLanguage(language.code);}} className="OpenSidebar__LanguageBtn">{language.label}</Button>
           ))}
         </ButtonGroup>
       </div>

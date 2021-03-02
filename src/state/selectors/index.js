@@ -1,5 +1,7 @@
 import { createSelector, defaultMemoize } from 'reselect'
-import { reduce, keys, isNull, find, get, mapValues, keyBy, isPlainObject, isArray } from 'lodash'
+import { reduce, isNull, find, get, mapValues, keyBy, isPlainObject, isArray } from 'lodash'
+import { getSchemaInitialValue } from '../../utils';
+import { MEDIA_TYPES } from '../consts';
 import {
   TAG_THEME,
   TAG_CHAPTER,
@@ -46,9 +48,8 @@ const createBasicStory = (languages, tag) => ({
 })
 
 // Make base paginate list state selectors
-const makePaginateListSelectors = selectState => {
+const makePaginateListSelectors = (selectState, getData) => {
   const getIds = state => selectState(state).ids
-  const getData = state => selectState(state).data
   const getLoading = state => selectState(state).loading
   const getPagination = state => selectState(state).pagination
   const getCount = state => getPagination(state).count
@@ -67,14 +68,37 @@ export const [
   getDocuments,
   canLoadMoreDocuments,
   getDocumentsCount,
-  getDocumentsLoading,
-] = makePaginateListSelectors(state => state.widgets.chooseDocuments.list)
+  areDocumentsLoading,
+] = makePaginateListSelectors(
+  state => state.documents.list,
+  state => state.entities.documents
+);
+
+export const getDocument = createSelector(
+  state => state.documentDetail.document.id,
+  state => state.entities.documents,
+  (id, data) => maybeNull(id)(id => data[id])
+);
+export const getDocumentSchema = state => state.documentDetail.schema.payload;
+export const getDocumentSchemaError = state => state.documentDetail.schema.error;
+export const isDocumentLoading = state => state.documentDetail.document.loading;
+export const isDocumentSchemaLoading = state => state.documentDetail.schema.loading;
 
 export const getDocumentsPlaceTypes = createSelector(
-  state => state.widgets.chooseDocuments.facets,
+  state => state.documents.facets,
   facets => maybeNull(facets)(() => {
     if (facets.data__place_type) {
       return facets.data__place_type.map(f => f.data__place_type)
+    }
+    return []
+  })
+)
+
+export const getDocumentsTypes = createSelector(
+  state => state.documents.facets,
+  facets => maybeNull(facets)(() => {
+    if (facets.data__type) {
+      return facets.data__type.map(f => f.data__type)
     }
     return []
   })
@@ -84,7 +108,7 @@ export const getSelectedDocumentsById = state => state.widgets.chooseDocuments.s
 
 export const getSelectedDocuments = createSelector(
   getSelectedDocumentsById,
-  state => state.widgets.chooseDocuments.list.data,
+  state => state.entities.documents,
   (byId, data) => reduce(byId, (r, v, id) => {
     if (v) {
       if (data[id]) {
@@ -97,6 +121,14 @@ export const getSelectedDocuments = createSelector(
     return r
   }, [])
 )
+
+export const getNewDocument = createSelector(
+  getDocumentSchema,
+  schema => ({
+    type: MEDIA_TYPES[0],
+    data: maybeNull(schema)(schema => getSchemaInitialValue(schema.properties))
+  })
+);
 
 // Themes
 

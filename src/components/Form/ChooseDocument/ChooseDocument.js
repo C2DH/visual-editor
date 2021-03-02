@@ -12,7 +12,7 @@ class ChooseDocument extends PureComponent {
     this.props.hideWidgetFullPage()
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.choosedDocument !== nextProps.choosedDocument && nextProps.choosedDocument) {
       this.props.input.onChange(nextProps.choosedDocument)
       if (this.props.clearBbox) {
@@ -41,7 +41,7 @@ class ChooseDocument extends PureComponent {
   }
 
   render() {
-    const { input: { value, onChange }, label, buttons } = this.props
+    const { input: { value }, label, buttons } = this.props
 
     // No cover choosed
     if (!value) {

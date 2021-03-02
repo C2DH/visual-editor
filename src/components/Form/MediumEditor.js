@@ -15,14 +15,14 @@ import {
   hideWidgetFullPage,
 } from '../../state/actions'
 
-const unwrap = html => {
-  let s = html.substr(html.indexOf('>') + 1)
-  return s.substr(0, s.lastIndexOf('<')).trim()
-}
+//const unwrap = html => {
+//  let s = html.substr(html.indexOf('>') + 1)
+//  return s.substr(0, s.lastIndexOf('<')).trim()
+//}
 
 class MediumEditor extends PureComponent {
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props.choosedDocument !== nextProps.choosedDocument && nextProps.choosedDocument) {
       this.props.input.onChange(this.props.input.value.replace(/___DOC___/g, nextProps.choosedDocument.id))
       this.props.hideWidgetFullPage()

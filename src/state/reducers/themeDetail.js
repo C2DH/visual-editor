@@ -10,6 +10,7 @@ import {
   MOVE_CHAPTER_THEME_SUCCESS,
 } from '../actions'
 import makeStoryDetail from './hor/storyDetail'
+import resetOn from './hor/resetOn';
 
 const deletingChapters = (prevState = {}, { type, payload }) => {
   switch (type) {
@@ -22,8 +23,6 @@ const deletingChapters = (prevState = {}, { type, payload }) => {
       return {
         [payload.id]: undefined,
       }
-    case GET_THEME_UNLOAD:
-      return {}
     default:
       return prevState
   }
@@ -40,15 +39,15 @@ const movingChapters = (prevState = {}, { type, payload }) => {
       return {
         [payload.chapterId]: undefined,
       }
-    case GET_THEME_UNLOAD:
-      return {}
     default:
       return prevState
   }
 }
 
-export default combineReducers({
+const reducer = combineReducers({
   deletingChapters,
   movingChapters,
-  theme: makeStoryDetail(THEME),
-})
+  theme: makeStoryDetail(THEME)
+});
+
+export default resetOn(GET_THEME_UNLOAD, reducer);

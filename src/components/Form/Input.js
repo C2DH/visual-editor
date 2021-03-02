@@ -1,10 +1,39 @@
 import React from 'react'
-// import { omit } from 'lodash'
-import { Input } from 'reactstrap'
+import { Input, Label } from 'reactstrap'
 
 // Maybe pass down props such style or other shit...
-const FormInput = ({ input: { value, onChange }, meta, ...passProps }) => (
-  <Input value={value} onChange={onChange} {...passProps} />
+const FormInput = ({
+    input: {
+      value,
+      ...input
+    },
+    label,
+    type,
+    maxLength,
+    className,
+    required,
+    meta: {
+      touched,
+      error
+    }
+  }) => (
+
+  <React.Fragment>
+    {label &&
+      <Label className={required ? 'font-weight-bold' : ''} for={input.name}>{label}</Label>
+    }
+    <Input
+      id        = {input.name}
+      type      = {type}
+      maxLength = {maxLength}
+      className = {className}
+      value     = {value || ''}
+      {...input}
+    />
+    {touched && error &&
+      <span className="text-danger">{error}</span>
+    }
+  </React.Fragment>
 )
 
 export default FormInput
