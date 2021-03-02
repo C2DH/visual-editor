@@ -12,6 +12,7 @@ const FormInput = ({
     maxLength,
     className,
     required,
+    placeholder,
     meta: {
       touched,
       error
@@ -28,6 +29,7 @@ const FormInput = ({
       maxLength = {maxLength}
       className = {className}
       value     = {value || ''}
+      placeholder = {placeholder}
       {...input}
     />
     {touched && error &&
