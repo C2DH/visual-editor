@@ -166,7 +166,7 @@ export const getSchemaInitialValue = (properties = {}) => {
 // Recursively remove null, undefined, '', {}, [] values from object
 const isBlank = value => (_.isEmpty(value) && !_.isNumber(value) && !_.isBoolean(value)) || _.isNaN(value);
 export const cleanJSON = obj =>
-  _.isObject(obj) ? _(obj).mapValues(cleanJSON).omitBy(isBlank).value() : obj;
+  _.isObject(obj) && !_.isArray(obj) ? _(obj).mapValues(cleanJSON).omitBy(isBlank).value() : obj;
 
 
 export * from "./modules";
