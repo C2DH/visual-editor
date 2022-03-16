@@ -1,7 +1,7 @@
 const { createProxyMiddleware } = require('http-proxy-middleware')
 const fs = require('fs')
 
-const target = process.env.REACT_APP_PROXY || 'http://localhost'
+const target = process.env.REACT_APP_PROXY || process.env.PROXY_HOST || 'http://localhost'
 
 fs.appendFile(
   './setupProxy.log',
