@@ -44,6 +44,8 @@ class NewModule extends PureComponent {
     const { theme, chapter } = this.props
     const index = get(chapter, 'contents.modules', []).length + 1
     this.props.chapterUpdated(updatedChapter)
+    //  To fix the issue after creating a new module. Force the ModuleForm to be reinitialized
+    this.props.history.replace(`/themes/${theme.id}/chapters/${chapter.id}`)
     this.props.history.replace(`/themes/${theme.id}/chapters/${chapter.id}/modules/${index}/edit`)
   }
 
