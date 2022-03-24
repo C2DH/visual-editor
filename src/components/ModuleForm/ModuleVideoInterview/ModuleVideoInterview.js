@@ -50,6 +50,7 @@ const betweenTime = (playedSeconds) => ({ secondsFrom, secondsTo }) => {
 const listWithTime = (list) => {
   return list.map((a) => ({
     ...a,
+    tags: a.tags || '',
     secondsFrom: stringTimeToSeconds(a.from),
     secondsTo: stringTimeToSeconds(a.to),
   }));
@@ -65,9 +66,13 @@ const renderExtraVideoTimeFields = ({ field, title }) => (
         <label>Start</label>
         <Field component={Input} placeholder="00:00" name={`${field}.from`} />
       </div>
-      <div className="form-group">
+      <div className="form-group mr-2">
         <label>End</label>
         <Field component={Input} placeholder="00:00" name={`${field}.to`} />
+      </div>
+      <div className="form-group">
+        <label>Tags</label>
+        <Field component={Input} placeholder="" name={`${field}.tags`} />
       </div>
     </div>
   </div>
