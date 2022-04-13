@@ -13,8 +13,7 @@ import { makeTranslator } from "../../state/selectors";
 import "./MapPreview.css";
 
 const Map = ReactMapboxGl({
-  accessToken:
-    "pk.eyJ1IjoiZWlzY2h0ZXdlbHRrcmljaCIsImEiOiJjajRpYnR1enEwNjV2MndtcXNweDR5OXkzIn0._eSF2Gek8g-JuTGBpw7aXw"
+  accessToken: process.env.REACT_APP_MABOX_ACCESS_TOKEN || ""
 });
 
 const circleScale = scaleLinear()
