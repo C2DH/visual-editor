@@ -7,12 +7,13 @@ import objectImage from "./imgs/object.png";
 import galleryImage from "./imgs/gallery.png";
 import text_objectImage from "./imgs/text_object.png";
 import text_galleryImage from "./imgs/text_gallery.png";
+import mapImage from "./imgs/text.png";
+import text_mapImage from "./imgs/text.png";
 
-const modulesTypes = [
+let modulesTypes = [
   { type: "text", label: "Module text", cover: textImage },
   { type: "object", label: "Module object", cover: objectImage },
   { type: "gallery", label: "Module gallery", cover: galleryImage },
-  //{ type: "map", label: "Module map", cover: mapImage },
   {
     type: "text_object",
     label: "Module text & object",
@@ -23,17 +24,19 @@ const modulesTypes = [
     label: "Module text & gallery",
     cover: text_galleryImage,
   },
-  // {
-  //   type: "text_map",
-  //   label: "Module text & map",
-  //   cover: text_mapImage,
-  // },
   {
     type: "video_interview",
     label: "Modul video interview",
     cover: objectImage,
   },
 ];
+
+if (process.env.REACT_APP_MABOX_ACCESS_TOKEN) {
+  modulesTypes = modulesTypes.concat([
+    { type: "map", label: "Module map", cover: mapImage },
+    { type: "text_map", label: "Module text & map", cover: text_mapImage }
+  ])
+}
 
 const ChooseModuleCard = memo(({ title, cover, cardClick }) => (
   <GenericCard
