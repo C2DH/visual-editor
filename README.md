@@ -13,6 +13,10 @@ Build a specific version for a project is as easy as:
     BUILD_TAG=your-visual-editor-v1.1.4 make build-docker-image
     ```
 
+If your project should support Mapbox, jsut add the env variable
+REACT_APP_MABOX_ACCESS_TOKEN in your `.env` file. If there's a valid value,
+the editor "new module" page will display two additional modules, *Module Map* and *Module Text & Map*
+
 ## Local development with setup proxy
 
 Instead of using just `PROXY_HOST`, from v1.1.4 onwards we use setupProxy using the http middleware proxy.
