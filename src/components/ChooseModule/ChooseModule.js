@@ -31,7 +31,7 @@ let modulesTypes = [
   },
 ];
 
-if (process.env.REACT_APP_MABOX_ACCESS_TOKEN) {
+if (process.env.REACT_APP_MAPBOX_ACCESS_TOKEN) {
   modulesTypes = modulesTypes.concat([
     { type: "map", label: "Module map", cover: mapImage },
     { type: "text_map", label: "Module text & map", cover: text_mapImage }

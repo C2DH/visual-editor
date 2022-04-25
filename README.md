@@ -14,7 +14,7 @@ Build a specific version for a project is as easy as:
     ```
 
 If your project should support Mapbox, jsut add the env variable
-REACT_APP_MABOX_ACCESS_TOKEN in your `.env` file. If there's a valid value,
+REACT_APP_MAPBOX_ACCESS_TOKEN in your `.env` file. If there's a valid value,
 the editor "new module" page will display two additional modules, *Module Map* and *Module Text & Map*
 
 ## Local development with setup proxy
