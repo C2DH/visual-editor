@@ -29,6 +29,12 @@ console.info('REACT_APP_CONTENT_MAX_SIZE:', process.env.REACT_APP_CONTENT_MAX_SI
 console.info('REACT_APP_PREVIEW_ACCEPTED_FILES:', process.env.REACT_APP_PREVIEW_ACCEPTED_FILES)
 console.info('REACT_APP_PREVIEW_MAX_SIZE:', process.env.REACT_APP_PREVIEW_MAX_SIZE)
 
+console.info('REACT_APP_MAPBOX_STYLE_URL:', process.env.REACT_APP_MAPBOX_STYLE_URL)
+console.info('REACT_APP_MAPBOX_ACCESS_TOKEN:', process.env.REACT_APP_MAPBOX_ACCESS_TOKEN)
+
+console.info('REACT_APP_BACKGROUND_COLORS_PALETTE:', process.env.REACT_APP_BACKGROUND_COLORS_PALETTE)
+console.info('REACT_APP_TEXT_COLORS_PALETTE:', process.env.REACT_APP_TEXT_COLORS_PALETTE)
+
 ReactDOM.render(<App />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change

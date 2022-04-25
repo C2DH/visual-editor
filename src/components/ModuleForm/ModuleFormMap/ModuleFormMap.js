@@ -85,7 +85,7 @@ class ModuleFormMap extends PureComponent {
                   <Field
                     label="Background Overlay"
                     name="background.object.overlay"
-                    colors={['#818A91', '#777', '#ADADAD', '#1E1E1E', '#373A3C', '#DDD']}
+                    colors={(process.env.REACT_APP_BACKGROUND_COLORS_PALETTE || '#818A91,#777,#ADADAD,#1E1E1E,#373A3C,#DDD').split(',')}
                     component={ColorSelection}
                     validate={[isValidHex]}
                    />
@@ -98,7 +98,7 @@ class ModuleFormMap extends PureComponent {
                   <Field
                     label="Background Color"
                     name="background.color"
-                    colors={['#818A91', '#777', '#ADADAD', '#1E1E1E', '#373A3C', '#DDD']}
+                    colors={(process.env.REACT_APP_BACKGROUND_COLORS_PALETTE || '#818A91,#777,#ADADAD,#1E1E1E,#373A3C,#DDD').split(',')}
                     component={ColorSelection}
                     validate={[isValidHex]}
                    />

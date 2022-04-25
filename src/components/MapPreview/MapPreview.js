@@ -13,8 +13,7 @@ import { makeTranslator } from "../../state/selectors";
 import "./MapPreview.css";
 
 const Map = ReactMapboxGl({
-  accessToken:
-    "pk.eyJ1IjoiZWlzY2h0ZXdlbHRrcmljaCIsImEiOiJjajRpYnR1enEwNjV2MndtcXNweDR5OXkzIn0._eSF2Gek8g-JuTGBpw7aXw"
+  accessToken: process.env.REACT_APP_MAPBOX_ACCESS_TOKEN || ""
 });
 
 const circleScale = scaleLinear()
@@ -94,7 +93,7 @@ class MapPreview extends PureComponent {
         touchZoomRotate={false}
         minZoom={8}
         maxBounds={llb}
-        style={`mapbox://styles/andreabenedetti/cj2kujx9w002d2rt7mcwgv5fd`}
+        style={process.env.REACT_APP_MAPBOX_STYLE_URL || 'mapbox://styles/mapbox/streets-v11'}
         containerStyle={{
           width: "100%",
           height: "100%"

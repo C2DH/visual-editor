@@ -87,7 +87,7 @@ class ChapterForm extends PureComponent {
                 <hr />
                 <Field
                   label="Background overlay"
-                  colors={['#818A91', '#777', '#ADADAD', '#1E1E1E', '#373A3C', '#DDD']}
+                  colors={(process.env.REACT_APP_BACKGROUND_COLORS_PALETTE || '#818A91,#777,#ADADAD,#1E1E1E,#373A3C,#DDD').split(',')}
                   name="data.background.overlay"
                   component={ColorSelection}
                   validate={[isValidHex, required]}
@@ -97,7 +97,10 @@ class ChapterForm extends PureComponent {
             {backgroundType === 'color' && (
               <Field
                 label="Background color"
-                colors={['#818A91', '#777', '#ADADAD', '#1E1E1E', '#373A3C', '#DDD']}
+                colors={
+                  (process.env.REACT_APP_BACKGROUND_COLORS_PALETTE || '#818A91,#777,#ADADAD,#1E1E1E,#373A3C,#DDD')
+                    .split(',')
+                }
                 name="data.background.backgroundColor"
                 component={ColorSelection}
                 validate={[isValidHex, required]}
@@ -107,7 +110,8 @@ class ChapterForm extends PureComponent {
             <hr />
             <Field
               label="Text color"
-              colors={['#fff', '#000']}
+              colors={(process.env.REACT_APP_BACKGROUND_COLORS_PALETTE || '#fff,#000')
+                .split(',')}
               hexInput={false}
               name="data.color"
               component={ColorSelection}
