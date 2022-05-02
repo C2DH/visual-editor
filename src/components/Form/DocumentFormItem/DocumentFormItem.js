@@ -24,9 +24,12 @@ const DocumentFormItem = ({
         : title
       }
       {typeof slug === 'string' && (
-        <p className="text-muted small text-break">{slug}</p>
+        <div className="DocumentFormItem__title__slug text-monospace text-muted">
+          <span>{slug}</span>
+        </div>
       )}
     </ListGroupItem>
+
     <ListGroupItem className="DocumentFormItem__buttons-container">
       {buttons}
       {typeof onChange === 'function' && <Button className="tiny-btn margin-right-5" onClick={onChange}><i className="fa fa-file-image-o" /></Button>}

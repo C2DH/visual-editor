@@ -9,6 +9,16 @@
   padding: 10px;
 }
 
+.DocumentFormItem__title__slug{
+  font-size: 10px;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.DocumentFormItem__title__slug > span {
+  background: var(--light);
+}
+
 .DocumentFormItem__button {
   padding: 0.2rem 0.35rem;
 }
