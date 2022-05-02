@@ -1,9 +1,12 @@
 import React from 'react'
-import { ListGroup, ListGroupItem, Button } from 'reactstrap'
+import { ListGroup, ListGroupItem, Button, Badge } from 'reactstrap'
 import './DocumentFormItem.css'
 
 const DocumentFormItem = ({
   title,
+  type,
+  slug,
+  data={},
   buttons,
   onEmpty,
   onChange,
@@ -11,10 +14,18 @@ const DocumentFormItem = ({
 }) => (
   <ListGroup className="margin-top-15">
     <ListGroupItem className="DocumentFormItem__title">
+      {typeof type === 'string' && (
+        <Badge color="secondary" className="mr-2">
+          {type}
+        </Badge>
+      )}
       {typeof renderExtraFields === 'function'
         ? renderExtraFields({ title })
         : title
       }
+      {typeof slug === 'string' && (
+        <p className="text-muted small text-break">{slug}</p>
+      )}
     </ListGroupItem>
     <ListGroupItem className="DocumentFormItem__buttons-container">
       {buttons}

@@ -134,6 +134,7 @@ class Documents extends PureComponent {
                 <Link to={`/documents/${doc.id}/edit`} style={deleting[doc.id] && { pointerEvents: 'none' }}>
                   <div style={deleting[doc.id] ? { opacity: 0.5 } : undefined}>
                     <DocumentCard
+                      slug              = {doc.slug}
                       type              = {`${doc.data.type !== doc.type ? `${doc.data.type} / ` : ""}${doc.type}`}
                       title             = {doc.title}
                       showDeleteButton  = {true}
