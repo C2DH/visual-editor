@@ -5,6 +5,7 @@ import "./DocumentCard.css";
 
 const DocumentCard = ({
   title = "",
+  slug,
   cover = null,
   checked,
   onClick,
@@ -14,6 +15,7 @@ const DocumentCard = ({
 }) => (
   <GenericCard
     className="DocumentCard__card"
+    slug={slug}
     title={title}
     type={type}
     backgroundImage={cover}
