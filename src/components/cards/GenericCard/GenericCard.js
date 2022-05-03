@@ -8,7 +8,7 @@ const PublishedThemeLabel = ({ pos }) => (
     style={
       pos === "top"
         ? { padding: 3 }
-        : { position: "absolute", bottom: 65, left: 5 }
+        : { position: "absolute", bottom: 5, left: 5 }
     }
   >
     <Badge color="success">Published</Badge>
@@ -42,7 +42,7 @@ const GenericCard = ({
     <Card className={className} onClick={cardClick}>
       <BackgroundPreview
         containerClassName={containerClassName}
-        overlayClassName="GenericCard__div_img_overlay"
+        overlayClassName="GenericCard__div_img_overlay position-relative"
         backgroundImage={backgroundImage}
         backgroundColor={backgroundColor}
         backgroundColorOverlay={backgroundColorOverlay}
