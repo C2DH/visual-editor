@@ -157,6 +157,7 @@ export const updateStoryStatus = token => (id, status) =>
 
 export const getThemes = token => () =>
   getStories(token)({
+    limit: NO_LIMIT,
     filters: JSON.stringify({
       'tags__slug': 'theme',
     }),
