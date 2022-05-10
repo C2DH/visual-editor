@@ -22,7 +22,8 @@ import {
   canLoadMoreDocuments,
   getDocumentsCount,
   areDocumentsLoading,
-  getDocumentsTypes
+  getDocumentsTypes,
+  makeTranslator
 } from '../../state/selectors';
 
 const TYPE_FACET = 'data__type';
@@ -104,7 +105,7 @@ class Documents extends PureComponent {
 
 
   render() {
-    const { documents, canLoadMore, count, loading, types, deleting } = this.props;
+    const { documents, canLoadMore, count, loading, types, deleting, trans } = this.props;
 
     return (
       <Container fluid className="margin-r-l-20">
@@ -129,26 +130,35 @@ class Documents extends PureComponent {
             <Col md="3" className="Documents__AddButton-container">
               <AddButton label="Add document" tag={Link} to={'/documents/new'} />
             </Col>
-            {documents && documents.map((doc) => (
-              <Col md="3" key={doc.id}>
-                <Link to={`/documents/${doc.id}/edit`} style={deleting[doc.id] && { pointerEvents: 'none' }}>
-                  <div style={deleting[doc.id] ? { opacity: 0.5 } : undefined}>
-                    <DocumentCard
-                      slug              = {doc.slug}
-                      type              = {`${doc.data.type !== doc.type ? `${doc.data.type} / ` : ""}${doc.type}`}
-                      title             = {doc.title}
-                      showDeleteButton  = {true}
-                      onClick           = {e => { e.preventDefault(); this.askDeleteDoc(doc); }}
-                      cover             = {
-                        doc.data.resolutions
-                          ? doc.data.resolutions.thumbnail.url
-                          : doc.attachment
-                        }
-                    />
-                  </div>
-                </Link>
-              </Col>
-            ))}
+            {documents && documents.map((doc) => {
+              let documentTitle = String(trans(doc, 'data.title'))
+              if (!documentTitle.length) {
+                documentTitle = doc.title || ''
+              }
+              if (!documentTitle.length) {
+                documentTitle = doc.slug
+              }
+              return (
+                <Col md="3" key={doc.id}>
+                  <Link to={`/documents/${doc.id}/edit`} style={deleting[doc.id] && { pointerEvents: 'none' }}>
+                    <div style={deleting[doc.id] ? { opacity: 0.5 } : undefined}>
+                      <DocumentCard
+                        slug              = {doc.slug}
+                        type              = {`${doc.data.type !== doc.type ? `${doc.data.type} / ` : ""}${doc.type}`}
+                        title             = {documentTitle}
+                        showDeleteButton  = {true}
+                        onClick           = {e => { e.preventDefault(); this.askDeleteDoc(doc); }}
+                        cover             = {
+                          doc.data.resolutions
+                            ? doc.data.resolutions.thumbnail.url
+                            : doc.attachment
+                          }
+                      />
+                    </div>
+                  </Link>
+                </Col>
+              )
+            })}
           </Row>
         </div>
 
@@ -176,6 +186,7 @@ class Documents extends PureComponent {
 
 const mapStateToProps = state => ({
   types: getDocumentsTypes(state),
+  trans: makeTranslator(state),
   documents: getDocuments(state),
   canLoadMore: canLoadMoreDocuments(state),
   count: getDocumentsCount(state),
