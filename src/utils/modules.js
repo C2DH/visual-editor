@@ -18,6 +18,8 @@ export const createEmptyModule = (moduleType, languages) => {
       return createEmptyModuleTextMap(languages)
     case 'video_interview':
       return createEmptyModuleVideoInterview(languages)
+    case 'text_bibliography':
+      return createEmptyModuleTextBibliography(languages)
     default:
       throw new Error(`Invalid module type ${moduleType}`)
   }
@@ -36,6 +38,18 @@ const createEmptyModuleText = languages => ({
   text: {
     color: '#000',
     position: 'center',
+    content: createEmptyMultilangObj(languages, ''),
+  }
+})
+
+const createEmptyModuleTextBibliography = languages => ({
+  module: 'text_bibliography',
+  background: {
+    color: DEFAULT_BG_COLOR,
+  },
+  text: {
+    color: '#000',
+    position: 'left',
     content: createEmptyMultilangObj(languages, ''),
   }
 })

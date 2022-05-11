@@ -28,6 +28,7 @@ import {
   areDocumentsLoading,
   getSelectedDocumentsById,
   getDocumentsPlaceTypes,
+  makeTranslator
 } from "../../state/selectors";
 
 const mergeParams = (s1, s2) => ({
@@ -147,6 +148,7 @@ class DocumentChooser extends PureComponent {
       unselectDocument,
       selectionDone,
       placeTypes,
+      trans,
     } = this.props;
     return (
       <Container fluid className="margin-r-l-20">
@@ -193,7 +195,15 @@ class DocumentChooser extends PureComponent {
         >
           {documents && (
             <Row>
-              {documents.map((doc) => (
+              {documents.map((doc) => {
+                let documentTitle = String(trans(doc, 'data.title'))
+                if (!documentTitle.length) {
+                  documentTitle = doc.title || ''
+                }
+                if (!documentTitle.length) {
+                  documentTitle = doc.slug
+                }
+                return (
                 <Col md="3" key={doc.id}>
                   {multi ? (
                     <DocumentCard
@@ -203,8 +213,9 @@ class DocumentChooser extends PureComponent {
                           ? selectDocument(doc.id)
                           : unselectDocument(doc.id);
                       }}
-                      type={doc.type}
-                      title={doc.title}
+                      type = {`${doc.data.type !== doc.type ? `${doc.data.type} / ` : ""}${doc.type}`}
+                      title ={documentTitle}
+                      slug = {doc.slug}
                       cover={
                         doc.data.resolutions
                           ? doc.data.resolutions.thumbnail.url
@@ -214,7 +225,9 @@ class DocumentChooser extends PureComponent {
                   ) : (
                     <DocumentCard
                       onClick={() => this.chooseDocument(doc)}
-                      title={doc.title}
+                      title ={doc.title}
+                      slug = {doc.slug}
+                      type = {`${doc.data.type !== doc.type ? `${doc.data.type} / ` : ""}${doc.type}`}
                       cover={
                         doc.data.resolutions
                           ? doc.data.resolutions.thumbnail.url
@@ -223,7 +236,7 @@ class DocumentChooser extends PureComponent {
                     />
                   )}
                 </Col>
-              ))}
+              )})}
             </Row>
           )}
 
@@ -270,6 +283,7 @@ const mapStateToProps = (state) => ({
   canLoadMore: canLoadMoreDocuments(state),
   count: getDocumentsCount(state),
   loading: areDocumentsLoading(state),
+  trans: makeTranslator(state),
 });
 
 export default connect(mapStateToProps, {

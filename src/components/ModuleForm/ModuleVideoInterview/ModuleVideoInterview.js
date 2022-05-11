@@ -27,6 +27,13 @@ import { required, requiredAtLeastOne } from "../../Form/validate";
 import { getCurrentLanguage } from "../../../state/selectors";
 import "./ModuleVideoInterview.css";
 
+
+const EntityDataTypes = (process.env.REACT_APP_MODULE_VIDEO_INTERVIEW_ENTITY_DATA_TYPES || 'speaker').split(',')
+const DocumentTypes = (process.env.REACT_APP_MODULE_VIDEO_INTERVIEW_DOCUMENT_TYPES || 'image,pdf').split(',')
+
+console.info('%cEntityDataTypes', 'font-weight:bold', EntityDataTypes)
+console.info('%cDocumentTypes', 'font-weight:bold', DocumentTypes)
+
 const stringTimeToSeconds = (str) => {
   if (!str) {
     return null;
@@ -135,7 +142,7 @@ class ModuleFormObject extends PureComponent {
               multiSelection={false}
               params={{
                 filters: {
-                  type: "image",
+                  type__in: DocumentTypes,
                 },
               }}
               className="mt-4"
@@ -149,7 +156,7 @@ class ModuleFormObject extends PureComponent {
               name="speakers"
               params={{
                 filters: {
-                  data__type: "speaker",
+                  data__type__in: EntityDataTypes
                 },
               }}
               multiSelection={false}

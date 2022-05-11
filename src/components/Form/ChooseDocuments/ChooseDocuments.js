@@ -15,7 +15,13 @@ import {
 import { getSelectedDocuments } from "../../../state/selectors";
 
 const renderDoc = ({ input: { value }, ...props }) => (
-  <DocumentFormItem title={value.title} {...props} />
+  <DocumentFormItem
+    title={value.title}
+    type={value.type}
+    slug={value.slug}
+    data={value.data}
+    {...props}
+  />
 );
 
 class ChooseDocuments extends PureComponent {

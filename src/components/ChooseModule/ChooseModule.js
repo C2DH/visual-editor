@@ -20,6 +20,11 @@ let modulesTypes = [
     cover: text_objectImage,
   },
   {
+    type: "text_bibliography",
+    label: "Module Bibliography",
+    cover: textImage,
+  },
+  {
     type: "text_gallery",
     label: "Module text & gallery",
     cover: text_galleryImage,

@@ -14,6 +14,17 @@ module.exports = function(app) {
     target,
     changeOrigin: true,
   }));
+
+  app.use('/media', createProxyMiddleware({
+    target,
+    changeOrigin: true,
+  }));
+
+  app.use('/miller-assets', createProxyMiddleware({
+    target,
+    changeOrigin: true,
+  }));
+
   app.use('/o', createProxyMiddleware({
     target,
     changeOrigin: true,

@@ -1,0 +1,2 @@
+import ModuleFormTextBibliography from './ModuleFormTextBibliography'
+export default ModuleFormTextBibliography

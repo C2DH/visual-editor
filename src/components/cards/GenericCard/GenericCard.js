@@ -8,7 +8,7 @@ const PublishedThemeLabel = ({ pos }) => (
     style={
       pos === "top"
         ? { padding: 3 }
-        : { position: "absolute", bottom: 65, left: 5 }
+        : { position: "absolute", bottom: 5, left: 5 }
     }
   >
     <Badge color="success">Published</Badge>
@@ -23,7 +23,7 @@ const SelectedModuleLabel = () => (
 
 const GenericCard = ({
   title = '',
-  slug = '',
+  slug,
   backgroundType = "image",
   backgroundImage,
   backgroundColor,
@@ -42,7 +42,7 @@ const GenericCard = ({
     <Card className={className} onClick={cardClick}>
       <BackgroundPreview
         containerClassName={containerClassName}
-        overlayClassName="GenericCard__div_img_overlay"
+        overlayClassName="GenericCard__div_img_overlay position-relative"
         backgroundImage={backgroundImage}
         backgroundColor={backgroundColor}
         backgroundColorOverlay={backgroundColorOverlay}
@@ -62,12 +62,14 @@ const GenericCard = ({
               {type}
             </Badge>
           )}
-          {!title.length && (
-            <em className="text-secondary">{slug}</em>
-          )}{title}
+          {title}
+
         </CardTitle>
         <div className="GenericCard_footerButton">{footerButton}</div>
       </div>
+      {typeof slug === 'string' && (
+        <div title={slug} className="GenericCard__slugContainer text-muted border-top text-monospace">{slug}</div>
+      )}
     </Card>
   </div>
 );
