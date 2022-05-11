@@ -26,6 +26,9 @@ class ModuleEdit extends PureComponent {
         createChapterCaptions(chapterUpdated.id)
           .then(() => getStory(chapterUpdated.id))
       )
+      .catch((err) => {
+        console.error(err)
+      })
   }
 
   submitSuccess = (updatedChapter) => {

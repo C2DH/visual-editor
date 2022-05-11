@@ -1,9 +1,7 @@
 import React from 'react'
 import {
-  Container,
-  Row,
-  Col,
-  Badge
+  Container, Row, Col,
+  Badge, Button
 } from 'reactstrap'
 import { toHtml } from '../../utils/markdown'
 import ModulePreviewObject from './ModulePreviewObject'
@@ -21,6 +19,7 @@ const ModulePreview = ({
   moduleType="text",
   background={},
   text={},
+  onEditClick,
   ...rest
 }) => {
   const textContent = toHtml(trans(text, 'content'));
@@ -40,6 +39,14 @@ const ModulePreview = ({
         <Col md={{size: 4}}>
           <div className="ModulePreview__actions sticky-top">
             <Badge>{idx} / {countSiblings}</Badge> Fixed content
+            <div>
+            <Button
+              onClick={onEditClick}
+              className="ModuleCard__btn_margin flex-right"
+            >
+              edit <i className="fa fa-pencil" aria-hidden="true" />
+            </Button>
+            </div>
           </div>
         </Col>
       </Row>

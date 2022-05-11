@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router';
 import {
   Container,
   Row,
@@ -42,7 +43,7 @@ const ChapterDetailPreview = ({
   unpublishChapter,
   authToken
  }) => {
-
+   const history = useHistory()
   const toggledPublished = () => {
     if (chapter.status === 'draft') {
       publishChapter(chapter.id)
@@ -55,19 +56,21 @@ const ChapterDetailPreview = ({
     <div className="ChapterDetail">
       <header className="ChapterDetail__header sticky-top">
         <Container fluid className="margin-r-l-20 visual-preview ">
-          <Row className="ChapterDetail__topRow">
+          <div className="ChapterDetail__topRow d-flex">
+            <div className="">
             <Breadcrumb>
               <BreadcrumbItem className="ChapterDetail__topRow_title">
                 <Link to={`/themes/${theme.id}`}>{`${trans(theme, 'data.title')} (${theme.slug})`}</Link>
               </BreadcrumbItem>
               <BreadcrumbItem className="ChapterDetail__topRow_title" active>{`${trans(chapter, 'data.title')} (${chapter.slug})`}</BreadcrumbItem>
             </Breadcrumb>
-            <div className="ChapterDetail__topRow_btnContainer">
+            </div>
+            <div className="flex-shrink">
               <Button disabled={saving} className="ChapterDetail__topRow_btn" onClick={toggledPublished}>
                 {chapter.status === 'draft' ? 'Publish' : 'Unpublish'}
               </Button>
             </div>
-          </Row>
+          </div>
         </Container>
       </header>
     <Container>
@@ -88,6 +91,7 @@ const ChapterDetailPreview = ({
         idx={i + 1}
         countSiblings={modules.length}
         moduleType={mod.module}
+        onEditClick={() => history.push(`/themes/${theme.id}/chapters/${chapter.id}/modules/${i + 1}/edit`)}
         {...mod}
       />
     ))}

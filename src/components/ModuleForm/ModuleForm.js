@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import ModuleFormText from './ModuleFormText'
+import ModuleFormTextBibliography from './ModuleFormTextBibliography'
 import ModuleFormObject from './ModuleFormObject'
 import ModuleFormGallery from './ModuleFormGallery'
 import ModuleFormMap from './ModuleFormMap'
@@ -26,6 +27,8 @@ const getModuleFormComponent = moduleType => {
       return ModuleFormTextMap
     case 'video_interview':
       return ModuleVideoInterview
+    case 'text_bibliography':
+      return ModuleFormTextBibliography
     default:
       throw new Error(`Invalid module type ${moduleType}`)
   }
