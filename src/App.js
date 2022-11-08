@@ -1,50 +1,112 @@
-import React from 'react'
-import { BrowserRouter as Router, Switch, Redirect } from 'react-router-dom'
-import { Provider } from 'react-redux'
-import store from './state'
-import { AuthRoute, GuestRoute } from './authRoutes'
+import React, { lazy } from 'react'
+import { isMobile } from 'react-device-detect'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { WithMiller } from './logic/miller'
+import RouteAdapter from './components/RouteAdapter'
+import { QueryParamProvider } from 'use-query-params'
+import LanguageRouter from './components/LanguageRouter'
+import { Github } from 'lucide-react'
+import { useSettingsStore } from './store'
+import { LoginRoute, SettingsRoute, StoriesRoute } from './constants'
+import RequireAuth from './components/RequireAuth'
+import LangLink from './components/LangLink'
 
-import Layout from './components/Layout'
-import FullPageWidgets from './components/FullPageWidgets'
+const NotFound = lazy(() => import('./pages/NotFound'))
+const Home = lazy(() => import('./pages/Home'))
+const Login = lazy(() => import('./pages/Login'))
+const Settings = lazy(() => import('./pages/Settings'))
+const Stories = lazy(() => import('./pages/Stories'))
 
-// Pages
-import Home from './pages/Home'
-import Login from './pages/Login'
-import Themes from './pages/Themes'
-import NewTheme from './pages/NewTheme'
-import Theme from './pages/Theme'
-import StaticStory from './pages/StaticStory'
-import Educationals from './pages/Educationals'
-import NewEducational from './pages/NewEducational'
-import EducationalDetail from './pages/EducationalDetail'
-import Documents from './pages/Documents';
-import NewDocument from './pages/NewDocument';
-import DocumentEdit from './pages/DocumentEdit';
+function App({ languageCode }) {
+  const basename = useSettingsStore((state) => state.basename)
+  return (
+    <BrowserRouter basename={basename}>
+      <WithMiller>
+        <QueryParamProvider ReactRouterRoute={RouteAdapter}>
+          <div className="App d-flex">
+            <aside className="flex-shrink-1 p-5">
+              <h1>
+                visual
+                <br />
+                editor
+              </h1>
+              <LanguageRouter />
+              <LangLink language={languageCode} to={SettingsRoute.to}>
+                {SettingsRoute.label}
+              </LangLink>
+              <br />
+              <LangLink language={languageCode} to={StoriesRoute.to}>
+                {StoriesRoute.label}
+              </LangLink>
+              <p>
+                <label className="d-block">languageCode</label>
+                <b>{languageCode}</b>
+              </p>
+              <p>
+                <label className="d-block">basename </label>
+                <b>{basename}</b>
+              </p>
+              <a
+                href={`https://github.com/C2DH/visual-editor/commit/${process.env.REACT_APP_GIT_REVISION}`}
+              >
+                <Github size={18} /> {process.env.REACT_APP_GIT_REVISION}
+              </a>
+            </aside>
+            <div className="py-5 flex-grow-1">
+              <Routes>
+                <Route path="/" element={<Navigate to={languageCode} replace />} />
+                <Route path={languageCode}>
+                  <Route
+                    path=""
+                    element={
+                      <React.Suspense fallback={<div className="h-75" />}>
+                        <Home isMobile={isMobile} />
+                      </React.Suspense>
+                    }
+                  />
+                  <Route
+                    path={SettingsRoute.path}
+                    element={
+                      <React.Suspense fallback={<div className="h-75" />}>
+                        <Settings isMobile={isMobile} />
+                      </React.Suspense>
+                    }
+                  />
+                  <Route
+                    path={LoginRoute.path}
+                    element={
+                      <React.Suspense fallback={<div className="h-75" />}>
+                        <Login isMobile={isMobile} />
+                      </React.Suspense>
+                    }
+                  />
+                  <Route
+                    path={StoriesRoute.path}
+                    element={
+                      <RequireAuth languageCode={languageCode}>
+                        <React.Suspense fallback={<div className="h-75" />}>
+                          <Stories isMobile={isMobile} />
+                        </React.Suspense>
+                      </RequireAuth>
+                    }
+                  />
 
-const App = () => (
-  <Provider store={store}>
-    <Router basename={process.env.REACT_APP_EDITOR_BASENAME}>
-      <Layout>
-        <FullPageWidgets>
-          <Switch>
-            <GuestRoute path='/login' exact component={Login} />
-            <AuthRoute path='/' exact component={Home} />
-            <AuthRoute path='/themes' exact component={Themes} />
-            <AuthRoute path='/themes/new' exact component={NewTheme} />
-            <AuthRoute path='/themes/:themeId' component={Theme} />
-            <AuthRoute path='/static/:staticStoryId' component={StaticStory} />
-            <AuthRoute path='/educationals' exact component={Educationals} />
-            <AuthRoute path='/educationals/new' component={NewEducational} />
-            <AuthRoute path='/educationals/:educationalId' component={EducationalDetail} />
-            <AuthRoute path='/documents' exact component={Documents} />
-            <AuthRoute path='/documents/new' component={NewDocument} />
-            <AuthRoute path='/documents/:documentId/edit' component={DocumentEdit} />
-            <Redirect to='/' />
-          </Switch>
-        </FullPageWidgets>
-      </Layout>
-    </Router>
-  </Provider>
-)
+                  <Route
+                    path="*"
+                    element={
+                      <React.Suspense fallback={<>...</>}>
+                        <NotFound />
+                      </React.Suspense>
+                    }
+                  />
+                </Route>
+              </Routes>
+            </div>
+          </div>
+        </QueryParamProvider>
+      </WithMiller>
+    </BrowserRouter>
+  )
+}
 
 export default App
