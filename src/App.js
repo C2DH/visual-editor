@@ -5,11 +5,12 @@ import { WithMiller } from './logic/miller'
 import RouteAdapter from './components/RouteAdapter'
 import { QueryParamProvider } from 'use-query-params'
 import LanguageRouter from './components/LanguageRouter'
-import { Github } from 'lucide-react'
+
 import { useSettingsStore } from './store'
 import { LoginRoute, SettingsRoute, StoriesRoute } from './constants'
 import RequireAuth from './components/RequireAuth'
-import LangLink from './components/LangLink'
+
+import Menu from './components/Menu'
 
 const NotFound = lazy(() => import('./pages/NotFound'))
 const Home = lazy(() => import('./pages/Home'))
@@ -23,43 +24,29 @@ function App({ languageCode }) {
     <BrowserRouter basename={basename}>
       <WithMiller>
         <QueryParamProvider ReactRouterRoute={RouteAdapter}>
-          <div className="App d-flex">
-            <aside className="flex-shrink-1 p-5">
-              <h1>
-                visual
-                <br />
-                editor
-              </h1>
-              <LanguageRouter />
-              <LangLink language={languageCode} to={SettingsRoute.to}>
-                {SettingsRoute.label}
-              </LangLink>
-              <br />
-              <LangLink language={languageCode} to={StoriesRoute.to}>
-                {StoriesRoute.label}
-              </LangLink>
+          <LanguageRouter />
+          <div className='App d-flex'>
+            <Menu className='flex-shrink-1 p-5' languageCode={languageCode}>
               <p>
-                <label className="d-block">languageCode</label>
+                <label className='d-block'>languageCode</label>
                 <b>{languageCode}</b>
               </p>
               <p>
-                <label className="d-block">basename </label>
+                <label className='d-block'>basename </label>
                 <b>{basename}</b>
               </p>
-              <a
-                href={`https://github.com/C2DH/visual-editor/commit/${process.env.REACT_APP_GIT_REVISION}`}
-              >
-                <Github size={18} /> {process.env.REACT_APP_GIT_REVISION}
-              </a>
-            </aside>
-            <div className="py-5 flex-grow-1">
+            </Menu>
+            <div className='py-5 flex-grow-1'>
               <Routes>
-                <Route path="/" element={<Navigate to={languageCode} replace />} />
+                <Route
+                  path='/'
+                  element={<Navigate to={languageCode} replace />}
+                />
                 <Route path={languageCode}>
                   <Route
-                    path=""
+                    path=''
                     element={
-                      <React.Suspense fallback={<div className="h-75" />}>
+                      <React.Suspense fallback={<div className='h-75' />}>
                         <Home isMobile={isMobile} />
                       </React.Suspense>
                     }
@@ -67,7 +54,7 @@ function App({ languageCode }) {
                   <Route
                     path={SettingsRoute.path}
                     element={
-                      <React.Suspense fallback={<div className="h-75" />}>
+                      <React.Suspense fallback={<div className='h-75' />}>
                         <Settings isMobile={isMobile} />
                       </React.Suspense>
                     }
@@ -75,7 +62,7 @@ function App({ languageCode }) {
                   <Route
                     path={LoginRoute.path}
                     element={
-                      <React.Suspense fallback={<div className="h-75" />}>
+                      <React.Suspense fallback={<div className='h-75' />}>
                         <Login isMobile={isMobile} />
                       </React.Suspense>
                     }
@@ -84,7 +71,7 @@ function App({ languageCode }) {
                     path={StoriesRoute.path}
                     element={
                       <RequireAuth languageCode={languageCode}>
-                        <React.Suspense fallback={<div className="h-75" />}>
+                        <React.Suspense fallback={<div className='h-75' />}>
                           <Stories isMobile={isMobile} />
                         </React.Suspense>
                       </RequireAuth>
@@ -92,7 +79,7 @@ function App({ languageCode }) {
                   />
 
                   <Route
-                    path="*"
+                    path='*'
                     element={
                       <React.Suspense fallback={<>...</>}>
                         <NotFound />
