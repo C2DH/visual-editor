@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from 'react-query'
 import { LoginRoute } from '../constants'
@@ -13,14 +14,17 @@ const User = () => {
   const millerAuthToken = useSettingsStore((state) => state.millerAuthToken)
 
   const enabled = user === null && millerAuthToken !== null
-  const { data, error, isLoading } = useQuery(
+  console.debug('[User] reload query:', enabled, millerAuthToken)
+
+  const { isLoading, isSuccess } = useQuery(
     {
-      queryKey: ['me'],
+      queryKey: ['me', millerAuthToken?.access_token],
       queryFn: () => {
         console.debug('[User] @useQuery', millerAuthToken)
-        return axios.get(`${millerApiUrl}/profile/me`, {
+        return axios.get('/profile/me', {
+          baseURL: millerApiUrl,
           headers: {
-            Authorization: `${millerAuthToken.token_type}:${millerAuthToken.access_token}`,
+            Authorization: `${millerAuthToken?.token_type} ${millerAuthToken?.access_token}`,
           },
         })
       },
