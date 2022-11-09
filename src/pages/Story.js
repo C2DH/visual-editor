@@ -47,7 +47,11 @@ const Story = () => {
               <Row>
                 {MillerLanguages.map((lang) => (
                   <Col key={lang}>
-                    <ModuleText content={story.data[field][lang]} lang={lang} />
+                    <ModuleText
+                      className='me-3'
+                      content={story.data[field][lang]}
+                      lang={lang}
+                    />
                     {/* <Form.Group className='me-3'>
                       <Form.Label> {lang}</Form.Label>
                       <Form.Control as='textarea' rows={2}>

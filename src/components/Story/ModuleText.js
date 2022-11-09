@@ -32,9 +32,9 @@ const ModuleText = ({ content = '', lang, className = '' }) => {
   ]
   return (
     <div className={`ModuleText ${className}`}>
-      {lang}
+      <b>{lang}</b>
       <ReactMarkdown
-        className={className}
+        className='border-top border-dark pt-2 mt-2'
         components={{
           a: ModuleTextAnchor,
         }}
