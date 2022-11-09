@@ -3,8 +3,8 @@ import { persist } from 'zustand/middleware'
 
 export const useStore = create((set) => ({
   routeLabel: '',
-  setRouteLabel: (routeLabel) => set({ routeLabel }),
   user: null,
+  setRouteLabel: (routeLabel) => set({ routeLabel }),
   setUser: (user) => set({ user }),
 }))
 
@@ -15,9 +15,9 @@ const EnvVariables = {
   basename: process.env.REACT_APP_BASENAME || '/editor',
   proxy: process.env.REACT_APP_PROXY || 'http://localhost',
   millerApiUrl: process.env.REACT_APP_MILLER_API_URL || '/api',
-  millerOAuthUrl: process.env.REACT_APP_MILLER_OAUTH_URL || '/o/auth',
+  millerOAuthUrl: process.env.REACT_APP_MILLER_OAUTH_URL || '/o/token/',
 }
-console.debug(EnvVariables)
+
 export const useSettingsStore = create(
   persist(
     (set) => ({
@@ -28,12 +28,10 @@ export const useSettingsStore = create(
       setMillerOAuthUrl: (millerOAuthUrl) => set({ millerOAuthUrl }),
       setMillerClientId: (millerClientId) => set({ millerClientId }),
       setMillerAuthToken: (millerAuthToken) => set({ millerAuthToken }),
-      setMapbox: ({ mapboxStyleUrl, mapboxAccessToken }) =>
-        set({
-          mapboxStyleUrl,
-          mapboxAccessToken,
-        }),
+      setMapboxStyleUrl: (mapboxStyleUrl) => set({ mapboxStyleUrl }),
+      setMapboxAccessToken: (mapboxAccessToken) => set({ mapboxAccessToken }),
+      setMillerAuthToken: (millerAuthToken) => set({ millerAuthToken }),
     }),
-    { name: 'visual-editor-settings' },
-  ),
+    { name: 'visual-editor-settings' }
+  )
 )
