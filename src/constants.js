@@ -42,5 +42,5 @@ export const DefaultLanguageCode = DefaultLanguage.split('-')[0]
 export const MillerAPI = process.env.REACT_APP_MILLER_API ?? '/api'
 
 export const BootstrapColumnLayout = Object.freeze({
-  md: { span: 11, offset: 1 },
+  md: { span: 10, offset: 0 },
 })
