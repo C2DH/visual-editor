@@ -17,6 +17,7 @@ const Home = lazy(() => import('./pages/Home'))
 const Login = lazy(() => import('./pages/Login'))
 const Settings = lazy(() => import('./pages/Settings'))
 const Stories = lazy(() => import('./pages/Stories'))
+const Story = lazy(() => import('./pages/Story'))
 
 function App({ languageCode }) {
   const basename = useSettingsStore((state) => state.basename)
@@ -77,7 +78,24 @@ function App({ languageCode }) {
                       </RequireAuth>
                     }
                   />
-
+                  <Route
+                    path={StoriesRoute.path}
+                    element={
+                      <RequireAuth languageCode={languageCode}>
+                        <React.Suspense fallback={<div className='h-75' />}>
+                          <Stories isMobile={isMobile} />
+                        </React.Suspense>
+                      </RequireAuth>
+                    }
+                  />
+                  <Route
+                    path='story/:storyId'
+                    element={
+                      <React.Suspense fallback={<>...</>}>
+                        <Story isMobile={isMobile} />
+                      </React.Suspense>
+                    }
+                  />
                   <Route
                     path='*'
                     element={
