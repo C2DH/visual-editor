@@ -17,24 +17,21 @@ const Stories = () => {
 
   console.debug('[Stories] test', count)
   return (
-    <Container>
+    <Container fluid>
       <Row>
         <Col {...BootstrapColumnLayout}>
           <h1>{t('pagesStoriesTitle')}</h1>
         </Col>
       </Row>
       {isLoading && <p>loading</p>}
-      {isSuccess && (
-        <Row>
-          <Col>
-            {results.map((d) => (
-              <div key={d.id}>
-                <StoryItem story={d} className='mb-5' />
-              </div>
-            ))}
-          </Col>
-        </Row>
-      )}
+      <Row>
+        {isSuccess &&
+          results.map((d) => (
+            <Col {...BootstrapColumnLayout} key={d.id}>
+              <StoryItem story={d} className='mb-5' />
+            </Col>
+          ))}
+      </Row>
     </Container>
   )
 }
