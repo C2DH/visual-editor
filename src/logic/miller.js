@@ -26,16 +26,27 @@ const client = new QueryClient({
 
 export const WithMiller = ({ children }) => {
   const { i18n } = useTranslation()
-  const millerApiUrl = useSettingsStore((state) => state.millerApiUrl)
+  const [millerApiUrl, millerAuthToken] = useSettingsStore((state) => [
+    state.millerApiUrl,
+    state.millerAuthToken,
+  ])
 
   console.debug('[WithMiller] \n - millerApiUrl:', millerApiUrl)
+  const headers = {
+    'X-MILLER-TEST': 'Hello Miller :)',
+  }
+  if (millerAuthToken) {
+    headers.Authentication =
+      '${millerAuthToken.token_type}: ${millerAuthToken.access_token'
+  }
   return (
     <Miller
       client={client}
       apiUrl={millerApiUrl}
       langs={Languages.map(lang2Field)}
       lang={lang2Field(i18n.language)}
-      disableTranslate={false}
+      disableTranslate={true}
+      headers={headers}
     >
       {children}
     </Miller>
