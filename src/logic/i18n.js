@@ -7,6 +7,7 @@ import translations from '../translations'
 import {
   Languages,
   LanguageCodes,
+  DefaultLanguage,
   DefaultLanguageCode,
   LanguagePathRegExp,
   LanguageRootPathRegExp,
@@ -28,10 +29,13 @@ const getLanguage = () => {
     const availablesLangsShort = browserLangsShort
       .map((d) => d.split('-').shift().toLowerCase())
       .filter((d) => LanguageCodes.includes(d))
-    languageCode = availablesLangsShort.length > 0 ? availablesLangsShort[0] : DefaultLanguageCode
+    languageCode =
+      availablesLangsShort.length > 0
+        ? availablesLangsShort[0]
+        : DefaultLanguageCode
   }
 
-  console.debug('[getLanguage] languageCode:', languageCode)
+  console.debug('[getLanguage] languageCode:', languageCode, LanguageCodes)
   return {
     languageCode,
     language: Languages.find((l) => l.indexOf(languageCode) === 0),
@@ -40,12 +44,19 @@ const getLanguage = () => {
 
 export const initializeI18next = () => {
   const { languageCode, language } = getLanguage()
-  console.info('start language:', languageCode, language)
+  console.info(
+    '[i18n] initializeI18next \n - languageCode:',
+    languageCode,
+    '\n - language:',
+    language,
+    '\n - DefaultLanguageCode:',
+    DefaultLanguageCode
+  )
   i18n
     .use(initReactI18next) // passes i18n down to react-i18next
     .init({
       resources: translations,
-      lng: language,
+      lng: languageCode,
       fallbackLng: [DefaultLanguageCode],
       interpolation: {
         escapeValue: false, // react already safes from xss
@@ -54,7 +65,9 @@ export const initializeI18next = () => {
             return DateTime.fromJSDate(value).toFormat(format)
           } else if (typeof value === 'number') {
             // adapt number
-            return new Intl.NumberFormat(lng, { maximumFractionDigits: format }).format(value)
+            return new Intl.NumberFormat(lng, {
+              maximumFractionDigits: format,
+            }).format(value)
           }
           return value
         },
