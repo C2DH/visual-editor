@@ -1,11 +1,7 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next'
 import { Miller } from '@c2dh/react-miller'
 import { QueryClient } from 'react-query'
-import { Languages, MillerAPI } from '../constants'
 import { useSettingsStore } from '../store'
-
-const lang2Field = (l) => l?.split('-').join('_')
 
 const client = new QueryClient({
   defaultOptions: {
@@ -24,27 +20,21 @@ const client = new QueryClient({
   },
 })
 
-export const WithMiller = ({ children }) => {
-  const { i18n } = useTranslation()
-  const [millerApiUrl, millerAuthToken] = useSettingsStore((state) => [
-    state.millerApiUrl,
-    state.millerAuthToken,
-  ])
+export const lang2Field = (l) => l?.split('-').join('_')
 
-  console.debug('[WithMiller] \n - millerApiUrl:', millerApiUrl)
+export const WithMiller = ({ children }) => {
+  const millerApiUrl = useSettingsStore((state) => state.millerApiUrl)
+  const millerAuthToken = useSettingsStore((state) => state.millerAuthToken)
   const headers = {
-    'X-MILLER-TEST': 'Hello Miller :)',
+    'X-MILLER': 'Hello Miller :)',
   }
   if (millerAuthToken) {
-    headers.Authentication =
-      '${millerAuthToken.token_type}: ${millerAuthToken.access_token'
+    headers.Authorization = `${millerAuthToken.token_type} ${millerAuthToken.access_token}`
   }
   return (
     <Miller
       client={client}
       apiUrl={millerApiUrl}
-      langs={Languages.map(lang2Field)}
-      lang={lang2Field(i18n.language)}
       disableTranslate={true}
       headers={headers}
     >
