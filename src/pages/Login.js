@@ -39,6 +39,7 @@ const Login = () => {
         })
     },
     onSuccess: (res) => {
+      console.debug('[Login] @useQuery success!', res.data)
       setMillerAuthToken(res.data)
       navigate(from, { replace: true })
     },
