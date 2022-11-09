@@ -1,13 +1,22 @@
 {
-  "en-GB": {
+  "en": {
     "translation": {
       "pagesSettingsTitle": "Settings",
       "pagesSettingsSubheading": "Change settings in your browser local storage. Default values are stored in your curent .env file",
       "settingFieldMillerApiUrl": "Miller API url",
-      "settingFieldBasename": "this website basename (cannot be changed here)"
+      "settingFieldBasename": "this website basename (cannot be changed here)",
+      "navigationSettings": "settings",
+      "navigationStories": "stories"
     }
   },
-  "fr-FR": {
-    "translation": {}
+  "fr": {
+    "translation": {
+      "pagesSettingsTitle": "Settings",
+      "pagesSettingsSubheading": "Change settings in your browser local storage. Default values are stored in your curent .env file",
+      "settingFieldMillerApiUrl": "Miller API url",
+      "settingFieldBasename": "this website basename (cannot be changed here)",
+      "navigationSettings": "settings",
+      "navigationStories": "stories"
+    }
   }
 }
