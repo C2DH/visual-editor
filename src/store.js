@@ -30,7 +30,6 @@ export const useSettingsStore = create(
       setMillerAuthToken: (millerAuthToken) => set({ millerAuthToken }),
       setMapboxStyleUrl: (mapboxStyleUrl) => set({ mapboxStyleUrl }),
       setMapboxAccessToken: (mapboxAccessToken) => set({ mapboxAccessToken }),
-      setMillerAuthToken: (millerAuthToken) => set({ millerAuthToken }),
     }),
     { name: 'visual-editor-settings' }
   )
