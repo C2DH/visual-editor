@@ -25,14 +25,14 @@ const Story = () => {
   if (story === null) {
     return null
   }
-  const modules = story.contents.modules || []
+  const modules = story.contents?.modules || []
 
   return (
     <div className='Story'>
       <Container fluid>
         <Row>
           <Col {...BootstrapColumnLayout}>
-            <h1>{t('pagesStoryTitle')}</h1>
+            <h1 className='mb-5'>{t('pagesStoryTitle')}</h1>
             <StoryItem story={story} />
           </Col>
         </Row>
