@@ -1,13 +1,19 @@
-import React from 'react'
+import React, { useLayoutEffect, useRef, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import ModuleTextAnchor, {
   FootnoteReferencePrefix,
   FootnoteDefinitionPrefix,
 } from './ModuleTextAnchor'
-import { Form } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
+import CodeMirror from '@uiw/react-codemirror'
+import { markdown } from '@codemirror/lang-markdown'
+import { useBoundingClientRect } from '../../hooks/viewport'
+import { Pencil } from 'lucide-react'
 
-const ModuleText = ({ content = '', lang, className = '' }) => {
+const ModuleText = ({ content = '', memo, lang, className = '' }) => {
+  const [bbox, ref] = useBoundingClientRect({ key: memo })
+  const [mode, setMode] = useState('r')
   let chunks = [
     content
       // replace image spec {width= ...} (sic)
@@ -30,18 +36,50 @@ const ModuleText = ({ content = '', lang, className = '' }) => {
           : `[${num}](${FootnoteDefinitionPrefix}/${num})`
       }), // VERY IMPORTANT, we build FAKE footnotes! as we hve now sections.
   ]
+
+  // var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+  //   lineNumbers: true,
+  //   lineWrapping: true,
+  //   mode: "text/html"
+  // });
+  // var charWidth = editor.defaultCharWidth(), basePadding = 4;
+  // editor.on("renderLine", function(cm, line, elt) {
+  //   var off = CodeMirror.countColumn(line.text, null, cm.getOption("tabSize")) * charWidth;
+  //   elt.style.textIndent = "-" + off + "px";
+  //   elt.style.paddingLeft = (basePadding + off) + "px";
+  // });
+  // editor.refresh();
+
   return (
-    <div className={`ModuleText ${className}`}>
-      <b>{lang}</b>
-      <ReactMarkdown
-        className='border-top border-dark pt-2 mt-2'
-        components={{
-          a: ModuleTextAnchor,
-        }}
-        remarkPlugins={[remarkGfm]}
+    <div ref={ref} className={`ModuleText ${className} position-relative`}>
+      <Button
+        onClick={() => setMode(mode === 'r' ? 'w' : 'r')}
+        variant='light'
+        size='sm'
       >
-        {chunks.join('\n\n')}
-      </ReactMarkdown>
+        edit {lang} <Pencil size={16} />
+      </Button>
+      {mode === 'w' && (
+        <CodeMirror
+          value={chunks.join('\n\n')}
+          height='auto'
+          width={`${bbox.width}px`}
+          extensions={[markdown({ jsx: true })]}
+          options={{ lineWrapping: true, viewportMargin: Infinity }}
+          // onChange={onChange}
+        />
+      )}
+      {mode === 'r' && (
+        <ReactMarkdown
+          className='border-top border-dark pt-2 mt-2'
+          components={{
+            a: ModuleTextAnchor,
+          }}
+          remarkPlugins={[remarkGfm]}
+        >
+          {chunks.join('\n\n')}
+        </ReactMarkdown>
+      )}
     </div>
   )
   // <div>
