@@ -5,6 +5,7 @@ import { Button, Dropdown } from 'react-bootstrap'
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   <Button
     variant='light'
+    size='sm'
     href=''
     ref={ref}
     onClick={(e) => {
@@ -18,12 +19,13 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
 ))
 
 const StoryModuleTypeSwitch = ({
+  className,
   type = '',
   availableTypes = [],
   onChange,
 }) => {
   return (
-    <Dropdown>
+    <Dropdown className={className}>
       <Dropdown.Toggle as={CustomToggle} id='dropdown-custom-components'>
         {type}
       </Dropdown.Toggle>
@@ -33,7 +35,10 @@ const StoryModuleTypeSwitch = ({
           <Dropdown.Item
             key={i}
             active={d === type}
-            onClick={(e) => onChange(d)}
+            onClick={(e) => {
+              e.preventDefault()
+              onChange(d)
+            }}
           >
             {d}
           </Dropdown.Item>
