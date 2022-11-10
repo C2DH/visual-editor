@@ -72,24 +72,36 @@ body {
   ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
-h1,
-h2 {
-  font-family: rift, sans-serif;
-  font-size: 2em;
-  line-height: 1.2em;
+h1 {
+  // font-family: rift, sans-serif;
+  font-size: 1.5em;
+
+  line-height: 1.25em;
   font-weight: 400;
 
   font-style: normal;
 }
 
+h2 {
+  font-size: 1.25em;
+  line-height: 1.25em;
+  font-weight: bold;
+}
 aside h1 {
   font-family: rift, sans-serif;
+  font-size: 2em;
+  line-height: 1.2em;
   font-weight: 700;
   font-style: italic;
 }
 
 a {
   color: $dark;
+}
+
+.btn {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  // border: 1px solid;
 }
 :root {
   --primary: #1da7e0;
