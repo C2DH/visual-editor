@@ -91,9 +91,11 @@ function App({ languageCode }) {
                   <Route
                     path='story/:storyId'
                     element={
-                      <React.Suspense fallback={<>...</>}>
-                        <Story isMobile={isMobile} />
-                      </React.Suspense>
+                      <RequireAuth languageCode={languageCode}>
+                        <React.Suspense fallback={<>...</>}>
+                          <Story isMobile={isMobile} />
+                        </React.Suspense>
+                      </RequireAuth>
                     }
                   />
                   <Route
