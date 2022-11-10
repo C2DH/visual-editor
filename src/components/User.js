@@ -12,6 +12,9 @@ const User = () => {
   const setUser = useStore((state) => state.setUser)
   const millerApiUrl = useSettingsStore((state) => state.millerApiUrl)
   const millerAuthToken = useSettingsStore((state) => state.millerAuthToken)
+  const setMillerAuthToken = useSettingsStore(
+    (state) => state.setMillerAuthToken
+  )
 
   const enabled = user === null && millerAuthToken !== null
   console.debug('[User] reload query:', enabled, millerAuthToken)
@@ -34,6 +37,16 @@ const User = () => {
           username: res.data.username,
           isStaff: res.data.user.is_staff,
         })
+      },
+      onError: (err) => {
+        console.warn(
+          '[User] @useQuery error, err:',
+          err.message,
+          err.response.status
+        )
+        if (err.response.status === 401) {
+          setMillerAuthToken(null)
+        }
       },
     },
     { enabled }
