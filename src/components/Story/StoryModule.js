@@ -15,6 +15,7 @@ const StoryModule = ({ type = '', ...rest }) => {
   return (
     <div className='StoryModule'>
       <StoryModuleTypeSwitch
+        className='mb-3'
         type={currentType}
         availableTypes={AvailableModuleTypes}
         onChange={(t) => setType(t)}
