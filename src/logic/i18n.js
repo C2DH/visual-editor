@@ -75,3 +75,10 @@ export const initializeI18next = () => {
     })
   return { languageCode, language }
 }
+
+export const lang2Field = (l) => {
+  const idx = LanguageCodes.indexOf(l)
+  return idx === -1
+    ? l?.split('-').join('_')
+    : Languages[idx].split('-').join('_')
+}
