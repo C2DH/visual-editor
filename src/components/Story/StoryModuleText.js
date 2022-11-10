@@ -5,6 +5,7 @@ import ModuleText from './ModuleText'
 
 const StoryModuleText = ({
   text = {},
+  displayLanguages = [],
   ...rest
   // footnotes
 }) => {
@@ -28,9 +29,14 @@ const StoryModuleText = ({
       <p>color: {color}</p> */}
       {/* <pre>{JSON.stringify(content, null, 2)}</pre> */}
       <Row>
-        {MillerLanguages.map((lang) => (
+        {displayLanguages.map((lang) => (
           <Col key={lang}>
-            <ModuleText className='me-3' lang={lang} content={content[lang]} />
+            <ModuleText
+              memo={displayLanguages.join('')}
+              className='me-3'
+              lang={lang}
+              content={content[lang]}
+            />
           </Col>
         ))}
       </Row>
