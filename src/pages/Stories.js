@@ -20,7 +20,7 @@ const Stories = () => {
     <Container fluid>
       <Row>
         <Col {...BootstrapColumnLayout}>
-          <h1>{t('pagesStoriesTitle')}</h1>
+          <h1 className='mb-5'>{t('pagesStoriesTitle')}</h1>
         </Col>
       </Row>
       {isLoading && <p>loading</p>}
