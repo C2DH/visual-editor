@@ -1,0 +1,14 @@
+.DocItem del {
+  opacity: 0.24;
+}
+.DocItem_languages label,
+.DocItem_authors label {
+  opacity: 0.75;
+}
+.DocItem_languages,
+.DocItem_authors {
+  font-size: var(--small-font-size);
+}
+.DocItem_title {
+  text-decoration: none;
+}
