@@ -7,19 +7,28 @@ const DocFacets = ({ className = '', status, facets = {}, onSelect }) => {
     <div className={`DocsFacets ${className}`}>
       {Object.keys(facets).map((k) => (
         <div key={k}>
-          <h2>{t(k ? k : 'undefined')}</h2>
+          <h2>{t(`filterBy${k.toUpperCase()}`)}</h2>
           <ul>
-            {facets[k].map((d, i) => (
-              <li key={i}>
-                <button
-                  className="btn btn-xs btn-transparent"
-                  onClick={() => onSelect({ [k]: [d[k]] })}
-                >
-                  {t(d[k] ? d[k] : 'undefined')} {d.count}
-                </button>
-              </li>
-            ))}
+            {facets[k].map((d, i) =>
+              d[k] === null ? null : (
+                <li key={i}>
+                  <button
+                    className="btn btn-xs btn-transparent"
+                    onClick={() => onSelect({ [k]: [d[k]] })}
+                  >
+                    {t(d[k] ? d[k] : 'undefined')}
+                    <span class="badge rounded ms-1 px-1 border border-dark">{d.count}</span>
+                  </button>
+                </li>
+              ),
+            )}
           </ul>
+          <button
+            className="btn btn-xs btn-outline-dark"
+            onClick={() => onSelect({ [k]: undefined })}
+          >
+            {t('reset')}
+          </button>
         </div>
       ))}
       test {status}

@@ -99,6 +99,11 @@ a {
   // border: 1px solid;
 }
 
+.btn.btn-transparent {
+  box-shadow: none;
+  text-decoration: underline;
+}
+
 .btn-xs {
   padding: 1px 4px;
   font-size: 0.85em;

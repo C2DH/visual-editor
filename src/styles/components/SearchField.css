@@ -1,0 +1,22 @@
+.SearchField_inputSearchQuery {
+  border: 1px solid;
+  border-right: 0px transparent;
+}
+.SearchField_inputSubmit {
+  border-bottom: 1px solid;
+}
+.SearchField_inputSearchQuery:focus {
+  color: var(--bs-primary);
+  background-color: white;
+  border-color: inherit;
+  border-right: 1px solid var(--bs-primary);
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem var(--bs-primary-alpha);
+}
+
+.SearchField_inputSubmit:focus {
+  border-color: var(--bs-primary);
+  background-color: aqua;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem var(--bs-primary-alpha);
+}

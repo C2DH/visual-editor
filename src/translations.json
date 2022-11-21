@@ -1,6 +1,10 @@
 {
   "en": {
     "translation": {
+      "filterByDATA__TYPE": "filter by data type",
+      "languageDE": "de",
+      "languageEN": "en",
+      "languageFR": "fr",
       "navigationDocs": "documents",
       "navigationSettings": "settings",
       "navigationStories": "stories",
@@ -8,11 +12,16 @@
       "pagesSettingsTitle": "Settings",
       "pagesSettingsSubheading": "Change settings in your browser local storage. Default values are stored in your curent .env file",
       "settingFieldMillerApiUrl": "Miller API url",
-      "settingFieldBasename": "this website basename (cannot be changed here)"
+      "settingFieldBasename": "this website basename (cannot be changed here)",
+      "translatedIn": "translated in"
     }
   },
   "fr": {
     "translation": {
+      "filterByDATA__TYPE": "filter by data type",
+      "languageDE": "de",
+      "languageEN": "en",
+      "languageFR": "fr",
       "navigationDocs": "documents",
       "navigationSettings": "settings",
       "navigationStories": "stories",
@@ -20,7 +29,8 @@
       "pagesSettingsTitle": "Settings",
       "pagesSettingsSubheading": "Change settings in your browser local storage. Default values are stored in your curent .env file",
       "settingFieldMillerApiUrl": "Miller API url",
-      "settingFieldBasename": "this website basename (cannot be changed here)"
+      "settingFieldBasename": "this website basename (cannot be changed here)",
+      "translatedIn": "traduit en"
     }
   }
 }

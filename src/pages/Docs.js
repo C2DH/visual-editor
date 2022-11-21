@@ -6,11 +6,13 @@ import { useQueryParams } from 'use-query-params'
 import DocsFacets from '../components/Doc/DocsFacets'
 import DocItem from '../components/Doc/DocItem'
 import { BootstrapColumnLayout } from '../constants'
-import { SlugsParam } from '../logic/params'
+import { QParam, SlugsParam } from '../logic/params'
+import SearchField from '../components/SearchField'
 
 const Docs = () => {
   const { t } = useTranslation()
   const [query, setQuery] = useQueryParams({
+    q: QParam,
     type: SlugsParam,
     data__type: SlugsParam,
   })
@@ -23,13 +25,17 @@ const Docs = () => {
     filters.data__type__in = query.data__type
   }
 
-  const [{ count: filteredDocsCount = -1, results = [] } = {}, { isLoading, isSuccess }] =
-    useDocuments({
-      params: {
-        limit: 60,
-        filters,
-      },
-    })
+  const [
+    { count: filteredDocsCount = -1, results = [], facets: filteredDocsFacets } = {},
+    { isLoading, isSuccess },
+  ] = useDocuments({
+    params: {
+      limit: 60,
+      filters,
+      q: query.q && query.q.length ? query.q : undefined,
+      facets: 'data__type',
+    },
+  })
 
   const [{ count: allDocsCount = -1, facets } = {}, { status: allDocsStatus }] = useDocuments({
     params: {
@@ -53,6 +59,7 @@ const Docs = () => {
             <h1 className="mb-5">
               {t('pagesDocsTitle')} {filteredDocsCount} {allDocsCount}
             </h1>
+            <SearchField className="mb-5" onSubmit={(e, value) => setQuery({ q: value })} />
           </Col>
         </Row>
         {isLoading && <p>loading</p>}
@@ -70,6 +77,7 @@ const Docs = () => {
         status={allDocsStatus}
         query={query}
         facets={facets}
+        fiteredFacets={filteredDocsFacets}
         onSelect={setQuery}
       />
     </div>

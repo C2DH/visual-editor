@@ -1,3 +1,7 @@
 .DocsFacets ul {
   list-style-type: none;
 }
+
+.DocsFacets .badge {
+  text-decoration: none;
+}
