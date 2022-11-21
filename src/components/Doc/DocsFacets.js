@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next'
 import '../../styles/components/Doc/DocFacets.css'
 
-const DocFacets = ({ className = '', status, facets = {}, onSelect }) => {
+const DocFacets = ({ className = '', status, filteredDocsFacets = {}, facets = {}, onSelect }) => {
   const { t } = useTranslation()
+  const hasFilteredFacets = !!Object.keys(filteredDocsFacets).length
   return (
     <div className={`DocsFacets ${className}`}>
       {Object.keys(facets).map((k) => (
@@ -17,7 +18,9 @@ const DocFacets = ({ className = '', status, facets = {}, onSelect }) => {
                     onClick={() => onSelect({ [k]: [d[k]] })}
                   >
                     {t(d[k] ? d[k] : 'undefined')}
-                    <span class="badge rounded ms-1 px-1 border border-dark">{d.count}</span>
+                    <span className="badge rounded ms-1 px-1 border border-dark">
+                      {filteredDocsFacets[k] ? filteredDocsFacets[k][i].count / d.count : d.count}
+                    </span>
                   </button>
                 </li>
               ),

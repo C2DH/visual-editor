@@ -1,10 +1,9 @@
 import axios from 'axios'
-import { useState } from 'react'
 import { Button, Container, Row, Col, Form } from 'react-bootstrap'
 import { useMutation } from 'react-query'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { BootstrapColumnLayout } from '../constants'
-import { useSettingsStore, useStore } from '../store'
+import { useSettingsStore } from '../store'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -13,9 +12,7 @@ const Login = () => {
   const millerAuthToken = useSettingsStore((state) => state.millerAuthToken)
   const millerOAuthUrl = useSettingsStore((state) => state.millerOAuthUrl)
   const millerClientId = useSettingsStore((state) => state.millerClientId)
-  const setMillerAuthToken = useSettingsStore(
-    (state) => state.setMillerAuthToken
-  )
+  const setMillerAuthToken = useSettingsStore((state) => state.setMillerAuthToken)
 
   const { isLoading, isError, error, data, mutate } = useMutation({
     mutationFn: (credentials) => {
@@ -27,7 +24,7 @@ const Login = () => {
             client_id: millerClientId,
             grant_type: 'password',
             ...credentials,
-          })
+          }),
         )
         .then((res) => {
           console.debug('[Login] @useQuery res:', res)
@@ -51,7 +48,7 @@ const Login = () => {
     '\n isLoading, error, data:',
     isLoading,
     error,
-    data
+    data,
   )
 
   const handleSubmit = (event) => {
@@ -86,33 +83,27 @@ const Login = () => {
         <Col {...BootstrapColumnLayout}>
           <p>You must log in to view the page at {from}</p>
           {error !== null && (
-            <p className='text-danger'>
+            <p className="text-danger">
               Error: {error.message}
               <br />
-              Probably this is due to `Cross-Origin Request Blocked: The Same
-              Origin Policy disallows reading the remote resource`
+              Probably this is due to `Cross-Origin Request Blocked: The Same Origin Policy
+              disallows reading the remote resource`
             </p>
           )}
           <Form onSubmit={handleSubmit}>
-            <Form.Group className='mb-3' controlId='email'>
+            <Form.Group className="mb-3" controlId="email">
               <Form.Label>Username</Form.Label>
-              <Form.Control
-                name='username'
-                type='text'
-                placeholder='Enter email'
-              />
-              <Form.Text className='text-muted'>
-                Ask someone for the credentials.
-              </Form.Text>
+              <Form.Control name="username" type="text" placeholder="Enter email" />
+              <Form.Text className="text-muted">Ask someone for the credentials.</Form.Text>
             </Form.Group>
-            <Form.Group className='mb-3' controlId='pwd'>
+            <Form.Group className="mb-3" controlId="pwd">
               <Form.Label>Password</Form.Label>
-              <Form.Control name='pwd' type='password' placeholder='Password' />
+              <Form.Control name="pwd" type="password" placeholder="Password" />
             </Form.Group>
-            <Form.Group className='mb-3' controlId='formBasicCheckbox'>
-              <Form.Check type='checkbox' label='Check me out' />
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+              <Form.Check type="checkbox" label="Check me out" />
             </Form.Group>
-            <Button variant='primary' type='submit'>
+            <Button variant="primary" type="submit">
               Submit
             </Button>
           </Form>

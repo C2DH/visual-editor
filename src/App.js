@@ -17,6 +17,7 @@ const Home = lazy(() => import('./pages/Home'))
 const Login = lazy(() => import('./pages/Login'))
 const Settings = lazy(() => import('./pages/Settings'))
 const Stories = lazy(() => import('./pages/Stories'))
+const Doc = lazy(() => import('./pages/Doc'))
 const Docs = lazy(() => import('./pages/Docs'))
 const Story = lazy(() => import('./pages/Story'))
 
@@ -89,7 +90,16 @@ function App({ languageCode, asideWidth = 250 }) {
                       </RequireAuth>
                     }
                   />
-
+                  <Route
+                    path="doc/:docId"
+                    element={
+                      <RequireAuth languageCode={languageCode}>
+                        <React.Suspense fallback={<>...</>}>
+                          <Doc isMobile={isMobile} />
+                        </React.Suspense>
+                      </RequireAuth>
+                    }
+                  />
                   <Route
                     path={StoriesRoute.path}
                     element={
