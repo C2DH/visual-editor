@@ -15,10 +15,10 @@ export const StoriesRoute = {
   path: 'stories',
   label: 'navigationStories',
 }
-export const DocumentsRoute = {
+export const DocsRoute = {
   to: '/docs',
   path: 'docs',
-  label: 'navigationDocuments',
+  label: 'navigationDocs',
 }
 export const NotFoundRoute = {
   to: '/pages/not-found',
