@@ -52,19 +52,14 @@ body {
   // font-family: neue-kabel, sans-serif;
   margin: 0;
   color: $dark;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #f8ede3;
   transition: background-color 0.5s ease-in-out;
   background: #e1eec3; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to right,
-    $light,
-    #d6cbdb
-  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-gradient(to right, $light, #d6cbdb); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to right,
     $light,
@@ -100,9 +95,16 @@ a {
 }
 
 .btn {
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
   // border: 1px solid;
 }
+
+.btn-xs {
+  padding: 1px 4px;
+  font-size: 0.85em;
+  border-radius: 3px;
+}
+
 :root {
   --primary: #1da7e0;
   --black: #172429;
@@ -110,4 +112,9 @@ a {
   --body-light-bg: #b4defe;
   --fixed-menu-rm: 8rem;
   --main-container-padding: 4rem;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
 }
