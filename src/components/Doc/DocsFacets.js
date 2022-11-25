@@ -4,6 +4,7 @@ import '../../styles/components/Doc/DocFacets.css'
 const DocFacets = ({ className = '', status, filteredDocsFacets = {}, facets = {}, onSelect }) => {
   const { t } = useTranslation()
   const hasFilteredFacets = !!Object.keys(filteredDocsFacets).length
+  console.debug('[DocFacets] hasFilteredFacets:', hasFilteredFacets)
   return (
     <div className={`DocsFacets ${className}`}>
       {Object.keys(facets).map((k) => (

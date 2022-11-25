@@ -44,7 +44,7 @@ const DocItem = ({ doc, reduced = false, className = '', onSelect }) => {
             className="m-0 "
             dangerouslySetInnerHTML={{
               __html: title
-                .split(/[\[\]]/)
+                .split(/[[\]]/)
                 .join('')
                 .split(/\{[^}]+\}/)
                 .join(''),

@@ -1,11 +1,11 @@
-import React, { useLayoutEffect, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import ModuleTextAnchor, {
   FootnoteReferencePrefix,
   FootnoteDefinitionPrefix,
 } from './ModuleTextAnchor'
-import { Button, Form } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import CodeMirror from '@uiw/react-codemirror'
 import { markdown } from '@codemirror/lang-markdown'
 import { useBoundingClientRect } from '../../hooks/viewport'
@@ -25,10 +25,7 @@ const ModuleText = ({ content = '', memo, lang, className = '' }) => {
       // replace weird list item: e:g am\n29. Juli 1947 MUST NOT BE A LIST
       .replace(/([^.])\n(\d+)\./g, (m, dot, num) => `. ${num}.`)
       // replace /1 with [^1]
-      .replace(
-        /[\\/](\d+)/g,
-        (m, num) => `[${num}](${FootnoteReferencePrefix}/${num})`
-      )
+      .replace(/[\\/](\d+)/g, (m, num) => `[${num}](${FootnoteReferencePrefix}/${num})`)
       // replace footnotes and their references
       .replace(/\[\^(\d+)\](:)?/g, (m, num, def) => {
         return def === undefined
@@ -52,17 +49,13 @@ const ModuleText = ({ content = '', memo, lang, className = '' }) => {
 
   return (
     <div ref={ref} className={`ModuleText ${className} position-relative`}>
-      <Button
-        onClick={() => setMode(mode === 'r' ? 'w' : 'r')}
-        variant='light'
-        size='sm'
-      >
+      <Button onClick={() => setMode(mode === 'r' ? 'w' : 'r')} variant="light" size="sm">
         edit {lang} <Pencil size={16} />
       </Button>
       {mode === 'w' && (
         <CodeMirror
           value={chunks.join('\n\n')}
-          height='auto'
+          height="auto"
           width={`${bbox.width}px`}
           extensions={[markdown({ jsx: true })]}
           options={{ lineWrapping: true, viewportMargin: Infinity }}
@@ -71,7 +64,7 @@ const ModuleText = ({ content = '', memo, lang, className = '' }) => {
       )}
       {mode === 'r' && (
         <ReactMarkdown
-          className='border-top border-dark pt-2 mt-2'
+          className="border-top border-dark pt-2 mt-2"
           components={{
             a: ModuleTextAnchor,
           }}

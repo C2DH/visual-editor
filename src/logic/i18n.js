@@ -1,13 +1,11 @@
 import i18n from 'i18next'
 import { DateTime } from 'luxon'
-import { initReactI18next, useTranslation } from 'react-i18next'
-// import { matchPath } from 'react-router'
-import { useParams } from 'react-router-dom'
+import { initReactI18next } from 'react-i18next'
 import translations from '../translations'
 import {
   Languages,
   LanguageCodes,
-  DefaultLanguage,
+  // DefaultLanguage,
   DefaultLanguageCode,
   LanguagePathRegExp,
   LanguageRootPathRegExp,
@@ -29,10 +27,7 @@ const getLanguage = () => {
     const availablesLangsShort = browserLangsShort
       .map((d) => d.split('-').shift().toLowerCase())
       .filter((d) => LanguageCodes.includes(d))
-    languageCode =
-      availablesLangsShort.length > 0
-        ? availablesLangsShort[0]
-        : DefaultLanguageCode
+    languageCode = availablesLangsShort.length > 0 ? availablesLangsShort[0] : DefaultLanguageCode
   }
 
   console.debug('[getLanguage] languageCode:', languageCode, LanguageCodes)
@@ -50,7 +45,7 @@ export const initializeI18next = () => {
     '\n - language:',
     language,
     '\n - DefaultLanguageCode:',
-    DefaultLanguageCode
+    DefaultLanguageCode,
   )
   i18n
     .use(initReactI18next) // passes i18n down to react-i18next
@@ -78,7 +73,5 @@ export const initializeI18next = () => {
 
 export const lang2Field = (l) => {
   const idx = LanguageCodes.indexOf(l)
-  return idx === -1
-    ? l?.split('-').join('_')
-    : Languages[idx].split('-').join('_')
+  return idx === -1 ? l?.split('-').join('_') : Languages[idx].split('-').join('_')
 }

@@ -82,7 +82,7 @@ const Login = () => {
       <Row>
         <Col {...BootstrapColumnLayout}>
           <p>You must log in to view the page at {from}</p>
-          {error !== null && (
+          {isError && (
             <p className="text-danger">
               Error: {error.message}
               <br />

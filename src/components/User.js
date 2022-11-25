@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQuery } from 'react-query'
 import { LoginRoute } from '../constants'
@@ -12,14 +11,12 @@ const User = () => {
   const setUser = useStore((state) => state.setUser)
   const millerApiUrl = useSettingsStore((state) => state.millerApiUrl)
   const millerAuthToken = useSettingsStore((state) => state.millerAuthToken)
-  const setMillerAuthToken = useSettingsStore(
-    (state) => state.setMillerAuthToken
-  )
+  const setMillerAuthToken = useSettingsStore((state) => state.setMillerAuthToken)
 
   const enabled = user === null && millerAuthToken !== null
   console.debug('[User] reload query:', enabled, millerAuthToken)
 
-  const { isLoading, isSuccess } = useQuery(
+  const { isLoading } = useQuery(
     {
       queryKey: ['me', millerAuthToken?.access_token],
       queryFn: () => {
@@ -39,25 +36,21 @@ const User = () => {
         })
       },
       onError: (err) => {
-        console.warn(
-          '[User] @useQuery error, err:',
-          err.message,
-          err.response.status
-        )
+        console.warn('[User] @useQuery error, err:', err.message, err.response.status)
         if (err.response.status === 401) {
           setMillerAuthToken(null)
         }
       },
     },
-    { enabled }
+    { enabled },
   )
 
   return (
-    <div className='User'>
+    <div className="User">
       {isLoading ? (
         'loading'
       ) : user !== null ? (
-        <div className='border-start border-dark ps-2'>
+        <div className="border-start border-dark ps-2">
           <b>{user.username}</b>
           <br />
           {user.isStaff ? 'staff' : 'guest'}

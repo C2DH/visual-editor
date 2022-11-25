@@ -88,7 +88,7 @@ const schema = {
   },
 }
 
-const Doc = ({}) => {
+const Doc = () => {
   const { t } = useTranslation()
   const { docId } = useParams()
   const safeDocId = docId.replace(/[^\dA-Za-z-_]/g, '').toLowerCase()

@@ -3,12 +3,7 @@ import User from './User'
 import LangLink from './LangLink'
 import { Github } from 'lucide-react'
 
-import {
-  DocsRoute,
-  LoginRoute,
-  SettingsRoute,
-  StoriesRoute,
-} from '../constants'
+import { DocsRoute, SettingsRoute, StoriesRoute } from '../constants'
 import { useTranslation } from 'react-i18next'
 
 const Menu = ({ className = '', children }) => {
@@ -26,10 +21,10 @@ const Menu = ({ className = '', children }) => {
       <LangLink to={StoriesRoute.to}>{t(StoriesRoute.label)}</LangLink>
       <br />
       <LangLink to={DocsRoute.to}>{t(DocsRoute.label)}</LangLink>
-      <section className='mt-3'>
+      <section className="mt-3">
         <User></User>
       </section>
-      <section className='mt-3'>
+      <section className="mt-3">
         <a
           href={`https://github.com/C2DH/visual-editor/commit/${process.env.REACT_APP_GIT_REVISION}`}
         >

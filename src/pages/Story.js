@@ -1,11 +1,11 @@
 import { useStory } from '@c2dh/react-miller'
 import React, { useState } from 'react'
-import { Container, Row, Col, Form, ButtonGroup } from 'react-bootstrap'
+import { Container, Row, Col, Form } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
 import ModuleText from '../components/Story/ModuleText'
 import StoryItem from '../components/Story/StoryItem'
-import StoryModule, { Text, TextObject } from '../components/Story/StoryModule'
+import StoryModule from '../components/Story/StoryModule'
 import { BootstrapColumnLayout, MillerLanguages } from '../constants'
 import { lang2Field } from '../logic/i18n'
 
@@ -16,7 +16,7 @@ const Story = () => {
   const [onlyCurrentLanguage, set] = useState(false)
   const { storyId } = useParams()
   const safeStoryId = storyId.replace(/[^\dA-Za-z-_]/g, '').toLowerCase()
-  const [story, { isLoading, isSuccess }] = useStory(safeStoryId, {
+  const [story, { isLoading }] = useStory(safeStoryId, {
     params: {
       parser: 'yaml',
       nocache: 'true',
@@ -30,24 +30,22 @@ const Story = () => {
     return null
   }
   const modules = story.contents?.modules || []
-  const displayLanguages = onlyCurrentLanguage
-    ? [currentLanguage]
-    : MillerLanguages
+  const displayLanguages = onlyCurrentLanguage ? [currentLanguage] : MillerLanguages
   return (
-    <div className='Story'>
+    <div className="Story">
       <Container fluid>
         <Row>
           <Col {...BootstrapColumnLayout}>
-            <h1 className='mb-5'>{t('pagesStoryTitle')}</h1>
+            <h1 className="mb-5">{t('pagesStoryTitle')}</h1>
             <StoryItem story={story} />
             <Form>
-              <Form.Check type='switch'>
+              <Form.Check type="switch">
                 <Form.Check.Input
                   defaultChecked={onlyCurrentLanguage}
                   onChange={(e) => {
                     set(e.target.checked)
                   }}
-                  type='checkbox'
+                  type="checkbox"
                 />
                 <Form.Check.Label>use current language</Form.Check.Label>
               </Form.Check>
@@ -57,7 +55,7 @@ const Story = () => {
         {['title', 'abstract'].map((field) => {
           return (
             <React.Fragment key={field}>
-              <Row className='mt-5'>
+              <Row className="mt-5">
                 <h2>{field}</h2>
               </Row>
               <Row>
@@ -65,7 +63,7 @@ const Story = () => {
                   <Col key={lang}>
                     <ModuleText
                       memo={displayLanguages.join('')}
-                      className='me-3'
+                      className="me-3"
                       content={story.data[field][lang]}
                       lang={lang}
                     />
@@ -83,7 +81,7 @@ const Story = () => {
         })}
       </Container>
       {modules.map((d, i) => (
-        <section key={i} className='mt-3 pt-2 me-3'>
+        <section key={i} className="mt-3 pt-2 me-3">
           <h2>
             paragraph {i + 1} of {modules.length}
           </h2>

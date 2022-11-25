@@ -18,34 +18,28 @@ const StoryItem = ({ story, reduced = false, className = '' }) => {
   if (reduced) {
     title = downsize(title, { characters: 50, append: '&hellip;' })
   }
-  console.info(
-    '[StoryItem]',
-    '\n - title:',
-    title,
-    '\n - availableLanguages:',
-    availableLanguages
-  )
+  console.info('[StoryItem]', '\n - title:', title, '\n - availableLanguages:', availableLanguages)
   return (
     <div className={`StoryItem d-flex align-items-center ${className}`}>
       {story.covers.length ? <Covers covers={story.covers} /> : null}
       <div className={story.covers.length ? 'ms-3' : ''}>
-        <div className='badge badge-info'>status: {story.status}</div>
-        <div className='badge badge-info'>slug: {story.slug}</div>
-        <LangLink className='StoryItem_title' to={`/story/${story.slug}`}>
+        <div className="badge badge-info">status: {story.status}</div>
+        <div className="badge badge-info">slug: {story.slug}</div>
+        <LangLink className="StoryItem_title" to={`/story/${story.slug}`}>
           <h4
-            className='m-0 '
+            className="m-0 "
             dangerouslySetInnerHTML={{
               __html: title
-                .split(/[\[\]]/)
+                .split(/[[\]]/)
                 .join('')
                 .split(/\{[^}]+\}/)
                 .join(''),
             }}
           />
         </LangLink>
-        <StoryAuthors className='StoryItem_authors' authors={story.authors} />
+        <StoryAuthors className="StoryItem_authors" authors={story.authors} />
         <AvailableLanguages
-          className='StoryItem_languages'
+          className="StoryItem_languages"
           languages={availableLanguages}
           language={availableLanguage}
         />

@@ -1,14 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 
 const getWidth = () =>
-  window.innerWidth ||
-  document.documentElement.clientWidth ||
-  document.body.clientWidth
+  window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
 
 const getHeight = () =>
-  window.innerHeight ||
-  document.documentElement.clientHeight ||
-  document.body.clientHeight
+  window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
 
 const getWindowDimensions = () => ({
   width: getWidth(),
@@ -29,21 +25,13 @@ export const useCurrentWindowDimensions = (isMobile) => {
       clearTimeout(timeoutId)
       const dims = getWindowDimensions()
       if (isMobile) {
-        console.debug(
-          '[useCurrentWindowDimensions] in mobile.',
-          dims.width,
-          windowDimensions.width
-        )
+        console.debug('[useCurrentWindowDimensions] in mobile.', dims.width, windowDimensions.width)
 
         if (dims.width !== windowDimensions.width) {
           setWindowDimensions(dims)
         }
       } else {
-        console.debug(
-          '[useCurrentWindowDimensions] Dimension changed to',
-          dims,
-          isMobile
-        )
+        console.debug('[useCurrentWindowDimensions] Dimension changed to', dims, isMobile)
         timeoutId = setTimeout(() => setWindowDimensions(dims), 150)
       }
       // console.info('setWindowDimensions', dims)
@@ -85,10 +73,7 @@ export const useBoundingClientRect = ({ isMobile = false, key = '' } = {}) => {
   })
   const setCurrentBoundingClientRect = () => {
     const w = getWindowDimensions()
-    const rect =
-      ref && ref.current
-        ? ref.current.getBoundingClientRect()
-        : { width: 0, height: 0 }
+    const rect = ref && ref.current ? ref.current.getBoundingClientRect() : { width: 0, height: 0 }
     const memo = `${rect.width}x${rect.height},${w.width}x${w.height}`
     const orientation = w.width < w.height ? 'portrait' : 'landscape'
     if (isMobile && bbox.height > 0) {
@@ -137,10 +122,12 @@ export const useBoundingClientRect = ({ isMobile = false, key = '' } = {}) => {
       window.removeEventListener('resize', resizeListener)
       clearTimeout(timeoutId)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     setCurrentBoundingClientRect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key])
   return [bbox, ref]
 }
@@ -160,10 +147,7 @@ export const useBoundingClientRect = ({ isMobile = false, key = '' } = {}) => {
  *   <div ref={ref}>trigger {isIntersecting? 'visisble': 'not visible'}</div>
  *
  */
-export function useOnScreen({
-  threshold = [0, 1],
-  rootMargin = '0% 0% 0% 0%',
-} = {}) {
+export function useOnScreen({ threshold = [0, 1], rootMargin = '0% 0% 0% 0%' } = {}) {
   const ref = useRef()
   const [entry, setEntry] = useState({
     intersectionRatio: 0, // this avoid entry is null error
@@ -176,7 +160,7 @@ export function useOnScreen({
     {
       threshold,
       rootMargin,
-    }
+    },
   )
   useEffect(() => {
     observer.observe(ref.current)
@@ -195,7 +179,7 @@ export function isFullScreenElement(el) {
       document.fullscreenElement === el ||
         document.mozFullScreenElement === el ||
         document.webkitFullscreenElement === el ||
-        document.msFullscreenElement === el
+        document.msFullscreenElement === el,
     )
   }
 
@@ -207,7 +191,7 @@ export function isFullScreenElement(el) {
       document.fullscreen ||
       document.mozFullScreen ||
       document.webkitIsFullScreen ||
-      document.fullScreenMode
+      document.fullScreenMode,
   )
 }
 
@@ -221,9 +205,7 @@ export function useFullScreen(refElement) {
     window.document &&
     window.document.createElement
   )
-  const initialState = !isClient
-    ? false
-    : isFullScreenElement(refElement.current)
+  const initialState = !isClient ? false : isFullScreenElement(refElement.current)
   const [fullScreen, setFullScreen] = useState(initialState)
 
   // access various open fullscreen methods
