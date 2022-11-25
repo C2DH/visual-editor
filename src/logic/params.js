@@ -47,3 +47,18 @@ export const SlugsParam = {
     return undefined
   },
 }
+
+export const EnumParam = (acceptedValues = []) => ({
+  decode(value) {
+    if (acceptedValues.includes(value)) {
+      return value
+    }
+    return null
+  },
+  encode(value) {
+    if (acceptedValues.includes(value)) {
+      return value
+    }
+    return undefined
+  },
+})

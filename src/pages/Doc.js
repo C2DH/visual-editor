@@ -6,6 +6,8 @@ import { BootstrapColumnLayout } from '../constants'
 import DocItem from '../components/Doc/DocItem'
 import { Col, Container, Row } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
+import { useQueryParam, withDefault } from 'use-query-params'
+import { EnumParam } from '../logic/params'
 
 const schema = {
   title: 'person',
@@ -91,6 +93,7 @@ const schema = {
 const Doc = () => {
   const { t } = useTranslation()
   const { docId } = useParams()
+  const [view, setView] = useQueryParam('view', withDefault(EnumParam(['form', 'diff']), 'form'))
   const safeDocId = docId.replace(/[^\dA-Za-z-_]/g, '').toLowerCase()
   const [doc, { isLoading }] = useDocument(safeDocId, {
     params: {
@@ -109,7 +112,9 @@ const Doc = () => {
       <Container fluid>
         <Row>
           <Col {...BootstrapColumnLayout}>
-            <h1 className="mb-5">{t('pagesDocTitle')}</h1>
+            <h1 className="mb-5">
+              {t('pagesDocTitle')} {view}
+            </h1>
             <DocItem doc={doc} />
           </Col>
         </Row>
