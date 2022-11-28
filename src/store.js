@@ -16,6 +16,9 @@ const EnvVariables = {
   proxy: process.env.REACT_APP_PROXY || 'http://localhost',
   millerApiUrl: process.env.REACT_APP_MILLER_API_URL || '/api',
   millerOAuthUrl: process.env.REACT_APP_MILLER_OAUTH_URL || '/o/token/',
+  // the folder where payload is. this is related to host (or proxy)
+  millerDocumentSchemaRootUrl:
+    process.env.REACT_APP_MILLER_DOCUMENT_SCHEMA_ROOT_URL || '/miller-assets/schema/document',
 }
 
 export const useSettingsStore = create(
@@ -30,7 +33,9 @@ export const useSettingsStore = create(
       setMillerAuthToken: (millerAuthToken) => set({ millerAuthToken }),
       setMapboxStyleUrl: (mapboxStyleUrl) => set({ mapboxStyleUrl }),
       setMapboxAccessToken: (mapboxAccessToken) => set({ mapboxAccessToken }),
+      setMillerDocumentSchemaRootUrl: (millerDocumentSchemaRootUrl) =>
+        set({ millerDocumentSchemaRootUrl }),
     }),
-    { name: 'visual-editor-settings' }
-  )
+    { name: 'visual-editor-settings' },
+  ),
 )
