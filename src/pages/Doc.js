@@ -1,105 +1,97 @@
 import { useDocument } from '@c2dh/react-miller'
-import validator from '@rjsf/validator-ajv8'
 import { useParams } from 'react-router-dom'
 import Form from '@rjsf/core'
-import { BootstrapColumnLayout } from '../constants'
+import validator from '@rjsf/validator-ajv8'
+import {
+  BootstrapColumnLayout,
+  ViewParamName,
+  ViewParamValueForm,
+  ViewParamValueDiff,
+  ViewParamValueBasic,
+} from '../constants'
 import DocItem from '../components/Doc/DocItem'
 import { Col, Container, Row } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { useQueryParam, withDefault } from 'use-query-params'
 import { EnumParam } from '../logic/params'
+import DocData from './DocData'
+import axios from 'axios'
+import { useSettingsStore } from '../store'
+import { useMutation, useQuery } from 'react-query'
+import Saving from '../components/Saving'
+import { queryClient } from '../logic/miller'
 
-const schema = {
-  title: 'person',
-  type: 'object',
-  required: ['title', 'slug'],
-  definitions: {
-    life_events: {
-      type: 'object',
-      properties: {
-        name: { type: 'string' },
-        date: {
-          title: 'death date',
-          type: 'string',
-          format: 'date-time',
-        },
-      },
-      required: ['name'],
-    },
-  },
-  properties: {
-    title: { type: 'string', title: 'Title', default: 'title' },
-    slug: { type: 'string', title: 'unique identifier', default: 'slug' },
-    data: {
-      type: 'object',
-      description: 'basic info',
-      title: 'person metadata',
-      required: ['first_name', 'last_name'],
-      additionalProperties: false,
-      properties: {
-        first_name: {
-          title: 'First name',
-          type: 'string',
-        },
-        last_name: {
-          title: 'Last name',
-          type: 'string',
-        },
-        last_name_at_birth: {
-          title: 'Last name at birth',
-          type: 'string',
-        },
-        name_notes: {
-          title: 'Notes on name',
-          type: 'string',
-        },
-        birth_date: {
-          title: 'Birth date',
-          type: 'string',
-          format: 'date-time',
-        },
-        birth_country: {
-          title: 'Birth country',
-          type: 'string',
-        },
-        death_date: {
-          title: 'death date',
-          type: 'string',
-          format: 'date-time',
-        },
-        death_country: {
-          title: 'death country',
-          type: 'string',
-        },
-        notes: {
-          title: 'Notes on name, birth date etc...',
-          type: 'string',
-        },
-        households: {
-          type: 'array',
-          items: { title: 'household identifier', type: 'string' },
-        },
-        events: {
-          type: 'array',
-          items: {
-            $ref: '#/definitions/life_events',
-          },
-        },
-      },
-    },
-  },
-}
+const AvailableViewParamValues = [ViewParamValueBasic, ViewParamValueForm, ViewParamValueDiff]
 
+// https://tanstack.com/query/v4/docs/guides/updates-from-mutation-responses
 const Doc = () => {
   const { t } = useTranslation()
   const { docId } = useParams()
-  const [view, setView] = useQueryParam('view', withDefault(EnumParam(['form', 'diff']), 'form'))
   const safeDocId = docId.replace(/[^\dA-Za-z-_]/g, '').toLowerCase()
-  const [doc, { isLoading }] = useDocument(safeDocId, {
-    params: {
-      nocache: 'true',
+  const millerApiUrl = useSettingsStore((state) => state.millerApiUrl)
+  const millerAuthToken = useSettingsStore((state) => state.millerAuthToken)
+  const [view, setView] = useQueryParam(
+    ViewParamName,
+    withDefault(EnumParam(AvailableViewParamValues), ViewParamValueBasic),
+  )
+
+  const {
+    data: doc,
+    isLoading,
+    isSuccess,
+  } = useQuery(['doc', safeDocId], () =>
+    axios
+      .get(`/document/${safeDocId}/`, {
+        baseURL: millerApiUrl,
+        headers: {
+          Authorization: `${millerAuthToken?.token_type} ${millerAuthToken?.access_token}`,
+        },
+      })
+      .then(({ data }) => data),
+  )
+
+  const {
+    status: mutationStatus,
+    isLoading: isPatching,
+    isSuccess: isPatched,
+    error: mutationError,
+    mutate: partiallyUpdateDocument,
+  } = useMutation(
+    (payload) =>
+      axios
+        .patch(`/document/${safeDocId}/`, payload, {
+          baseURL: millerApiUrl,
+          headers: {
+            Authorization: `${millerAuthToken?.token_type} ${millerAuthToken?.access_token}`,
+          },
+        })
+        .then((res) => {
+          console.debug('[Doc] @useMutation response status:', res.status)
+          return res.data
+        }),
+    // .catch((err) => console.error(err))
+    {
+      onSuccess: (data) => {
+        queryClient.setQueryData(['doc', safeDocId], data)
+      },
     },
-  })
+  )
+
+  const onSubmitHandler = ({ formData, ...rest }) => {
+    console.debug('[Doc] @onSubmit', formData, rest)
+    // send to document as post.
+    partiallyUpdateDocument(formData)
+    // withToken(token, request.patch(`/api/document/${doc.id}/`))
+    // .field({
+    //   type:       doc.type,
+    //   data:       JSON.stringify(doc.data)
+    // })
+    // .field(!doc.attachment ? {attachment: ''} : {}) //  Send an empty string to remove the file
+    // .field(!doc.snapshot ? {snapshot: ''} : {}) //  Send an empty string to remove the file
+    // .attach('attachment', doc.attachment_file || undefined)
+    // .attach('snapshot', doc.snapshot_file || undefined)
+    // .then(extractBody);
+  }
   if (isLoading) {
     return 'loading....'
   }
@@ -107,8 +99,18 @@ const Doc = () => {
     return null
   }
 
+  console.debug('[Doc] using document:', doc)
+
   return (
     <div className="Doc">
+      <Saving
+        success={isPatched}
+        isLoading={isPatching}
+        status={mutationStatus}
+        error={mutationError}
+      >
+        <span dangerouslySetInnerHTML={{ __html: t('pagesDocSavingDocument', { id: doc.slug }) }} />
+      </Saving>
       <Container fluid>
         <Row>
           <Col {...BootstrapColumnLayout}>
@@ -118,30 +120,84 @@ const Doc = () => {
             <DocItem doc={doc} />
           </Col>
         </Row>
-        <Row>
-          <Col {...BootstrapColumnLayout} className="mt-5">
-            <Form
-              schema={schema}
-              formData={doc}
-              validator={validator}
-              onChange={(e) => console.log('changed', e)}
-              onSubmit={(e) => console.log('submitted', e)}
-              onError={(e) => console.log('errors', e)}
-            />
-          </Col>
-          <Col></Col>
-        </Row>
-        <Row>
-          <Col>
-            <h2>Original data</h2>
-            <pre className="bg-white border border-dark box-shadow p-3">
-              {JSON.stringify(doc, null, 2)}
-            </pre>
-          </Col>
-          <Col>
-            <h2>Changed data</h2>
+        <Row className="my-3">
+          <Col {...BootstrapColumnLayout}>
+            <ul className="nav nav-tabs">
+              {AvailableViewParamValues.map((d) => (
+                <li className="nav-item" key={d}>
+                  <a
+                    className={`nav-link ${d === view ? 'active' : ''}`}
+                    aria-current="page"
+                    onClick={(e) => {
+                      setView(d)
+                    }}
+                  >
+                    {t(d)}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </Col>
         </Row>
+        {view === ViewParamValueBasic && isSuccess && (
+          <Row>
+            <Col {...BootstrapColumnLayout}>
+              <Form
+                schema={{
+                  title: '',
+                  type: 'object',
+                  required: ['title', 'slug'],
+                  properties: {
+                    title: { type: 'string', title: t('pagesDocFieldTitle'), default: 'title' },
+                    slug: {
+                      type: 'string',
+                      title: t('pagesDocFieldSlug'),
+                      default: 'slug',
+                      pattern: '^[0-9a-z-]+$',
+                      minLength: 10,
+                      maxLength: 100,
+                    },
+                  },
+                }}
+                formData={{ title: doc.title, slug: doc.slug }}
+                validator={validator}
+                // onChange={(e) => console.log('changed', e)}
+                onSubmit={onSubmitHandler}
+                onError={(e) => console.log('errors', e)}
+              >
+                <button
+                  type="submit"
+                  disabled={mutationStatus === 'loading'}
+                  className="btn btn-outline-dark btn-md"
+                >
+                  {t(mutationStatus === 'loading' ? 'saving' : 'save')}
+                </button>
+              </Form>
+            </Col>
+            <Col></Col>
+          </Row>
+        )}
+        {view === ViewParamValueForm && isSuccess && (
+          <Row>
+            <Col {...BootstrapColumnLayout}>
+              <DocData doc={doc} onSubmit={onSubmitHandler} />
+            </Col>
+          </Row>
+        )}
+
+        {view === ViewParamValueDiff && isSuccess && (
+          <Row>
+            <Col>
+              <h2>Original data</h2>
+              <pre className="bg-white border border-dark box-shadow p-3">
+                {JSON.stringify(doc, null, 2)}
+              </pre>
+            </Col>
+            <Col>
+              <h2>Changed data</h2>
+            </Col>
+          </Row>
+        )}
       </Container>
     </div>
   )

@@ -39,7 +39,7 @@ const DocItem = ({ doc, reduced = false, className = '', onSelect }) => {
         <div className="badge badge-info">
           slug:<b>{doc.slug}</b>
         </div>
-        <LangLink className="DocItem_title" to={`/doc/${doc.slug}`}>
+        <LangLink className="DocItem_title" to={`/doc/${doc.id}`}>
           <h4
             className="m-0 "
             dangerouslySetInnerHTML={{
