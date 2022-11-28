@@ -6,10 +6,10 @@ import { Github } from 'lucide-react'
 import { DocsRoute, SettingsRoute, StoriesRoute } from '../constants'
 import { useTranslation } from 'react-i18next'
 
-const Menu = ({ className = '', children }) => {
+const Menu = ({ className = '', children, style }) => {
   const { t } = useTranslation()
   return (
-    <aside className={`Menu ${className}`}>
+    <aside className={`Menu ${className}`} style={style}>
       <h1>
         visual
         <br />
