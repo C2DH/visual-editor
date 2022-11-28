@@ -30,6 +30,25 @@ $danger: #ff4136;
 $light: #f8ede3;
 $dark: #161217;
 
+$input-border-color: $dark;
+$input-bg: $light;
+$input-font-size: inherit;
+$input-border-radius: 3px;
+$input-padding-y: 5px;
+$input-padding-x: 10px;
+// $input-font-weight: bold;
+
+$nav-link-padding-y: 2px;
+$nav-link-padding-x: 20px;
+$nav-tabs-border-color: $dark;
+$nav-link-hover-color: $dark;
+$nav-tabs-link-hover-border-color: $dark;
+$nav-tabs-border-radius: 3px;
+$nav-tabs-link-active-bg: #161217ee;
+$nav-tabs-link-active-border-color: $dark;
+$nav-tabs-link-active-color: white;
+$nav-tabs-border-width: 1px;
+
 @import '../../node_modules/bootstrap/scss/root';
 
 // 6. Optionally include any other parts as needed
@@ -46,6 +65,7 @@ $dark: #161217;
 @import '../../node_modules/bootstrap/scss/buttons';
 @import '../../node_modules/bootstrap/scss/forms';
 @import '../../node_modules/bootstrap/scss/dropdown';
+@import '../../node_modules/bootstrap/scss/nav';
 // 8. Add additional custom code here
 
 body {
@@ -122,4 +142,18 @@ a {
 ul {
   margin: 0;
   padding: 0;
+}
+
+form fieldset .form-group {
+  margin-bottom: 25px;
+}
+
+form fieldset label {
+  font-family: monospace;
+  font-weight: bold;
+}
+
+form fieldset > legend {
+  font-size: inherit;
+  font-style: italic;
 }
