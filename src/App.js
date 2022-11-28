@@ -23,7 +23,7 @@ const Story = lazy(() => import('./pages/Story'))
 
 function App({ languageCode, asideWidth = 250 }) {
   const basename = useSettingsStore((state) => state.basename)
-  const { width: windowWidth } = useCurrentWindowDimensions(isMobile)
+  const { width: windowWidth, height: windowHeight } = useCurrentWindowDimensions(isMobile)
   return (
     <BrowserRouter basename={basename}>
       <WithMiller>
@@ -31,10 +31,10 @@ function App({ languageCode, asideWidth = 250 }) {
           <LanguageRouter />
           <div className="App">
             <Menu
-              className="position-fixed top-0 p-5"
+              className="position-fixed top-0 p-5 border-end border-dark"
               languageCode={languageCode}
               style={{
-                width: asideWidth,
+                minHeight: windowHeight - 100,
               }}
             >
               <p>
