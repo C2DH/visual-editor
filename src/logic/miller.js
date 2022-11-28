@@ -3,7 +3,7 @@ import { Miller } from '@c2dh/react-miller'
 import { QueryClient } from 'react-query'
 import { useSettingsStore } from '../store'
 
-const client = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       cacheTime: Infinity,
@@ -32,12 +32,7 @@ export const WithMiller = ({ children }) => {
     headers.Authorization = `${millerAuthToken.token_type} ${millerAuthToken.access_token}`
   }
   return (
-    <Miller
-      client={client}
-      apiUrl={millerApiUrl}
-      disableTranslate={true}
-      headers={headers}
-    >
+    <Miller client={queryClient} apiUrl={millerApiUrl} disableTranslate={true} headers={headers}>
       {children}
     </Miller>
   )
