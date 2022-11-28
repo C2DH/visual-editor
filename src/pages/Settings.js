@@ -7,31 +7,32 @@ import { useSettingsStore } from '../store'
 const Settings = () => {
   const { t } = useTranslation()
   // readonly
-  const [basename, proxy, millerClientId, resetFromEnv] = useSettingsStore(
-    (state) => [
-      state.basename,
-      state.proxy,
-      state.millerClientId,
-      state.resetFromEnv,
-    ]
-  )
+  const [basename, proxy, millerClientId, resetFromEnv] = useSettingsStore((state) => [
+    state.basename,
+    state.proxy,
+    state.millerClientId,
+    state.resetFromEnv,
+  ])
 
   const millerApiUrl = useSettingsStore((state) => state.millerApiUrl)
   const millerOAuthUrl = useSettingsStore((state) => state.millerOAuthUrl)
   const mapboxAccessToken = useSettingsStore((state) => state.mapboxAccessToken)
   const mapboxStyleUrl = useSettingsStore((state) => state.mapboxStyleUrl)
+  const millerDocumentSchemaRootUrl = useSettingsStore((state) => state.millerDocumentSchemaRootUrl)
   const [
     setMillerApiUrl,
     setMillerOAuthUrl,
     setMapboxAccessToken,
     setMapboxStyleUrl,
     setMillerClientId,
+    setMillerDocumentSchemaRootUrl,
   ] = useSettingsStore((state) => [
     state.setMillerApiUrl,
     state.setMillerOAuthUrl,
     state.setMapboxAccessToken,
     state.setMapboxStyleUrl,
     state.setMillerClientId,
+    state.setMillerDocumentSchemaRootUrl,
   ])
 
   return (
@@ -71,21 +72,22 @@ const Settings = () => {
                 defaultValue: mapboxStyleUrl,
                 set: setMapboxStyleUrl,
               },
+              {
+                label: 'settingFieldMillerDocumentSchemaRootUrl',
+                defaultValue: millerDocumentSchemaRootUrl,
+                set: setMillerDocumentSchemaRootUrl,
+              },
             ].map((field) => (
-              <Form.Group
-                key={field.label}
-                className='mb-3'
-                controlId='formBasicEmail'
-              >
+              <Form.Group key={field.label} className="mb-3" controlId="formBasicEmail">
                 <Form.Label>{t(field.label)}</Form.Label>
                 <Form.Control
-                  type='url'
+                  type="url"
                   value={field.defaultValue}
                   onChange={(e) => field.set(e.target.value)}
                 />
               </Form.Group>
             ))}
-            <Button type='button' onClick={() => resetFromEnv()}>
+            <Button type="button" onClick={() => resetFromEnv()}>
               Reset (use env variables)
             </Button>
           </Form>
@@ -100,17 +102,9 @@ const Settings = () => {
                 defaultValue: proxy,
               },
             ].map((field) => (
-              <Form.Group
-                key={field.label}
-                className='mb-3'
-                controlId='formBasicEmail'
-              >
+              <Form.Group key={field.label} className="mb-3" controlId="formBasicEmail">
                 <Form.Label>{t(field.label)}</Form.Label>
-                <Form.Control
-                  type='text'
-                  disabled
-                  defaultValue={field.defaultValue}
-                />
+                <Form.Control type="text" disabled defaultValue={field.defaultValue} />
               </Form.Group>
             ))}
           </Form>
