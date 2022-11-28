@@ -1,0 +1,14 @@
+.Saving {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  margin-left: -100px;
+  width: 200px;
+  text-align: center;
+}
+
+.Saving__message {
+  background-color: var(--bs-dark);
+  color: var(--white);
+  border-radius: 5px;
+}
