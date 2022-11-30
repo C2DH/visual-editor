@@ -3,7 +3,7 @@ import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { useQueryParams } from 'use-query-params'
-import DocsFacets from '../components/Doc/DocsFacets'
+import Facets from '../components/Facets'
 import DocItem from '../components/Doc/DocItem'
 import { BootstrapColumnLayout } from '../constants'
 import { QParam, SlugsParam } from '../logic/params'
@@ -72,7 +72,7 @@ const Docs = () => {
             ))}
         </Row>
       </Container>
-      <DocsFacets
+      <Facets
         className="flex-grow-1 px-3"
         status={allDocsStatus}
         query={query}

@@ -1,12 +1,12 @@
 import { useTranslation } from 'react-i18next'
-import '../../styles/components/Doc/DocFacets.css'
+import '../styles/components/Facets.css'
 
-const DocFacets = ({ className = '', status, filteredDocsFacets = {}, facets = {}, onSelect }) => {
+const Facets = ({ className = '', status, filteredDocsFacets = {}, facets = {}, onSelect }) => {
   const { t } = useTranslation()
   const hasFilteredFacets = !!Object.keys(filteredDocsFacets).length
-  console.debug('[DocFacets] hasFilteredFacets:', hasFilteredFacets)
+  console.debug('[Facet] hasFilteredFacets:', hasFilteredFacets)
   return (
-    <div className={`DocsFacets ${className}`}>
+    <div className={`Facets ${className}`}>
       {Object.keys(facets).map((k) => (
         <div key={k}>
           <h2>{t(`filterBy${k.toUpperCase()}`)}</h2>
@@ -40,4 +40,4 @@ const DocFacets = ({ className = '', status, filteredDocsFacets = {}, facets = {
   )
 }
 
-export default DocFacets
+export default Facets
