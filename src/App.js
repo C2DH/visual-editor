@@ -34,7 +34,7 @@ function App({ languageCode, asideWidth = 250 }) {
               className="position-fixed top-0 p-5 border-end border-dark"
               languageCode={languageCode}
               style={{
-                minHeight: windowHeight - 100,
+                minHeight: windowHeight,
               }}
             >
               <p>
