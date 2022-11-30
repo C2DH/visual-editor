@@ -78,7 +78,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #f8ede3;
   transition: background-color 0.5s ease-in-out;
-  background: #e1eec3; /* fallback for old browsers */
+  background: $light; /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, $light, #d6cbdb); /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(
     to right,
