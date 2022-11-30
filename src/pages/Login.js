@@ -1,11 +1,13 @@
 import axios from 'axios'
 import { Button, Container, Row, Col, Form } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 import { useMutation } from 'react-query'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { BootstrapColumnLayout } from '../constants'
 import { useSettingsStore } from '../store'
 
 const Login = () => {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
   const from = location.state?.from?.pathname || '/'
@@ -62,15 +64,6 @@ const Login = () => {
       username,
       password,
     })
-    // auth.signin(username, () => {
-    //   // Send them back to the page they tried to visit when they were
-    //   // redirected to the login page. Use { replace: true } so we don't create
-    //   // another entry in the history stack for the login page.  This means that
-    //   // when they get to the protected page and click the back button, they
-    //   // won't end up back on the login page, which is also really nice for the
-    //   // user experience.
-    //   navigate(from, { replace: true });
-    // });
   }
 
   if (millerAuthToken) {
@@ -84,10 +77,8 @@ const Login = () => {
           <p>You must log in to view the page at {from}</p>
           {isError && (
             <p className="text-danger">
-              Error: {error.message}
-              <br />
-              Probably this is due to `Cross-Origin Request Blocked: The Same Origin Policy
-              disallows reading the remote resource`
+              {error.code === 'ERR_BAD_REQUEST' && t('checkCredentials')}
+              <pre className="text-muted border border-danger">{error.message}</pre>
             </p>
           )}
           <Form onSubmit={handleSubmit}>
