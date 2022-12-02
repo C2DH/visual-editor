@@ -11,7 +11,7 @@ import { markdown } from '@codemirror/lang-markdown'
 import { useBoundingClientRect } from '../../hooks/viewport'
 import { Pencil } from 'lucide-react'
 
-const ModuleText = ({ content = '', memo, lang, className = '' }) => {
+const ModuleText = ({ content = '', onChange, memo, lang, className = '' }) => {
   const [bbox, ref] = useBoundingClientRect({ key: memo })
   const [mode, setMode] = useState('r')
   let chunks = [
@@ -59,7 +59,7 @@ const ModuleText = ({ content = '', memo, lang, className = '' }) => {
           width={`${bbox.width}px`}
           extensions={[markdown({ jsx: true })]}
           options={{ lineWrapping: true, viewportMargin: Infinity }}
-          // onChange={onChange}
+          onChange={onChange}
         />
       )}
       {mode === 'r' && (

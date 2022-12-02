@@ -1,13 +1,20 @@
-import { useStory } from '@c2dh/react-miller'
 import React, { useState } from 'react'
+import axios from 'axios'
+import { setObject } from '../logic/utils'
+// import { default as JSONSchemaForm } from '@rjsf/core'
+// import validator from '@rjsf/validator-ajv8'
 import { Container, Row, Col, Form } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { useParams } from 'react-router-dom'
-import ModuleText from '../components/Story/ModuleText'
-import StoryItem from '../components/Story/StoryItem'
-import StoryModule from '../components/Story/StoryModule'
+import { useMutation, useQuery } from 'react-query'
 import { BootstrapColumnLayout, MillerLanguages } from '../constants'
 import { lang2Field } from '../logic/i18n'
+import { useSettingsStore } from '../store'
+import { queryClient } from '../logic/miller'
+import ModuleText from '../components/Story/ModuleText'
+import Saving from '../components/Saving'
+import StoryItem from '../components/Story/StoryItem'
+import StoryModule from '../components/Story/StoryModule'
 
 const Story = () => {
   const { t, i18n } = useTranslation()
@@ -16,23 +23,88 @@ const Story = () => {
   const [onlyCurrentLanguage, set] = useState(false)
   const { storyId } = useParams()
   const safeStoryId = storyId.replace(/[^\dA-Za-z-_]/g, '').toLowerCase()
-  const [story, { isLoading }] = useStory(safeStoryId, {
-    params: {
-      parser: 'yaml',
-      nocache: 'true',
+  const millerApiUrl = useSettingsStore((state) => state.millerApiUrl)
+  const millerAuthToken = useSettingsStore((state) => state.millerAuthToken)
+  const [ghostStory, setGhostStory] = useState(null)
+
+  const {
+    data: story,
+    isLoading,
+    isSuccess,
+  } = useQuery(['story', safeStoryId], () =>
+    axios
+      .get(`/story/${safeStoryId}/`, {
+        baseURL: millerApiUrl,
+        headers: {
+          Authorization: `${millerAuthToken?.token_type} ${millerAuthToken?.access_token}`,
+        },
+        params: {
+          parser: 'yaml',
+          nocache: 'true',
+        },
+      })
+      .then(({ data }) => {
+        setGhostStory({ data: data.data }) // :D
+        return data
+      }),
+  )
+
+  const {
+    status: mutationStatus,
+    isLoading: isPatching,
+    isSuccess: isPatched,
+    error: mutationError,
+    mutate: partiallyUpdateStory,
+  } = useMutation(
+    (payload) =>
+      axios
+        .patch(`/story/${story?.id}/`, payload, {
+          baseURL: millerApiUrl,
+          headers: {
+            Authorization: `${millerAuthToken?.token_type} ${millerAuthToken?.access_token}`,
+          },
+        })
+        .then((res) => {
+          console.debug('[Story] @useMutation response status:', res.status)
+          return res.data
+        }),
+    {
+      onSuccess: (data) => {
+        queryClient.setQueryData(['story', safeStoryId], data)
+      },
     },
-  })
+  )
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault()
+    partiallyUpdateStory(ghostStory)
+  }
+
+  const onChangeHander = (path, value) => {
+    console.debug('[Story] @onChangeHander', path, value, ghostStory)
+    setGhostStory(setObject({ ...ghostStory }, path, value))
+  }
 
   if (isLoading) {
     return 'loading....'
   }
-  if (story === null) {
+  if (!isSuccess || story === null) {
     return null
   }
   const modules = story.contents?.modules || []
   const displayLanguages = onlyCurrentLanguage ? [currentLanguage] : MillerLanguages
   return (
     <div className="Story">
+      <Saving
+        success={isPatched}
+        isLoading={isPatching}
+        status={mutationStatus}
+        error={mutationError}
+      >
+        <span
+          dangerouslySetInnerHTML={{ __html: t('pagesStorySavingDocument', { id: story.slug }) }}
+        />
+      </Saving>
       <Container fluid>
         <Row>
           <Col {...BootstrapColumnLayout}>
@@ -66,6 +138,7 @@ const Story = () => {
                       className="me-3"
                       content={story.data[field][lang]}
                       lang={lang}
+                      onChange={(value) => onChangeHander(`data.${field}.${lang}`, value)}
                     />
                     {/* <Form.Group className='me-3'>
                       <Form.Label> {lang}</Form.Label>
@@ -79,6 +152,18 @@ const Story = () => {
             </React.Fragment>
           )
         })}
+        <Row>
+          <Col>
+            <button
+              type="submit"
+              onClick={onSubmitHandler}
+              disabled={mutationStatus === 'loading'}
+              className="btn btn-outline-dark btn-md"
+            >
+              {t(mutationStatus === 'loading' ? 'saving' : 'save')}
+            </button>
+          </Col>
+        </Row>
       </Container>
       {modules.map((d, i) => (
         <section key={i} className="mt-3 pt-2 me-3">

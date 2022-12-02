@@ -23,8 +23,12 @@ const StoryItem = ({ story, reduced = false, className = '' }) => {
     <div className={`StoryItem d-flex align-items-center ${className}`}>
       {story.covers.length ? <Covers covers={story.covers} /> : null}
       <div className={story.covers.length ? 'ms-3' : ''}>
-        <div className="badge badge-info">status: {story.status}</div>
-        <div className="badge badge-info">slug: {story.slug}</div>
+        <div className="badge badge-info">
+          status: <b>{story.status}</b>
+        </div>
+        <div className="badge badge-info">
+          slug: <b>{story.slug}</b>
+        </div>
         <LangLink className="StoryItem_title" to={`/story/${story.slug}`}>
           <h4
             className="m-0 "

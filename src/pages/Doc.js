@@ -1,4 +1,3 @@
-import { useDocument } from '@c2dh/react-miller'
 import { useParams } from 'react-router-dom'
 import Form from '@rjsf/core'
 import validator from '@rjsf/validator-ajv8'

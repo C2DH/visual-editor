@@ -15,6 +15,11 @@ export const StoriesRoute = {
   path: 'stories',
   label: 'navigationStories',
 }
+export const PagesRoute = {
+  to: '/stories?tags=static',
+  path: 'pages',
+  label: 'navigationPages',
+}
 export const DocsRoute = {
   to: '/docs',
   path: 'docs',

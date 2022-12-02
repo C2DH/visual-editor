@@ -14,10 +14,14 @@ const Stories = () => {
   const [query, setQuery] = useQueryParams({
     q: QParam,
     status: SlugsParam,
+    tags: SlugsParam,
   })
   const filters = {}
   if (query.status) {
     filters.status__in = query.status
+  }
+  if (query.tags) {
+    filters.tags__slug__in = query.tags
   }
 
   const [
@@ -28,6 +32,7 @@ const Stories = () => {
       limit: 60,
       q: query.q && query.q.length ? query.q : undefined,
       facets: 'status',
+      filters,
     },
   })
 

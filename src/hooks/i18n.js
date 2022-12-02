@@ -1,8 +1,9 @@
 import { useTranslation } from 'react-i18next'
+import { lang2Field } from '../logic/i18n'
 
 export const useAvailableLanguage = ({ translatable = {}, debug = false }) => {
   const { i18n } = useTranslation()
-  const requestedLanguage = i18n.language.split('-').join('_')
+  const requestedLanguage = lang2Field(i18n.language.split('-').join('_'))
 
   const availableLanguages = Object.keys(translatable || {}).filter(
     (d) => typeof translatable[d] === 'string',

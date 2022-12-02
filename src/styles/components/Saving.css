@@ -2,12 +2,13 @@
   position: fixed;
   bottom: 100px;
   left: 50%;
-  margin-left: -100px;
-  width: 200px;
+  margin-left: -40%;
+  width: 80%;
   text-align: center;
 }
 
 .Saving__message {
+  display: inline-block;
   background-color: var(--bs-dark);
   color: var(--white);
   border-radius: 5px;

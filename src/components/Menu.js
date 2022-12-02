@@ -3,7 +3,7 @@ import User from './User'
 import LangLink from './LangLink'
 import { Github } from 'lucide-react'
 
-import { DocsRoute, SettingsRoute, StoriesRoute } from '../constants'
+import { DocsRoute, PagesRoute, SettingsRoute, StoriesRoute } from '../constants'
 import { useTranslation } from 'react-i18next'
 
 const Menu = ({ className = '', children, style }) => {
@@ -16,11 +16,16 @@ const Menu = ({ className = '', children, style }) => {
         editor
       </h1>
 
-      <LangLink to={SettingsRoute.to}>{t(SettingsRoute.label)}</LangLink>
-      <br />
       <LangLink to={StoriesRoute.to}>{t(StoriesRoute.label)}</LangLink>
       <br />
       <LangLink to={DocsRoute.to}>{t(DocsRoute.label)}</LangLink>
+      <br />
+      <br />
+      <LangLink to={SettingsRoute.to}>{t(SettingsRoute.label)}</LangLink>
+      <br />
+
+      <LangLink to={PagesRoute.to}>{t(PagesRoute.label)}</LangLink>
+      <br />
       <section className="mt-3">
         <User></User>
       </section>

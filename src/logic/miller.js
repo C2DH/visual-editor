@@ -20,8 +20,6 @@ export const queryClient = new QueryClient({
   },
 })
 
-export const lang2Field = (l) => l?.split('-').join('_')
-
 export const WithMiller = ({ children }) => {
   const millerApiUrl = useSettingsStore((state) => state.millerApiUrl)
   const millerAuthToken = useSettingsStore((state) => state.millerAuthToken)

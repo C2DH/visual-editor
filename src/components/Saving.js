@@ -12,14 +12,16 @@ const Saving = ({ status = '', isSaving = false, success = false, error, childre
       api.start({ opacity: 0, delay: 2500 })
     }
   }, [status])
+  if (error) {
+    console.error('[Saving]', error)
+  }
   return (
     <animated.div style={styles} className="Saving">
       <div className="Saving__message px-3 py-2">
         {children ? <p>{children}</p> : null}
-        error: {error}
+        {error ? String(error?.message) : null}
         <br />
-        status: {status}
-        <br />
+        status: <b>{status}</b>
       </div>
     </animated.div>
   )
