@@ -7,10 +7,18 @@ import { ReactRouter6Adapter } from 'use-query-params/adapters/react-router-6'
 import LanguageRouter from './components/LanguageRouter'
 import { useCurrentWindowDimensions } from './hooks/viewport'
 import { useSettingsStore } from './store'
-import { LoginRoute, SettingsRoute, StoriesRoute, DocsRoute } from './constants'
+import {
+  LoginRoute,
+  SettingsRoute,
+  StoriesRoute,
+  DocsRoute,
+  AuthorsRoute,
+  AuthorRoute,
+} from './constants'
 import RequireAuth from './components/RequireAuth'
 
 import Menu from './components/Menu'
+import CreateDoc from './components/CreateDoc'
 
 const NotFound = lazy(() => import('./pages/NotFound'))
 const Home = lazy(() => import('./pages/Home'))
@@ -20,6 +28,8 @@ const Stories = lazy(() => import('./pages/Stories'))
 const Doc = lazy(() => import('./pages/Doc'))
 const Docs = lazy(() => import('./pages/Docs'))
 const Story = lazy(() => import('./pages/Story'))
+const Authors = lazy(() => import('./pages/Authors'))
+const Author = lazy(() => import('./pages/Author'))
 
 function App({ languageCode, asideWidth = 250 }) {
   const basename = useSettingsStore((state) => state.basename)
@@ -30,8 +40,9 @@ function App({ languageCode, asideWidth = 250 }) {
         <QueryParamProvider adapter={ReactRouter6Adapter}>
           <LanguageRouter />
           <div className="App">
+            <CreateDoc />
             <Menu
-              className="position-fixed top-0 p-5 border-end border-dark"
+              className="position-fixed top-0 p-5"
               languageCode={languageCode}
               style={{
                 minHeight: windowHeight,
@@ -120,6 +131,26 @@ function App({ languageCode, asideWidth = 250 }) {
                       </RequireAuth>
                     }
                   />
+                  <Route
+                    path={AuthorsRoute.path}
+                    element={
+                      <RequireAuth languageCode={languageCode}>
+                        <React.Suspense fallback={<>...</>}>
+                          <Authors isMobile={isMobile} />
+                        </React.Suspense>
+                      </RequireAuth>
+                    }
+                  ></Route>
+                  <Route
+                    path={AuthorRoute.path}
+                    element={
+                      <RequireAuth languageCode={languageCode}>
+                        <React.Suspense fallback={<>...</>}>
+                          <Author isMobile={isMobile} />
+                        </React.Suspense>
+                      </RequireAuth>
+                    }
+                  ></Route>
                   <Route
                     path="*"
                     element={
