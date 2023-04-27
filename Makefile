@@ -11,7 +11,7 @@ run-dev:
 run-build:
 	REACT_APP_GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD) \
 	REACT_APP_GIT_REVISION=$(shell git rev-parse --short HEAD) \
-	PUBLIC_URL=/editor yarn build
+	PUBLIC_URL=/editor npm build
 
 build-docker-image:
 	docker build \
