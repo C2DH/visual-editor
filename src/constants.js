@@ -25,6 +25,16 @@ export const DocsRoute = {
   path: 'docs',
   label: 'navigationDocs',
 }
+export const AuthorsRoute = {
+  to: '/authors',
+  path: 'authors',
+  label: 'navigationAuthors',
+}
+export const AuthorRoute = {
+  to: '/author/:authorId',
+  path: 'author/:authorId',
+  label: 'navigationAuthors',
+}
 export const NotFoundRoute = {
   to: '/pages/not-found',
   label: 'navigationNotFound',
@@ -46,6 +56,9 @@ export const BootstrapColumnLayout = Object.freeze({
   md: { span: 10, offset: 0 },
 })
 
+export const BootstrapMultiLayout = Object.freeze({
+  md: { span: 5, offset: 0 },
+})
 export const ViewParamName = 'view'
 export const ViewParamValueBasic = 'basic'
 export const ViewParamValueDiff = 'diff'
