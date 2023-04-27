@@ -10,16 +10,12 @@ const Covers = ({ covers = [], size = 120, style, ...rest }) => {
     }
   }
   return (
-    <ol className='Covers' style={{ minWidth: size, ...style }} {...rest}>
+    <ol className="Covers" style={{ minWidth: size, ...style }} {...rest}>
       {covers.map((doc, i) => {
-        const thumbnailResolution = doc.data.resolutions?.thumbnail?.url
+        const thumbnailResolution = doc.data?.resolutions?.thumbnail?.url
         return (
           <picture key={doc.id} style={pictureStyle(i)}>
-            <img
-              src={thumbnailResolution}
-              alt={doc.type}
-              style={{ width: size }}
-            />
+            <img src={thumbnailResolution} alt={doc.type} style={{ width: size }} />
           </picture>
         )
       })}
