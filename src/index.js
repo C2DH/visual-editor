@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './styles/index.scss'
+import './index.scss'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { initializeI18next } from './logic/i18n'
@@ -26,4 +26,6 @@ console.info(
   `\nhttps://github.com/C2DH/visual-editor/commit/${process.env.REACT_APP_GIT_REVISION}`,
   '\n - initial languageCode:',
   languageCode,
+  '\n - proxy:',
+  process.env.PROXY_HOST,
 )
