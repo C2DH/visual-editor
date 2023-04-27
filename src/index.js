@@ -1,43 +1,31 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "bootstrap/dist/css/bootstrap.css";
-import App from "./App";
-import * as serviceWorker from './serviceWorker';
-import "./style/font-awesome.css";
-import "./style/index.css";
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import './index.scss'
+import App from './App'
+import reportWebVitals from './reportWebVitals'
+import { initializeI18next } from './logic/i18n'
+const { languageCode } = initializeI18next()
 
-console.info('Version:',
-  process.env.REACT_APP_VISUAL_EDITOR_GIT_BRANCH,
-  process.env.REACT_APP_VISUAL_EDITOR_GIT_REVISION,
-);
-console.info('REACT_APP_EDITOR_BASENAME:', process.env.REACT_APP_EDITOR_BASENAME)
-console.info('REACT_APP_MILLER_CLIENT_ID:', process.env.REACT_APP_MILLER_CLIENT_ID)
-console.info('REACT_APP_DOCUMENT_SCHEMA:', process.env.REACT_APP_DOCUMENT_SCHEMA)
+const root = ReactDOM.createRoot(document.getElementById('root'))
+root.render(
+  <React.StrictMode>
+    <App languageCode={languageCode} />
+  </React.StrictMode>,
+)
 
-console.info('REACT_APP_FRONTEND_URL:', process.env.REACT_APP_FRONTEND_URL)
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals(console.log)
 
-console.info('REACT_APP_TAG_THEME_PK:', process.env.REACT_APP_TAG_THEME_PK)
-console.info('REACT_APP_TAG_CHAPTER_PK:', process.env.REACT_APP_TAG_CHAPTER_PK)
-console.info('REACT_APP_TAG_EDUCATION_PK:', process.env.REACT_APP_TAG_EDUCATION_PK)
-console.info('REACT_APP_DOCUMENT_SCHEMA:', process.env.REACT_APP_DOCUMENT_SCHEMA)
-console.info('REACT_APP_LANGUAGES:', process.env.REACT_APP_LANGUAGES)
-console.info('REACT_APP_DEFAULT_LANGUAGE:', process.env.REACT_APP_DEFAULT_LANGUAGE)
-console.info('REACT_APP_MILLER_CLIENT_ID:', process.env.REACT_APP_MILLER_CLIENT_ID)
-
-console.info('REACT_APP_CONTENT_ACCEPTED_FILES:', process.env.REACT_APP_CONTENT_ACCEPTED_FILES)
-console.info('REACT_APP_CONTENT_MAX_SIZE:', process.env.REACT_APP_CONTENT_MAX_SIZE)
-console.info('REACT_APP_PREVIEW_ACCEPTED_FILES:', process.env.REACT_APP_PREVIEW_ACCEPTED_FILES)
-console.info('REACT_APP_PREVIEW_MAX_SIZE:', process.env.REACT_APP_PREVIEW_MAX_SIZE)
-
-console.info('REACT_APP_MAPBOX_STYLE_URL:', process.env.REACT_APP_MAPBOX_STYLE_URL)
-console.info('REACT_APP_MAPBOX_ACCESS_TOKEN:', process.env.REACT_APP_MAPBOX_ACCESS_TOKEN)
-
-console.info('REACT_APP_BACKGROUND_COLORS_PALETTE:', process.env.REACT_APP_BACKGROUND_COLORS_PALETTE)
-console.info('REACT_APP_TEXT_COLORS_PALETTE:', process.env.REACT_APP_TEXT_COLORS_PALETTE)
-
-ReactDOM.render(<App />, document.getElementById("root"));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// add information on version on startup
+console.info(
+  'version',
+  process.env.REACT_APP_GIT_TAG,
+  process.env.REACT_APP_GIT_BRANCH,
+  `\nhttps://github.com/C2DH/visual-editor/commit/${process.env.REACT_APP_GIT_REVISION}`,
+  '\n - initial languageCode:',
+  languageCode,
+  '\n - proxy:',
+  process.env.PROXY_HOST,
+)

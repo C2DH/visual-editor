@@ -1,0 +1,7 @@
+.Menu ul {
+  list-style: none;
+}
+
+.Menu li {
+  margin: var(--spacer-2) 0;
+}

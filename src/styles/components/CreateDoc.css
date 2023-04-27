@@ -1,0 +1,10 @@
+.CreateDoc .modal-title {
+  font-family: var(--font-family-headings);
+  font-style: italic;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.CreateDoc .modal-content {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
