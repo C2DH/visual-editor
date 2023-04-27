@@ -4,8 +4,10 @@ import { persist } from 'zustand/middleware'
 export const useStore = create((set) => ({
   routeLabel: '',
   user: null,
+  modalCreateDocOpen: false,
   setRouteLabel: (routeLabel) => set({ routeLabel }),
   setUser: (user) => set({ user }),
+  setModalCreateDocOpen: (isOpen) => set({ modalCreateDocOpen: isOpen }),
 }))
 
 const EnvVariables = {
