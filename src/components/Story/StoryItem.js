@@ -6,8 +6,10 @@ import StoryAuthors from './StoryAuthors'
 import { useAvailableLanguage } from '../../hooks/i18n'
 import '../../styles/components/Story/StoryItem.css'
 import downsize from 'downsize'
+import { useTranslation } from 'react-i18next'
 
 const StoryItem = ({ story, reduced = false, className = '' }) => {
+  const { t } = useTranslation()
   const { availableLanguage, availableLanguages } = useAvailableLanguage({
     translatable: story.data.title,
   })
@@ -29,9 +31,15 @@ const StoryItem = ({ story, reduced = false, className = '' }) => {
         <div className="badge badge-info">
           slug: <b>{story.slug}</b>
         </div>
+        <div className="badge badge-info">
+          last modified: <b>{t('datetime', { date: new Date(story.date_last_modified) })}</b>
+        </div>
+        <div className="badge badge-info">
+          created: <b>{t('datetime', { date: new Date(story.date_created) })}</b>
+        </div>
         <LangLink className="StoryItem_title" to={`/story/${story.slug}`}>
           <h4
-            className="m-0 "
+            className="my-3 "
             dangerouslySetInnerHTML={{
               __html: title
                 .split(/[[\]]/)
