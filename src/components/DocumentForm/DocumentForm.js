@@ -10,6 +10,7 @@ import JSONSchemaForm, { JSONSchemaProperty } from '../Form/JSONSchemaForm';
 import Select from '../Form/Select';
 import File from '../Form/File';
 import Checkbox from '../Form/Checkbox';
+import Input from '../Form/Input';
 
 import { loadDocumentSchema } from '../../state/actions';
 import {
@@ -178,6 +179,14 @@ class DocumentForm extends PureComponent {
               }
             </Col>
             <Col md={6}>
+              <FormGroup>
+                <Field
+                  label         = "URL"
+                  name          = "url"
+                  component     = {Input}
+                />
+              </FormGroup>
+
               <FormGroup>
                 <Field
                   label         = "Content"

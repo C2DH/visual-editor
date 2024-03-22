@@ -106,7 +106,8 @@ export const createDocument = token => doc =>
     .field({
       title:      doc.data.title[DEFAULT_LANGUAGE] || find(doc.data.title),
       type:       doc.type,
-      data:       JSON.stringify(doc.data)
+      data: JSON.stringify(doc.data),
+      url:  doc.url
     })
     .attach('attachment', doc.attachment_file || undefined)
     .attach('snapshot', doc.snapshot_file || undefined)
@@ -116,7 +117,8 @@ export const updateDocument = token => doc =>
   withToken(token, request.patch(`/api/document/${doc.id}/`))
     .field({
       type:       doc.type,
-      data:       JSON.stringify(doc.data)
+      data: JSON.stringify(doc.data),
+      url:  doc.url
     })
     .field(!doc.attachment ? {attachment: ''} : {}) //  Send an empty string to remove the file
     .field(!doc.snapshot ? {snapshot: ''} : {}) //  Send an empty string to remove the file
