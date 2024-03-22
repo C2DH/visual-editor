@@ -118,7 +118,7 @@ export const updateDocument = token => doc =>
     .field({
       type:       doc.type,
       data: JSON.stringify(doc.data),
-      url:  doc.url
+      url:  doc.url || ''
     })
     .field(!doc.attachment ? {attachment: ''} : {}) //  Send an empty string to remove the file
     .field(!doc.snapshot ? {snapshot: ''} : {}) //  Send an empty string to remove the file
