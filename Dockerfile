@@ -1,4 +1,4 @@
-FROM node:12-alpine as visual-editor-builder
+FROM node:16-alpine as visual-editor-builder
 
 ARG GIT_BRANCH
 ARG GIT_REVISION
