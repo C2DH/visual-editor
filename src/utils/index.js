@@ -141,7 +141,7 @@ export const getBoundingBoxImage = (token, imageUrl, bbox) => {
       bboxUrl
     )}&token=${token}`;
   }
-  return imageUrl;
+  return encodeURI(imageUrl);
 };
 
 // Build a JSON object with default values from the schema
