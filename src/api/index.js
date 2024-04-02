@@ -107,7 +107,7 @@ export const createDocument = token => doc =>
       title:      doc.data.title[DEFAULT_LANGUAGE] || find(doc.data.title),
       type:       doc.type,
       data: JSON.stringify(doc.data),
-      url:  doc.url
+      url:  doc.url || ''
     })
     .attach('attachment', doc.attachment_file || undefined)
     .attach('snapshot', doc.snapshot_file || undefined)
