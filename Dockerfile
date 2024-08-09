@@ -1,4 +1,4 @@
-FROM node:16-alpine as visual-editor-builder
+FROM node:16-alpine AS visual-editor-builder
 
 ARG GIT_BRANCH
 ARG GIT_REVISION
@@ -25,6 +25,6 @@ ENV PUBLIC_URL=${PUBLIC_URL}
 
 RUN yarn build
 
-FROM busybox
+FROM busybox:stable
 WORKDIR /visual-editor
 COPY --from=visual-editor-builder /visual-editor/build ./
