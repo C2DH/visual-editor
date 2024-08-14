@@ -14,7 +14,7 @@ run-build:
 	PUBLIC_URL=/editor yarn build
 
 build-docker-image:
-	docker build \
+	DOCKER_DEFAULT_PLATFORM="linux/amd64" docker build \
 	-t c2dhunilu/visual-editor:${BUILD_TAG} \
 	--build-arg PUBLIC_URL=${PUBLIC_URL} \
 	--build-arg GIT_BRANCH=$(shell git rev-parse --abbrev-ref HEAD) \

@@ -13,6 +13,7 @@ RUN yarn install
 
 COPY public ./public
 COPY src ./src
+COPY .env ./.env
 
 ENV NODE_ENV=production
 ENV NODE_OPTIONS=--max_old_space_size=4096
@@ -26,6 +27,7 @@ ENV PUBLIC_URL=${PUBLIC_URL}
 ENV REACT_APP_MAPBOX_STYLE_URL=mapbox://styles/mapbox/streets-v11
 ENV REACT_APP_MAPBOX_ACCESS_TOKEN=pk.eyJ1IjoiZGFuaWVsZWd1aWRvdW5pIiwiYSI6ImNsMmVyOW5vazAyOXczaW8zYmJnOGczeWIifQ.R8HvtSP3S8gTlpkUeWq-BA
 ENV REACT_APP_FRONTEND_URL=https://ww2.lu
+ENV REACT_APP_DOCUMENT_SCHEMA=/miller-static/schema/document/payload.json
 
 RUN yarn build
 
