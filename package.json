@@ -1,5 +1,5 @@
 {
-  "name": "VisualEditor",
+  "name": "visual-editor",
   "version": "1.1.7",
   "private": true,
   "dependencies": {
